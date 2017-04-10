@@ -50,3 +50,6 @@ git config --global user.email "email@example.com"
 
 
 **说明:**平时我们使用的命令`git add readme.txt`实际上是把所有的修改从工作区提交到暂存区，`git commit -m "add readme"`是一次性把暂存区的所有修改提交到分支，因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以commit就提交到了master上了。
+
+### 管理修改
+
