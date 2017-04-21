@@ -2,7 +2,7 @@
 
 **Git**:分布式版本控制系统
 
-**SVN**:集中式版本控制系统，版本库集中存放在中央服务器的，中央服务器好比是一个图书馆，你要改一本书，必须先从图书馆借出来，然后回到家自己改，改完了，再放回图书馆。
+**SVN**:集中式版本控制系统，版本库集中存放在中央服务器的。
 
 创建版本库：
 
@@ -69,5 +69,30 @@ git config --global user.email "email@example.com"
 
 这个时候，工作区和版本库就不一致了，`git status`命令就能查看出那些文件被删除了。
 
-- 假如我们确实要从版本库中删除文件，那么使用命令`git rm file`以及`commit`命令可以删除版本库中的文件。
-- 另外就是误删了工作区的文件，我们可以使用`git checkout -- file`命令将误删的文件恢复到最新版本.**（该操作将会丢失最近一次提交后你修改的内容）**
++ 假如我们确实要从版本库中删除文件，那么使用命令`git rm file`以及`commit`命令可以删除版本库中的文件。
++ 另外就是误删了工作区的文件，我们可以使用`git checkout -- file`命令将误删的文件恢复到最新版本.**（该操作将会丢失最近一次提交后你修改的内容）**
+
+
+### 远程仓库
+
+[Github](https://github.com)提供免费的Git远程仓库
+
+```
+ssh-keygen -t rsa -C "youemail@email.com"
+```
+
+通过命令行将本地的仓库与远程库关联
+
+```
+git remote add origin git@github.com:flwcy/knowledge.git
+```
+
+把本地库的内容推送到远程仓库，用`git push`命令，实际上是把当前分支master推送到远程。
+
+```
+git push -u origin master
+```
+
+>由于是第一次推送master分支，加上了-u参数，Git不但会把本地的master分支内容推送到远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+从现在起，只要本地作了提交，就可以通过命令` git push origin master`把本地master分支的最新修改推送到GitHub。
