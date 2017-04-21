@@ -75,11 +75,24 @@ git config --global user.email "email@example.com"
 
 ### 远程仓库
 
-[Github](https://github.com)提供免费的Git远程仓库
+[Github](https://github.com)提供免费的Git远程仓库，首先检查SSH Key是否存在
+
+```
+ls -al ~/.ssh
+```
+
+不存在则创建SSH Key:
 
 ```
 ssh-keygen -t rsa -C "youemail@email.com"
 ```
+现在你的私钥被放在了~/.ssh/id_rsa 这个文件里，而公钥被放在了 ~/.ssh/id_rsa.pub 这个文件里。
+
+> SSH key提供了一种与GitHub通信的方式，通过这种方式，能够在不输入密码的情况下，将GitHub作为自己的remote端服务器，进行版本控制.
+
+> git可使用rsa，rsa要解决的一个核心问题是，如何使用一对特定的数字，使其中一个数字可以用来加密，而另外一个数字可以用来解密。这两个数字就是你在使用git和github的时候所遇到的public key也就是公钥以及private key私钥。
+>
+> 其中，公钥就是那个用来加密的数字，这也就是为什么你在本机生成了公钥之后，要上传到github的原因。从github发回来的，用那公钥加密过的数据，可以用你本地的私钥来还原。
 
 通过命令行将本地的仓库与远程库关联
 
