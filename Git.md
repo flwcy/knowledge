@@ -39,9 +39,9 @@ git config --global user.email "email@example.com"
 
 ### 工作区和暂存区
 
-__工作区（Working Directory）:__我们自己建立的项目文件夹即工作区，比如之前建立的learngit文件夹就是一个工作区.
+__工作区（Working Directory）: __我们自己建立的项目文件夹即工作区，比如之前建立的learngit文件夹就是一个工作区.
 
-__版本库（Repository）:__ 在初始化git版本库之后会生成一个隐藏的目录.git,这个就是Git的版本库.
+__版本库（Repository）: __ 在初始化git版本库之后会生成一个隐藏的目录.git,这个就是Git的版本库.
 
 在.git目录里面还很多文件，其中有一个index目录，就是**暂存区(stage)**，暂存区可以理解为一个虚拟工作区，这个虚拟工作区会跟踪工作区的文件变化（增删改等操作），另外Git还为我们自动生成了一个分支master以及指向该分支的指针head.
 
@@ -49,11 +49,11 @@ __版本库（Repository）:__ 在初始化git版本库之后会生成一个隐�
 
 
 
-__说明:__平时我们使用的命令`git add readme.txt`实际上是把所有的修改从工作区提交到暂存区，`git commit -m "add readme"`是一次性把暂存区的所有修改提交到分支，因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以commit就提交到了master上了。
+__说明: __平时我们使用的命令`git add readme.txt`实际上是把所有的修改从工作区提交到暂存区，`git commit -m "add readme"`是一次性把暂存区的所有修改提交到分支，因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以commit就提交到了master上了。
 
 ### 撤销修改
 
-__管理修改:__Git跟踪并管理的是修改，而非文件，每次修改，如果不add到暂存区，那就不会加入到commit中。
+__管理修改: __Git跟踪并管理的是修改，而非文件，每次修改，如果不add到暂存区，那就不会加入到commit中。
 
 场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令`git checkout -- file`。
 
