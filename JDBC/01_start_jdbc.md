@@ -3,8 +3,8 @@
 # JDBC入门
 
 标签： JDBC
-###(一) 初识JDBC
-####jdbc的概念
+### (一) 初识JDBC
+#### jdbc的概念
 
 
 
