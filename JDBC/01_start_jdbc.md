@@ -44,7 +44,7 @@ insert into db_user(id,user_name,`password`,email,birthday) values(1,"jjr" ,"jjr
 insert into db_user(id,user_name,`password`,email,birthday) values(2,"js123" ,"123456" ,"js123@126.net" ,"1991-09-08" )
 
 ```
-![测试数据](./img/jdbc/jdbc_start_02.jpg)
+![测试数据](../img/jdbc/jdbc_start_02.jpg)
 
 查看JDBC文档，我们发现首先需要下载或者拷贝一份数据库驱动程序到本机，然后将驱动程序添加到项目中，我使用的是MySql数据库，因此去MySql官网下载驱动程序。
 
