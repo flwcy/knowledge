@@ -26,7 +26,7 @@
 4、执行sql语句获得结果集(ResultSet)
 5、处理执行结果（在非查询语句中，该步骤可以省略）
 6、关闭连接，释放资源
-####**Talk is cheap.Show me the code**
+#### Talk is cheap.Show me the code
 首先进行一些准备工作，创建表，本bolg是在mysql新建的db_jdbc库中创建了表
 ```
 create table db_user(
@@ -79,8 +79,8 @@ Installing a JDBC driver generally consists of copying the driver to your comput
 执行结果显示如下
  ![执行结果](..\img\jdbc\jdbc_start_03.jpg)
 
-####**代码详解**
-#####**注册驱动的三种方式**
+#### 代码详解
+##### 注册驱动的三种方式
 在步骤一中我们注册了数据库的驱动，常用的注册驱动有三种方式
 方式一：通过DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 ```
@@ -180,7 +180,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 }
 ```
 综上所述，我们调用方法registerDriver就相当于又向drivers列表中放了一次driver驱动，代码不够"优雅",而且会对具体的类产生了依赖。因此推荐使用Class.forName("com.mysql.jdbc.Driver")这种方式，可以通过配置文件的方式使代码更加灵活。
-#####**获取数据库连接**
+##### 获取数据库连接
 连接数据库的过程就是通过驱动与数据库建立连接，一般我们写的应用程序与数据库并不在同一台机器上的，因此需要建立网络连接，实际上底层就是通过TCP/IP建立一个socket连接。数据库会有很多权限验证的，因此我们需要提供对应的用户名以及密码。
 查看api文档，发现DriverManager中共有三种获得数据库连接的方式
 
@@ -217,7 +217,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 本机使用MySql数据库，查看[Mysql文档](https://dev.mysql.com/doc/connector-j/en/connector-j-reference-configuration-properties.html)
 ![msql](..\img\jdbc\jdbc_start_08.jpg)
 
-#####**代码优化**
+##### 代码优化
 加载数据库驱动只需执行一次(放在静态代码块中)，资源的获取以及获取数据库的连接可以抽离成独立的方法。一般这些都是写在工具类中，工具类禁止继承(final),工具类只构造一个实例(单例模式/static方法)
 ```
 package com.rooike.util;
