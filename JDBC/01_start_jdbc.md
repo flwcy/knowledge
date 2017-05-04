@@ -15,7 +15,7 @@
 	jdbc:java data base connectivity
 	jdbc由一些接口和类构成的api，是javaSE的一部分，位于java.sql以及javax.sql包下。
 	sun公司提供了这些连接数据库的规范，由数据库的生产厂商提供驱动程序。
-![jdbc关系图](./img/jdbc/jdbc_start_01.jpg)
+![jdbc关系图](../img/jdbc/jdbc_start_01.jpg)
 
 
 
@@ -77,7 +77,7 @@ Installing a JDBC driver generally consists of copying the driver to your comput
     }
 ```
 执行结果显示如下
- ![执行结果](./img/jdbc/jdbc_start_03.jpg)
+ ![执行结果](../img/jdbc/jdbc_start_03.jpg)
 
 #### 代码详解
 ##### 注册驱动的三种方式
@@ -184,7 +184,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 连接数据库的过程就是通过驱动与数据库建立连接，一般我们写的应用程序与数据库并不在同一台机器上的，因此需要建立网络连接，实际上底层就是通过TCP/IP建立一个socket连接。数据库会有很多权限验证的，因此我们需要提供对应的用户名以及密码。
 查看api文档，发现DriverManager中共有三种获得数据库连接的方式
 
-![Connection](./img/jdbc/jdbc_start_06.jpg)
+![Connection](../img/jdbc/jdbc_start_06.jpg)
 
 ```
     @Test
@@ -212,10 +212,10 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
     }
 ```
 其中数据库连接的url可查看对应数据库厂商提供的api文档，主流的url格式如下：
-![url格式](./img/jdbc/jdbc_start_07.jpg)
+![url格式](../img/jdbc/jdbc_start_07.jpg)
 
 本机使用MySql数据库，查看[Mysql文档](https://dev.mysql.com/doc/connector-j/en/connector-j-reference-configuration-properties.html)
-![msql](./img/jdbc/jdbc_start_08.jpg)
+![msql](../img/jdbc/jdbc_start_08.jpg)
 
 ##### 代码优化
 加载数据库驱动只需执行一次(放在静态代码块中)，资源的获取以及获取数据库的连接可以抽离成独立的方法。一般这些都是写在工具类中，工具类禁止继承(final),工具类只构造一个实例(单例模式/static方法)
