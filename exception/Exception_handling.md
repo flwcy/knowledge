@@ -5,7 +5,7 @@
 ---
 
 
-###异常的基本概念###
+### 异常的基本概念
 异常是指阻止当前方法或者作用域继续执行的问题,如文件找不到、网络连接失败、非法参数等等.在java中,java.lang.Throwable是所有异常的基类.java异常体系结构如下:
 ![异常体系结构](../img/exception/exception_01.jpg)
 **Throwable**有两个重要的子类:Exception(异常)和Error(错误),二者都是java异常处理的重要子类，各自都包含了大量的子类.
@@ -21,7 +21,7 @@ java.lang.Exception又分为两大类:运行时异常和非运行时异常(编�
 **运行时异常**:都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查的异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。
 运行时异常的特点是**Java编译器不会检查它**，也就是说，当程序中可能出现这类异常，即使没有用try-catch语句捕获它，也没有用throws子句声明抛出它，也会编译通过。
 **非运行时异常 （编译异常）**：是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。
-###异常的处理机制###
+### 异常的处理机制
 在 Java 应用程序中，异常处理机制为：**抛出异常**，**捕捉异常**。对于RuntimeException、Error和CheckedException,java要求的处理方式不相同.
 
 + Error:应用程序不应该捕获
@@ -33,7 +33,7 @@ java.lang.Exception又分为两大类:运行时异常和非运行时异常(编�
 - 从方法中抛出的任何异常都必须使用throws子句.
 - 捕获异常通过try-catch语句或者try-catch-finally语句实现.
 
-####捕获异常：try、catch 和 finally####
+#### 捕获异常：try、catch 和 finally
 try、catch、finally语句块的执行顺序:
 1)当try没有捕获到异常时：try语句块中的语句逐一被执行，程序将跳过catch语句块，执行finally语句块和其后的语句；
 
@@ -54,7 +54,7 @@ try/catch/finally语句块的执行顺序如下图所示:
   4）关闭CPU。
 
 需要注意的是，**一旦某个catch捕获到匹配的异常类型，将进入异常处理代码。一经处理结束，就意味着整个try-catch语句结束。其他的catch子句不再有匹配和捕获异常类型的机会。**
-####抛出异常####
+#### 抛出异常
 任何Java代码都可以抛出异常，如：自己编写的代码、来自Java开发环境包中代码或者Java运行时系统，无论是谁，都可以通过Java的throw语句抛出异常，从方法中抛出的任何异常都必须使用throws子句。
 **Throws抛出异常的规则:**
 +  如果是不可查异常（Unchecked Exception）,即Error、RuntimeException或它们的子类，那么可以不使用throws关键字来声明要抛出的异常，编译仍能顺利通过，但在运行时会被系统抛出。
@@ -69,7 +69,7 @@ try/catch/finally语句块的执行顺序如下图所示:
   简单说：**子类覆盖父类，只能抛出父类的异常或者子类或者子集。**
 
 注意：如果父类的方法没有抛出异常,那么子类覆盖时绝对不能抛,子类不能抛出比父类多的异常,就只能try/catch.
-###Java常见异常###
+### Java常见异常
 1. RuntimeException子类:
 + java.lang.ArrayIndexOutOfBoundsException
     数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出。
@@ -97,5 +97,5 @@ try/catch/finally语句块的执行顺序如下图所示:
 + StringIndexOutOfBoundsException 字符串索引超出范围抛出的异常
 + IllegalAccessException  不允许访问某类异常
 + InstantiationException  当应用程序试图使用Class类中的newInstance()方法创建一个类的实例，而指定的类对象无法被实例化时，抛出该异常
-###异常链###
+### 异常链
 异常链是一种面向对象编程技术，指将捕获的异常包装进一个新的异常中并重新抛出的异常处理方式。原异常被保存为新异常的一个属性（比如cause）.这个想法是指一个方法应该抛出定义在相同的抽象层次上的异常，但不会丢弃更低层次的信息，Java这种向上传递异常信息的处理机制，称为异常链.
