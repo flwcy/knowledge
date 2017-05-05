@@ -181,8 +181,8 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 大多数HTML元素被定义为块级元素或内联元素。
 
-- **块级元素(block)特性：**总是独占一行，表现为另起一行开始，而且其后的元素也必须另起一行显示；宽度(width)、高度(height)、内边距(padding)和外边距(margin)都可控制；例如：`<h1>`, `<p>`,` <ul>`, `<table>`,`<div>`,`<form>`
-- **内联元素(inline)特性：**和相邻的内联元素在同一行；宽度(width)、高度(height)、内边距的top/bottom(padding-top/padding-bottom)和外边距的top/bottom(margin-top/margin-bottom)都不可变**（水平方向有效，竖直方向无效）**，就是里面的文字和图片的大小；例如：`<br>`, `<span>`, `<a>`, `<img>`,`<input>`
+-  **块级元素(block)特性：** 总是独占一行，表现为另起一行开始，而且其后的元素也必须另起一行显示；宽度(width)、高度(height)、内边距(padding)和外边距(margin)都可控制；例如：`<h1>`, `<p>`,` <ul>`, `<table>`,`<div>`,`<form>`
+-  **内联元素(inline)特性：** 和相邻的内联元素在同一行；宽度(width)、高度(height)、内边距的top/bottom(padding-top/padding-bottom)和外边距的top/bottom(margin-top/margin-bottom)都不可变 **（水平方向有效，竖直方向无效）**，就是里面的文字和图片的大小；例如：`<br>`, `<span>`, `<a>`, `<img>`,`<input>`
 
 
 对HTML进行分类，使我们能够为定义的元素的类**定义CSS样式**。
