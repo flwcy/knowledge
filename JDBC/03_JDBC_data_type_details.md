@@ -6,12 +6,12 @@
 
 
 
-###基本数据类型###
+### 基本数据类型
 JDBC中提供了我们所能见到的所有数据类型，其中像String、int等等，赋值使用的是PreparedStatement中的setter方法(类似setShot、setString等等)，取值使用的是ResultSet中的getter方法(类似getInt、getLong等等)可以查看Preparedstatement的API文档 ![API文档](..\img\jdbc\jdbc_data_01.jpg)
 
 其中如果不知道数据表中数据类型或者不能确定是什么类型的情况下，可以直接使用setObject方法和getObject方法进行获取和设置.
 
-###日期类型###
+### 日期类型
 其中日期类型是比较特殊的一个类型，我们看一下ResultSet的getDate方法
 ![getDate](..\img\jdbc\jdbc_data_02.jpg)
 
@@ -123,7 +123,7 @@ date2 = new java.util.Date(date1.getTime());
         return date;
     }
 ```
-###CLOB类型###
+### CLOB类型
 当我们存储大量的文本信息时，数据库中的varchar或者varchar2肯定是不能满足的，varchar2最多只能有4000个长度，当我们需要存放一篇文章或者一个文本信息时，可以使用CLOB类型来满足我们的需求。在MySQL数据库中CLOB类型对应的是Text，DB2/Oracle中clob对应clob。
 - 创建数据表
 ```SQL
@@ -228,7 +228,7 @@ public void readByClob(int id) {
         }
     }
 ```
-###BLOB类型###
+### BLOB类型
 BLOB和CLOB都是大字段类型,BLOB是按二进制存储的,而CLOB是可以直接存储文字的。通常像图片、文件、音乐等信息就使用BLOB字段来存储,先将文件转为二进制再存储进去.而像文章或者文本信息就使用CLOB存储。下面我们通过一个示例来进行演示
 - 创建数据表
 ```SQL
@@ -316,7 +316,7 @@ CREATE TABLE `db_blob_test` (
     }
 ```
 程序运行结束之后，我们可以在src目录下看到该图片.
-###其他数据类型###
+### 其他数据类型
 其他数据类型可以查看[数据库](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-type-conversions.html)和jdbc相关的文档,或者在java.sql.Types中查看所涉及的所有类型信息.
 ![types](..\img\jdbc\jdbc_data_05.jpg)
 
