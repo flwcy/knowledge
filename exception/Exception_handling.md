@@ -15,7 +15,8 @@
   **Exception**:是程序本身可以处理的异常.
 >**注意：异常和错误的区别：异常能被程序本身可以处理，错误是无法处理。**
 
-通常，Java的异常(包括Exception和Error)分为可查的异常CheckedException和不可查的异常Unchecked Exception.
+通常，Java的异常(包括Exception和Error)分为可查的异常CheckedException和不可查的异常Unchecked Exception.  
+
 **CheckedException(编译器要求必须处置的异常)**:除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
 
 **Unchecked Exception(编译器不要求强制处置的异常)**:包括运行时异常（RuntimeException与其子类）和错误（Error）.
