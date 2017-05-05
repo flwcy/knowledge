@@ -9,9 +9,10 @@
 异常是指阻止当前方法或者作用域继续执行的问题,如文件找不到、网络连接失败、非法参数等等.在java中,java.lang.Throwable是所有异常的基类.java异常体系结构如下:
 <br/>![异常体系结构](../img/exception/exception_01.jpg)<br/>
 **Throwable**有两个重要的子类:Exception(异常)和Error(错误),二者都是java异常处理的重要子类，各自都包含了大量的子类.
-**Error(错误)**:是程序无法处理的错误,表示运行应用程序中较严重的问题.合理的应用程序不应该去try/catch这种错误，绝大多数Error都是非正常的.常见的Error比如说OutOfMemoryError、StackOverflowError等等.
-
-**Exception**:是程序本身可以处理的异常.
+  
+  **Error(错误)**:是程序无法处理的错误,表示运行应用程序中较严重的问题.合理的应用程序不应该去try/catch这种错误，绝大多数Error都是非正常的.常见的Error比如说OutOfMemoryError、StackOverflowError等等.
+  
+  **Exception**:是程序本身可以处理的异常.
 >**注意：异常和错误的区别：异常能被程序本身可以处理，错误是无法处理。**
 
 通常，Java的异常(包括Exception和Error)分为可查的异常CheckedException和不可查的异常Unchecked Exception.
