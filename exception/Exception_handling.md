@@ -14,13 +14,13 @@
 >**注意：异常和错误的区别：异常能被程序本身可以处理，错误是无法处理。**
 
 通常，Java的异常(包括Exception和Error)分为可查的异常CheckedException和不可查的异常Unchecked Exception.
-**CheckedException(编译器要求必须处置的异常)**:除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
-**Unchecked Exception(编译器不要求强制处置的异常)**:包括运行时异常（RuntimeException与其子类）和错误（Error）.
+<br/>**CheckedException(编译器要求必须处置的异常)**:除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
+<br/>**Unchecked Exception(编译器不要求强制处置的异常)**:包括运行时异常（RuntimeException与其子类）和错误（Error）.
 <br/>![Difference between Unchecked exception or runtime exception](../img/exception/exception_02.jpg)<br/>
 java.lang.Exception又分为两大类:运行时异常和非运行时异常(编译异常),程序中应当尽可能的去处理这些异常.
-**运行时异常**:都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查的异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。
+<br/>**运行时异常**:都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查的异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。
 运行时异常的特点是**Java编译器不会检查它**，也就是说，当程序中可能出现这类异常，即使没有用try-catch语句捕获它，也没有用throws子句声明抛出它，也会编译通过。
-**非运行时异常 （编译异常）**：是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。
+<br/>**非运行时异常 （编译异常）**：是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。
 ### 异常的处理机制
 在 Java 应用程序中，异常处理机制为：**抛出异常**，**捕捉异常**。对于RuntimeException、Error和CheckedException,java要求的处理方式不相同.
 
@@ -35,11 +35,9 @@ java.lang.Exception又分为两大类:运行时异常和非运行时异常(编�
 
 #### 捕获异常：try、catch 和 finally
 try、catch、finally语句块的执行顺序:
-1)当try没有捕获到异常时：try语句块中的语句逐一被执行，程序将跳过catch语句块，执行finally语句块和其后的语句；
-
-2)当try捕获到异常，catch语句块里没有处理此异常的情况：当try语句块里的某条语句出现异常时，而没有处理此异常的catch语句块时，此异常将会抛给JVM处理，finally语句块里的语句还是会被执行，但finally语句块后的语句不会被执行；
-
-3)当try捕获到异常，catch语句块里有处理此异常的情况：在try语句块中是按照顺序来执行的，当执行到某一条语句出现异常时，程序将跳到catch语句块，并与catch语句块逐一匹配，一旦某个catch捕获到匹配的异常类型,将进入异常处理代码,一经处理结束,就意味着整个try-catch语句结束,其他的catch子句不再有匹配和捕获异常类型的机会.而try语句块中，出现异常之后的语句也不会被执行，catch语句块执行完后，执行finally语句块里的语句，最后执行finally语句块后的语句；
+<br/>1)当try没有捕获到异常时：try语句块中的语句逐一被执行，程序将跳过catch语句块，执行finally语句块和其后的语句；
+<br/>2)当try捕获到异常，catch语句块里没有处理此异常的情况：当try语句块里的某条语句出现异常时，而没有处理此异常的catch语句块时，此异常将会抛给JVM处理，finally语句块里的语句还是会被执行，但finally语句块后的语句不会被执行；
+<br/>3)当try捕获到异常，catch语句块里有处理此异常的情况：在try语句块中是按照顺序来执行的，当执行到某一条语句出现异常时，程序将跳到catch语句块，并与catch语句块逐一匹配，一旦某个catch捕获到匹配的异常类型,将进入异常处理代码,一经处理结束,就意味着整个try-catch语句结束,其他的catch子句不再有匹配和捕获异常类型的机会.而try语句块中，出现异常之后的语句也不会被执行，catch语句块执行完后，执行finally语句块里的语句，最后执行finally语句块后的语句；
 
 try/catch/finally语句块的执行顺序如下图所示:
 <br/>![try/catch执行顺序](../img/exception/exception_03.jpg)<br/>
