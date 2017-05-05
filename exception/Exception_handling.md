@@ -7,7 +7,7 @@
 
 ### 异常的基本概念
 异常是指阻止当前方法或者作用域继续执行的问题,如文件找不到、网络连接失败、非法参数等等.在java中,java.lang.Throwable是所有异常的基类.java异常体系结构如下:
-![异常体系结构](../img/exception/exception_01.jpg)
+![异常体系结构](../img/exception/exception_01.jpg)<br/>
 **Throwable**有两个重要的子类:Exception(异常)和Error(错误),二者都是java异常处理的重要子类，各自都包含了大量的子类.
 **Error(错误)**:是程序无法处理的错误,表示运行应用程序中较严重的问题.合理的应用程序不应该去try/catch这种错误，绝大多数Error都是非正常的.常见的Error比如说OutOfMemoryError、StackOverflowError等等.
 **Exception**:是程序本身可以处理的异常.
@@ -42,7 +42,7 @@ try、catch、finally语句块的执行顺序:
 3)当try捕获到异常，catch语句块里有处理此异常的情况：在try语句块中是按照顺序来执行的，当执行到某一条语句出现异常时，程序将跳到catch语句块，并与catch语句块逐一匹配，一旦某个catch捕获到匹配的异常类型,将进入异常处理代码,一经处理结束,就意味着整个try-catch语句结束,其他的catch子句不再有匹配和捕获异常类型的机会.而try语句块中，出现异常之后的语句也不会被执行，catch语句块执行完后，执行finally语句块里的语句，最后执行finally语句块后的语句；
 
 try/catch/finally语句块的执行顺序如下图所示:
-![try/catch执行顺序](../img/exception/exception_03.jpg)
+<br/>![try/catch执行顺序](../img/exception/exception_03.jpg)<br/>
 小结：
 
 + try 块：用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。
