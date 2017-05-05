@@ -45,7 +45,7 @@ __版本库（Repository）:__ 在初始化git版本库之后会生成一个隐�
 
 在.git目录里面还很多文件，其中有一个index目录，就是**暂存区(stage)**，暂存区可以理解为一个虚拟工作区，这个虚拟工作区会跟踪工作区的文件变化（增删改等操作），另外Git还为我们自动生成了一个分支master以及指向该分支的指针head.
 
-![stage](http://img.blog.csdn.net/20160426185910609)
+![stage](..\img\other\git_stage.jpg)
 
 
 
