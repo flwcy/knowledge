@@ -7,7 +7,7 @@
 
 ### 异常的基本概念
 异常是指阻止当前方法或者作用域继续执行的问题,如文件找不到、网络连接失败、非法参数等等.在java中,java.lang.Throwable是所有异常的基类.java异常体系结构如下:
-![异常体系结构](../img/exception/exception_01.jpg)<br/>
+<br/>![异常体系结构](../img/exception/exception_01.jpg)<br/>
 **Throwable**有两个重要的子类:Exception(异常)和Error(错误),二者都是java异常处理的重要子类，各自都包含了大量的子类.
 **Error(错误)**:是程序无法处理的错误,表示运行应用程序中较严重的问题.合理的应用程序不应该去try/catch这种错误，绝大多数Error都是非正常的.常见的Error比如说OutOfMemoryError、StackOverflowError等等.
 **Exception**:是程序本身可以处理的异常.
@@ -16,7 +16,7 @@
 通常，Java的异常(包括Exception和Error)分为可查的异常CheckedException和不可查的异常Unchecked Exception.
 **CheckedException(编译器要求必须处置的异常)**:除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。
 **Unchecked Exception(编译器不要求强制处置的异常)**:包括运行时异常（RuntimeException与其子类）和错误（Error）.
-![Difference between Unchecked exception or runtime exception](../img/exception/exception_02.jpg)
+<br/>![Difference between Unchecked exception or runtime exception](../img/exception/exception_02.jpg)<br/>
 java.lang.Exception又分为两大类:运行时异常和非运行时异常(编译异常),程序中应当尽可能的去处理这些异常.
 **运行时异常**:都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查的异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。
 运行时异常的特点是**Java编译器不会检查它**，也就是说，当程序中可能出现这类异常，即使没有用try-catch语句捕获它，也没有用throws子句声明抛出它，也会编译通过。
