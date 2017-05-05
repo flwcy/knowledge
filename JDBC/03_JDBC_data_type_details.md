@@ -7,13 +7,13 @@
 
 
 ### 基本数据类型
-JDBC中提供了我们所能见到的所有数据类型，其中像String、int等等，赋值使用的是PreparedStatement中的setter方法(类似setShot、setString等等)，取值使用的是ResultSet中的getter方法(类似getInt、getLong等等)可以查看Preparedstatement的API文档 ![API文档](..\img\jdbc\jdbc_data_01.jpg)
+JDBC中提供了我们所能见到的所有数据类型，其中像String、int等等，赋值使用的是PreparedStatement中的setter方法(类似setShot、setString等等)，取值使用的是ResultSet中的getter方法(类似getInt、getLong等等)可以查看Preparedstatement的API文档 ![API文档](../img/jdbc/jdbc_data_01.jpg)
 
 其中如果不知道数据表中数据类型或者不能确定是什么类型的情况下，可以直接使用setObject方法和getObject方法进行获取和设置.
 
 ### 日期类型
 其中日期类型是比较特殊的一个类型，我们看一下ResultSet的getDate方法
-![getDate](..\img\jdbc\jdbc_data_02.jpg)
+![getDate](../img/jdbc/jdbc_data_02.jpg)
 
 >以Java编程语言中的java.sql.Date对象形式获取此ResultSet对象的当前行中指定列的值。
 >参数:
@@ -22,7 +22,7 @@ JDBC中提供了我们所能见到的所有数据类型，其中像String、int�
 >列值;如果值为SQL NULL，则返回值为null
 
 其中返回值Date类型是java.sql.Date类型。
-![java.sql.Date](..\img\jdbc\jdbc_data_03.jpg)
+![java.sql.Date](../img/jdbc/jdbc_data_03.jpg)
 
 - java.sql.Date是java.util.Date的子类
 
@@ -59,7 +59,7 @@ JDBC中提供了我们所能见到的所有数据类型，其中像String、int�
     }
 ```
 查询数据库查看结果:
-![结果](..\img\jdbc\jdbc_data_04.jpg)
+![结果](../img/jdbc/jdbc_data_04.jpg)
 
 至于java.sql.Date与java.util.Date两者之间的转换，有一个很简单的方法。 
 因为两者都提供了一个long型的构造函数，两者通过getTime重新构造一下就行了。 
@@ -318,7 +318,7 @@ CREATE TABLE `db_blob_test` (
 程序运行结束之后，我们可以在src目录下看到该图片.
 ### 其他数据类型
 其他数据类型可以查看[数据库](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-type-conversions.html)和jdbc相关的文档,或者在java.sql.Types中查看所涉及的所有类型信息.
-![types](..\img\jdbc\jdbc_data_05.jpg)
+![types](../img/jdbc/jdbc_data_05.jpg)
 
 
 
