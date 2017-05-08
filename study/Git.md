@@ -77,7 +77,7 @@ __管理修改:__ Git跟踪并管理的是修改，而非文件，每次修改�
 
 ### 远程仓库
 
-[Github](https://github.com)提供免费的Git远程仓库，首先检查SSH Key是否存在
+[Github](https://github.com)提供免费的Git远程仓库（在[Github](https://github.com)上免费托管的Git仓库是所有人可见，但是只有自己能修改），首先检查SSH Key是否存在
 
 ```
 ls -al ~/.ssh
@@ -111,3 +111,10 @@ git push -u origin master
 >由于是第一次推送master分支，加上了-u参数，Git不但会把本地的master分支内容推送到远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 
 从现在起，只要本地作了提交，就可以通过命令` git push origin master`把本地master分支的最新修改推送到GitHub。
+
+另外使用`git clone`克隆远程仓库到本地。
+
+```
+git clone git@github.com:flwcy/knowledge.git
+```
+
