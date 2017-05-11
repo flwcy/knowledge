@@ -118,3 +118,38 @@ git push -u origin master
 git clone git@github.com:flwcy/knowledge.git
 ```
 
+### 分支管理
+
+__分支__就是从主线上分离出来进行另外的操作，而又不影响主线，主线又可以继续干其他的事。在最开始的时候，`master`分支是一条线，git用`master`指向最新的提交，再用`HEAD`指向`master`，就能确定当前分支，以及当前分支的提交点：
+
+![git_branch_01](../img/other/git_branch_01.png)
+
+每次提交，`master`分支都会向前移动一步。当我们创建新的分支，例如`dev`时，Git新建了一个指针叫`dev`，指向`master`相同的提交，再把`HEAD`指向`dev`，就表示当前分支在`dev`上：
+
+![git_branch_02](../img/other/git_branch_02.png)
+
+Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变`HEAD`的指向，工作区的文件都没有任何变化！不过，从现在开始，对工作区的修改和提交就是针对`dev`分支了，比如新提交一次后，`dev`指针往前移动一步，而`master`指针不变：
+
+![git_branch_03](../img/other/git_branch_03.png)
+
+假如我们在`dev`上的工作完成了，就可以把`dev`合并到`master`上。Git怎么合并呢？最简单的方法，就是直接把`master`指向`dev`的当前提交，就完成了合并：
+
+![git_branch_04](../img/other/git_branch_04.png)
+
+合并完分支后，甚至可以删除`dev`分支。删除`dev`分支就是把`dev`指针给删掉，删掉后，我们就剩下了一条`master`分支：
+
+![git_branch_05](../img/other/git_branch_05.png)
+
+查看分支：`git branch`
+
+> 当前分支前面会标一个`*`号。
+
+创建分支：`git branch <name>`
+
+切换分支：`git checkout <name>`
+
+创建+切换分支：`git checkout -b <name>`
+
+合并某分支到当前分支：`git merge <name>`
+
+删除分支：`git branch -d <name>`
