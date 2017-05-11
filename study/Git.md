@@ -152,4 +152,4 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 
 合并某分支到当前分支：`git merge <name>`
 
-删除分支：`git branch -d <name>`
+主分支上的修改删除分支：`git branch -d <name>`
