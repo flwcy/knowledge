@@ -170,15 +170,15 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 
 #### 分支管理策略
 
-通常，合并分支时，如果可能，Git会用`Fast forward`模式，但这种模式下，删除分支后，会丢掉分支信息。
+通常，合并分支时，如果可能，Git会用`Fast forward`模式，`Fast forward`方式就是当条件允许的时候，git直接把`HEAD`指针指向合并分支的头，完成合并。属于“快进方式”，不过这种情况如果删除分支，则会丢失分支信息。因为在这个过程中没有创建`commit`对象。
 
-如果要强制禁用`Fast forward`模式，Git就会在merge时生成一个新的`commit`对象，这样，从分支历史上就可以看出分支信息。
+如果要强制禁用`Fast forward`模式，Git就会在merge时保留分支的commit历史，这样，从分支历史上就可以看出分支信息。
 
 ```
 git merge --no-ff -m "merge with no-ff" dev
 ```
 
-因为本次合并要创建一个新的commit，所以加上`-m`参数，把commit描述写进去。不使用`Fast forward`模式，merge后就像这样：
+因为本次合并要创建一个新的commit，所以加上`-m`参数，把commit描述写进去。两种方式区别如下：
 
 ![git_branch_08](../img/other/git_branch_08.png)
 
