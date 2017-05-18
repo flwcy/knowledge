@@ -178,7 +178,7 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 git merge --no-ff -m "merge with no-ff" dev
 ```
 
-因为本次合并要创建一个新的commit，所以加上`-m`参数，把commit描述写进去。两种方式区别如下：
+因为本次合并要创建一个新的`merge commit`对象，所以加上`-m`参数，把commit描述写进去。两种方式区别如下：
 
 ![git_branch_08](../img/other/git_branch_08.png)
 
