@@ -1,0 +1,44 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Echrats Start</title>
+		<script src="echarts.js"></script>
+	</head>
+	<body>
+		<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+		<div id="main" style="width: 600px;height:400px;"></div>
+		<script type="text/javascript">
+		
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+			
+			var option = {
+				title:{
+					text:"hello World"
+				},
+				legend:{
+					data:[
+						{name:'每日打卡数'} //Legend data should be same with series name or data name.
+					]
+				},
+				//设置坐标系
+				xAxis: {
+					data: ["周一","周二","周三","周四","周五","周六","周日"]//后台生成
+				},//xAxis "0" not found
+				yAxis: {}, //yAxis "0" not found
+				//设置数据
+				series:[
+					{
+						name:'每日打卡数',
+						type:'bar', // series.type should be specified.
+						data:[12,13,54,24,23,12,56]
+					}
+				] 
+			};
+			
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>
+	</body>
+</html>
