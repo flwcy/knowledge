@@ -45,13 +45,24 @@ __工作区（Working Directory）:__ 我们自己建立的项目文件夹即工
 
 __版本库（Repository）:__ 在初始化git版本库之后会生成一个隐藏的目录.git,这个就是Git的版本库.
 
-在.git目录里面还很多文件，其中有一个index目录，就是**暂存区(stage)**，暂存区可以理解为一个虚拟工作区，这个虚拟工作区会跟踪工作区的文件变化（增删改等操作），另外Git还为我们自动生成了一个分支master以及指向该分支的指针head.
+在.git目录里面还很多文件，其中有一个index目录，就是**暂存区(stage)**，暂存区可以理解为一个虚拟工作区，这个虚拟工作区会跟踪工作区的文件变化（增删改等操作），另外Git还为我们自动生成了一个分支master以及指向该分支的指针head。
+
+![stage](../img/other/git_head_master.png)
+
+HEAD 就是当前活跃分支的游标。形象的记忆就是：你现在在哪儿，HEAD 就指向哪儿，所以 Git 才知道你在那儿！
+
+不过 HEAD 并非只能指向分支的最顶端（时间节点距今最近的那个），实际上它可以指向任何一个节点，它就是 Git 内部用来追踪当前位置的东东。
 
 ![stage](../img/other/git_stage.jpg)
 
 
 
-__说明:__ 平时我们使用的命令`git add readme.txt`实际上是把所有的修改从工作区提交到暂存区，`git commit -m "add readme"`是一次性把暂存区的所有修改提交到分支，因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以commit就提交到了master上了。
+__说明:__ 上面的四条命令在工作区、暂存区(也叫做索引)和仓库之间复制文件。
+
+- `git add files` 把当前文件放入暂存区域。
+- `git commit` 给暂存区域生成快照并提交。
+- `git reset -- files` 用来撤销最后一次`git add files`，你也可以用`git reset` 撤销所有暂存区域文件。
+- `git checkout -- files `把文件从暂存区域复制到工作目录，用来丢弃本地修改。
 
 ### 撤销修改
 
@@ -195,3 +206,9 @@ git merge --no-ff -m "merge with no-ff" dev
 所以，团队合作的分支看起来就像这样：
 
 ![git-br-policy](../img/other/git-br-policy.png)
+
+### Read More
+
+[图解Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
+
+[Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
