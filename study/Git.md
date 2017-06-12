@@ -4,7 +4,13 @@
 
 **SVN**:集中式版本控制系统，版本库集中存放在中央服务器的。
 
-创建版本库：
+#### 创建新仓库
+
+创建新文件夹`mkdir learngit`
+
+打开`cd learngit`
+
+然后执行 `git init`创建新的 git 仓库：
 
 ```
 mkdir learngit
@@ -57,12 +63,7 @@ HEAD 就是当前活跃分支的游标。形象的记忆就是：你现在在哪
 
 
 
-__说明:__ 上面的四条命令在工作区、暂存区(也叫做索引)和仓库之间复制文件。
-
-- `git add files` 把当前文件放入暂存区域。
-- `git commit` 给暂存区域生成快照并提交。
-- `git reset -- files` 用来撤销最后一次`git add files`，你也可以用`git reset` 撤销所有暂存区域文件。
-- `git checkout -- files `把文件从暂存区域复制到工作目录，用来丢弃本地修改。
+__说明:__ 平时我们使用的命令`git add readme.txt`实际上是把所有的修改从工作区提交到暂存区，`git commit -m "add readme"`是一次性把暂存区的所有修改提交到分支，因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以commit就提交到了master上了。
 
 ### 撤销修改
 
@@ -209,6 +210,10 @@ git merge --no-ff -m "merge with no-ff" dev
 
 ### Read More
 
+[Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
+
 [图解Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
+
+[Git完整命令地址](https://git-scm.com/book/zh)
 
 [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
