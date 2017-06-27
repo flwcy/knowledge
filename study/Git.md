@@ -16,6 +16,7 @@
 mkdir learngit
 cd learngit
 pwd
+git init
 ```
 
 ```
