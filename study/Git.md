@@ -135,6 +135,8 @@ git clone git@github.com:flwcy/knowledge.git
 
 **分支**就是从主线上分离出来进行另外的操作，而又不影响主线，主线又可以继续干其他的事。
 
+![分支示例](../img/other/git_branch_09.png)
+
 Git 中的分支，其实本质上仅仅是个指向`commit对象`的可变指针。Git 会使用`master`作为分支的默认名字。在若干次提交后，你其实已经有了一个指向最后一次提交对象的`master`分支，它在每次提交的时候都会自动向前移动。那么，Git 是如何知道你当前在哪个分支上工作的呢？其实答案也很简单，它保存着一个名为`HEAD`的特别指针。在 Git 中，它是一个指向你正在工作中的本地分支的指针（将 HEAD 想象为当前分支的别名）：
 
 ![git_branch_01](../img/other/git_branch_01.png)
@@ -207,7 +209,7 @@ git merge --no-ff -m "merge with no-ff" dev
 
 所以，团队合作的分支看起来就像这样：
 
-![git-br-policy](../img/other/git-br-policy.png)
+![git-br-policy](../img/other/git_branch_10.png)
 
 ### Read More
 
