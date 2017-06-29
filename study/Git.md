@@ -291,10 +291,27 @@ git stash list
 ```
 git stash apply stash@{0}
 ```
+**小结：**
+
+储藏: `git stash`
+
+查看：`git stash list`
+
+恢复并不删除stash内容：`git stash apply`
+
+删除stash内容：`git stash drop`
+
+恢复并删除：`git stash pop`
+
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+
+当手头工作没有完成时，先把工作现场`git stash`一下，然后去修复bug，修复后，再`git stash pop`，回到工作现场。
+
 #### Feature分支
+
 - 从哪个分支分离开来：develop
 - 必须要合并到哪个分支上：develop
-- 分支的命名规范：除了 master，develop，release-*，或者 hotfix-* 以外的名字都可以
+- 分支的命名规范：除了 master，develop，*release-*，或者*hotfix-*以外的名字都可以
 
 如果要改的一个东西会有比较多的修改，或者改的东西影响会比较大，请从 develop 分支开出一个 feature 分支，开发完成后合并回 develop 分支并且删除这个 feature 分支。
 **创建 Feature 分支**
