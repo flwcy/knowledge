@@ -197,7 +197,7 @@ git merge --no-ff -m "merge with no-ff" dev
 
 ![git_branch_08](../img/other/git_branch_08.png)
 
-#### 分支策略
+**分支策略**
 
 在实际开发中，我们应该按照几个基本原则进行分支管理：
 
