@@ -211,6 +211,112 @@ git merge --no-ff -m "merge with no-ff" dev
 
 ![git-br-policy](../img/other/git_branch_10.png)
 
+#### BUG分支
+
+开发过程中经常遇到这种情况，在dev分支上开发新的feature的时候，测试人员提交了1个BUG，这时我们往往需要先将手头的工作停掉，先去修复BUG。
+
+**停掉手头开发的工作**
+
+当有Bug的时候，想创建一个分支`bug-101`来修复它，如果当前正在`dev`上进行的工作还没有完成，所以这时候不能`commit`，而且我们必须马上解决bug，这时，我们借助Git提供的`stash`功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作。
+
+```
+$ git stash
+Saved working directory and index state WIP on master: 9c7f4dd 添加分支图示
+HEAD is now at 9c7f4dd 添加分支图示
+```
+
+这个时候，用git status查看版本库状态，可以看到working directory是clean的。因此可以放心地创建分支来修复bug。
+
+**创建bug分支**
+
+需要在`master`分支上修复，就从`master`创建临时分支：
+
+```
+git checkout master  
+
+git branch bug-101  
+
+git checkout bug-101  
+```
+
+**修复bug**
+
+现在修复bug......
+
+**合并bug分支**
+
+bug修复完成后，切换到master分支，合并bug-101分支：
+
+```
+git checkout master  
+git merge --no-ff -m "fixed bug" bug-101
+```
+
+**返回之前的开发工作**
+
+bug修复完成了之后，就可以回到之前的开发工作了。
+
+```
+git checkout dev  
+```
+
+查看下当前的版本库状态：
+
+```
+$ git status   
+# On branch dev  
+nothing to commit (working directory clean)  
+```
+
+工作区是干净的，刚才的工作现场存到哪去了？用`git stash list`命令看看：
+
+```
+stash@{0}: WIP on master: 9c7f4dd 添加分支图示
+```
+工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：
+
++ 一是用`git stash apply`恢复，但是恢复后，stash内容并不删除，你需要用`git stash drop`来删除；
++ 另一种方式是用`git stash pop`，恢复的同时把stash内容也删了：
+
+```
+git stash pop
+```
+
+再用git stash list查看，就看不到任何stash内容了：
+
+```
+git stash list
+```
+你可以多次`stash`，恢复的时候，先用`git stash list`查看，然后恢复指定的`stash`，用命令：
+```
+git stash apply stash@{0}
+```
+#### Feature分支
+- 从哪个分支分离开来：develop
+- 必须要合并到哪个分支上：develop
+- 分支的命名规范：除了 master，develop，release-*，或者 hotfix-* 以外的名字都可以
+
+如果要改的一个东西会有比较多的修改，或者改的东西影响会比较大，请从 develop 分支开出一个 feature 分支，开发完成后合并回 develop 分支并且删除这个 feature 分支。
+**创建 Feature 分支**
+想要开发一个新功能，可以从 develop 分支上创建一个 Feature 分支。
+```
+git checkout -b feature_x develop
+```
+**完成 Feature 分支**
+完成的功能可以合并到 develop 分支上，添加到下一个发行上：
+```
+# 写代码，提交，写代码，提交。。。
+# feature_x 开发完成，合并回 develop
+git checkout develop
+# 务必加上 --no-ff，以保持分支的合并历史
+git merge --no-ff  -m "merge feature_x" feature_x
+git branch -d feature_x
+git push origin develop
+```
+Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
+
+如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
+
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
@@ -220,3 +326,5 @@ git merge --no-ff -m "merge with no-ff" dev
 [Git完整命令地址](https://git-scm.com/book/zh)
 
 [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+
+[开发使用的 Git 分支](https://talk.ninghao.net/t/kai-fa-shi-yong-de-git-fen-zhi/473)
