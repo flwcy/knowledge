@@ -185,9 +185,16 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 
 #### 分支管理策略
 
-通常，合并分支时，如果可能，Git会用`Fast forward`模式，`Fast forward`方式就是当条件允许的时候，git直接把`HEAD`指针指向合并分支的头，完成合并。属于“快进方式”，不过这种情况如果删除分支，则会丢失分支信息。因为在这个过程中没有创建`commit`对象。
+- **If Master has diverged since the feature branch was created,then merging the feature branch into master will create a merge commit. This is a `typical merge`.**
+- **If Master has not diverged, instead of creating a new commit, git will just point master to the latest commit of the feature branch.This is a `“fast forward.”`**
 
-如果要强制禁用`Fast forward`模式，Git就会在merge时保留分支的commit历史，这样，从分支历史上就可以看出分支信息。
+![git_branch_08](../img/other/git_merge_mode.png)
+
+> 当你试图合并两个分支时，如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候，只会简单的将指针向前推进（指针右移），因为这种情况下的合并操作没有需要解决的分歧（diverged）——这就叫做 “快进（fast-forward）”。不过这种情况如果删除分支，则会丢失分支信息，因为在这个过程中没有创建`commit`对象。
+>
+> diverged：`master`分支所在提交并不是`feature` 分支所在提交的直接祖先。
+
+使用`--no-ff`参数将会创建一个`commit`对象来代表本次合并：
 
 ```
 git merge --no-ff -m "merge with no-ff" dev
@@ -345,3 +352,5 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 
 [开发使用的 Git 分支](https://talk.ninghao.net/t/kai-fa-shi-yong-de-git-fen-zhi/473)
+
+[Whatʼs a Fast Forward Merge?](https://sandofsky.com/images/fast_forward.pdf)
