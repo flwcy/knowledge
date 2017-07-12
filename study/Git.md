@@ -194,7 +194,7 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 >
 > diverged：`master`分支所在提交并不是`feature` 分支所在提交的直接祖先。
 
-使用`--no-ff`参数将会创建一个`commit`对象来代表本次合并：
+使用`--no-ff`参数强制禁用`Fast forward`模式，该参数将会创建一个`commit`对象来代表本次合并，这样，从分支历史上就可以看出分支信息：
 
 ```
 git merge --no-ff -m "merge with no-ff" dev
