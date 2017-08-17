@@ -341,6 +341,14 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
 
+#### 多人协作
+
+前面我们通过命令将本地的`master`分支和远程的`master`分支关联起来了，并且，远程仓库的默认名称是`origin`。
+
+查看远程库信息，使用`git remote`或者`git remote -v`
+
+从本地推送分支，使用`git push origin branch-name`
+
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
