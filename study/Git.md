@@ -359,7 +359,10 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 - feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 
+在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`，本地和远程分支的名称最好一致；
+
 多人协作的工作模式通常是这样：
+
 1. 首先，可以试图用`git push origin branch-name`推送自己的修改；
 2. 如果推送失败，则因为远程分支比你的本地更新，需要先用`git pull`试图合并；
 3. 如果合并有冲突，则解决冲突，并在本地提交；
