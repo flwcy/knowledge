@@ -352,10 +352,20 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
 
 - `master`分支是主分支，因此要时刻与远程同步；
+
 - `dev`分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+
 - bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+
 - feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 
+多人协作的工作模式通常是这样：
+1. 首先，可以试图用`git push origin branch-name`推送自己的修改；
+2. 如果推送失败，则因为远程分支比你的本地更新，需要先用`git pull`试图合并；
+3. 如果合并有冲突，则解决冲突，并在本地提交；
+4. 没有冲突或者解决掉冲突后，再用`git push origin branch-name`推送就能成功！
+
+如果`git pull`提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream branch-name origin/branch-name`。
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
