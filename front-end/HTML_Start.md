@@ -74,6 +74,8 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 - 属性和属性值对大小写不敏感，推荐使用小写的属性/属性值。
 
 
+![html_attribute.png](../img/html_css_js/html_attribute.png)
+
 ### HTML文本格式化
 
 一般我们在网页中能看见各种各样的字体、文本样式，这就是文本格式化标签的功劳，具体可查看[w3school的介绍](http://www.w3school.com.cn/html/html_formatting.asp)。
