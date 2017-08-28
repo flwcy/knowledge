@@ -60,7 +60,7 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 > 换行:`<br />`，`<br />` 元素是一个空的 HTML 元素。由于关闭标签没有任何意义，因此它没有结束标签。
 
 **应该避免使用下面这些标签和属性：**
-![simple_html.png](../img/html_css_js/deprecated_tags&attr.jpg)
+![deprecated_tags_and_attributes](../img/html_css_js/deprecated_tags_and_attributes.jpg)
 对于以上这些标签和属性：请使用样式代替！
 
 ### HTML属性
