@@ -62,7 +62,7 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 **应该避免使用下面这些标签和属性：**
 ![deprecated_tags_and_attributes](../img/html_css_js/deprecated_tags_and_attributes.jpg)
 
-对于以上这些标签和属性应使用样式代替！
+对于以上这些标签和属性应使用**样式**代替！
 
 ### HTML属性
 
