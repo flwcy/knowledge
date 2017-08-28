@@ -23,6 +23,8 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 - 空元素在开始标签中进行关闭（以开始标签的结束而结束），比如说换行符`<br/>`
 - 大多数 HTML 元素可拥有属性
 
+![html_element.png](../img/html_css_js/html_element.png)
+
 ### HTML基本结构
 
 一个HTML网页有自己固有的结构，具体如下：
