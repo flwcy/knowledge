@@ -234,10 +234,10 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 ```html
 <form>
-  姓名：
+  <label>姓名：</label>
   <input type="text" name="userName">
   <br/>
-  密码：
+  <label>密码：</label>
   <input type="password" name="pass">
 </form>
 ```
