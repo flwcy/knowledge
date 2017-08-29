@@ -1,4 +1,4 @@
-## HTML_CSS
+## HTML_Start
 
 HTML(Hyper Text Markup Language)：超文本标记语言
 
@@ -93,7 +93,7 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 
 注意：`<a>` 标签内必须提供 href 或 name 属性。
 
-target属性：使用Target属性，可以定义被链接的文档在何处显示。`_self`（覆盖当前页面，默认）、`_blank`（创建新窗口打开新页面）
+target属性：使用target属性，可以定义被链接的文档在何处显示。`_self`（覆盖当前页面，默认）、`_blank`（创建新窗口打开新页面）
 
 name属性：使用name属性创建HTML页面中的书签。（也可以使用id属性来代替name属性）。具体用法如下：
 
@@ -195,6 +195,138 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 	<dd>White cold drink</dd>
 </dl>
 ```
+
+### HTML表单
+
+网站怎样与用户进行交互？答案是使用HTML表单(form)。表单是可以把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据。
+
+```
+<form   method="传送方式"   action="服务器文件">
+```
+
+**讲解：**
+
+1. **<form>:** `<form>`标签是成对出现的，以`<form>`开始，以`</form>`结束。
+2. **action：**浏览者输入的数据被传送到的地方,比如一个PHP页面(save.php)。
+3. **method：** 数据传送的方式（get/post）。
+
+> 所有表单控件（文本框、文本域、按钮、单选框、复选框等）都必须放在 <form></form> 标签之间（否则用户输入的信息可提交不到服务器上哦！）。
+
+#### 表单控件——文本输入
+
+当用户要在表单中键入字母、数字等内容时，就会用到**文本输入框**。文本框也可以转化为**密码输入框**。
+
+**语法**：
+
+```
+<form>
+   <input type="text/password" name="名称" value="文本" />
+</form>
+```
+
+**1、type：**
+
++ 当`type="text"`时，输入框为**文本输入框;**
++ 当`type="password"`时,输入框为**密码输入框。**
+
+**2、name：**为文本框命名，以备后台程序ASP 、PHP使用。
+
+**3、value：**为文本输入框设置默认值。(一般起到提示作用)
+
+**示例：**
+
+```html
+<form>
+  姓名：
+  <input type="text" name="userName">
+  <br/>
+  密码：
+  <input type="password" name="pass">
+</form>
+```
+
+#### 表单控件——文本域
+
+当用户需要在表单中输入大段文字时，需要用到文本输入域。
+
+**语法**：
+
+```
+<textarea name="名称" rows="行数" cols="列数">文本</textarea>
+```
+
+1、`<textarea>`标签是成对出现的，以`<textarea>`开始，以`</textarea>`结束。
+
+2、`cols ：`多行输入域的**列数**。
+
+3、`rows ：`多行输入域的**行数**。
+
+4、在`<textarea></textarea>`标签之间可以输入**默认值**。
+
+**示例：**
+
+```html
+<form  method="post" action="save.php">
+        <label>联系我们</label>
+        <textarea cols="50" rows="10" >在这里输入内容...</textarea>
+</form>
+```
+
+#### 表单控件——单选框/复选框
+
+在使用表单设计调查表时，为了减少用户的操作，使用选择框是一个好主意，html中有两种选择框，即**单选框**和**复选框**，两者的区别是**单选框**中的选项用户只能选择一项，而**复选框**中用户可以任意选择多项，甚至全选。
+
+**语法：**
+
+```
+<input   type="radio/checkbox"   value="值"    name="名称"   checked="checked"/>
+```
+
+1、**type:**
+
+   当 `type="radio" `时，控件为**单选框**
+
+   当 `type="checkbox"` 时，控件为**复选框**
+
+2、**value：**提交数据到服务器的值（后台程序PHP使用）
+
+3、**name：**为控件命名，以备后台程序 ASP、PHP 使用
+
+4、**checked：**当设置`checked="checked"`时，该选项被默认选中
+**示例：**
+```html
+            <form method="post" action="#">
+                <label>男</label>
+                <input type="radio" name="sex" value="male" checked="checked" />
+                <label>女</label>
+                <input type="radio" name="sex" value="female">
+                <label>游戏</label><input type="checkbox" name="hobbies" value="game" />
+                <label>音乐</label><input type="checkbox" name="hobbies" value="music" />
+                <label>编程</label><input type="checkbox" name="hobbies" value="coding" />
+            </form>
+```
+
+> 注意**:同一组**的单选按钮，name 取值一定要一致，比如上面例子为同一个名称“sex”，这样同一组的单选按钮才可以起到单选的作用。
+
+#### 表单控件——下拉框
+
+`<select>`元素定义下拉列表
+
+**语法：**
+
+```html
+<select name="名称">
+	<option value="提交值">选项</option>
+</select>
+```
+
+**说明：**
+
+![drop_down_list.png](../img/html_css_js/drop_down_list.jpg)
+
+1. `<option>`元素定义待选择的选项。
+2. `selected="selected"`：设置`selected="selected"`属性，则该选项就被默认选中。
+3. 在`<select>`标签中设置`multiple="multiple"`属性，就可以实现多选功能
 
 ### HTML块
 
