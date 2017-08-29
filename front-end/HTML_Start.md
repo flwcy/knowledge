@@ -105,13 +105,10 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 在HTML中，图像由`<img>`标签定义，`<img>`是空标签（它只包含属性，并且没有闭合标签）。
 
-**1、src：**标识图像的位置；
-
-**2、alt：**指定图像的描述性文本，当图像不可见时（下载不成功时），可看到该属性指定的文本；
-
-**3、title：**提供在图像可见时对图像的描述(鼠标滑过图片时显示的文本)；
-
-**4、**图像可以是GIF，PNG，JPEG格式的图像文件。
+1. `src` 标识图像的位置；
+2. `alt`指定图像的描述性文本，当图像不可见时（下载不成功时），可看到该属性指定的文本；
+3. `title`提供在图像可见时对图像的描述(鼠标滑过图片时显示的文本)；
+4. 图像可以是GIF，PNG，JPEG格式的图像文件。
 
 ### HTML表格
 
@@ -200,15 +197,15 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 网站怎样与用户进行交互？答案是使用HTML表单(form)。表单是可以把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据。
 
-```
-<form   method="传送方式"   action="服务器文件">
+```html
+<form method="请求方式" action="服务器文件">
 ```
 
 **讲解：**
 
-1. **<form>:** `<form>`标签是成对出现的，以`<form>`开始，以`</form>`结束。
-2. **action：**浏览者输入的数据被传送到的地方,比如一个PHP页面(save.php)。
-3. **method：** 数据传送的方式（get/post）。
+1. `<form>`标签是成对出现的，以`<form>`开始，以`</form>`结束。
+2. `action`浏览者输入的数据被传送到的地方,比如一个PHP页面(save.php)。
+3. `method`数据传送的方式（get/post）。
 
 > 所有表单控件（文本框、文本域、按钮、单选框、复选框等）都必须放在 <form></form> 标签之间（否则用户输入的信息可提交不到服务器上哦！）。
 
@@ -218,20 +215,20 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 **语法**：
 
-```
+```html
 <form>
    <input type="text/password" name="名称" value="文本" />
 </form>
 ```
 
-**1、type：**
+1、`type`属性
 
 + 当`type="text"`时，输入框为**文本输入框;**
 + 当`type="password"`时,输入框为**密码输入框。**
 
-**2、name：**为文本框命名，以备后台程序ASP 、PHP使用。
+2、`name`为文本框命名，以备后台程序ASP 、PHP使用。
 
-**3、value：**为文本输入框设置默认值。(一般起到提示作用)
+3、`value`为文本输入框设置默认值。(一般起到提示作用)
 
 **示例：**
 
@@ -251,15 +248,15 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 **语法**：
 
-```
+```html
 <textarea name="名称" rows="行数" cols="列数">文本</textarea>
 ```
 
 1、`<textarea>`标签是成对出现的，以`<textarea>`开始，以`</textarea>`结束。
 
-2、`cols ：`多行输入域的**列数**。
+2、`cols`多行输入域的**列数**。
 
-3、`rows ：`多行输入域的**行数**。
+3、`rows`多行输入域的**行数**。
 
 4、在`<textarea></textarea>`标签之间可以输入**默认值**。
 
@@ -278,21 +275,21 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 **语法：**
 
-```
-<input   type="radio/checkbox"   value="值"    name="名称"   checked="checked"/>
+```html
+<input type="radio/checkbox" value="值" name="名称" checked="checked"/>
 ```
 
-1、**type:**
+1、`type`属性
 
    当 `type="radio" `时，控件为**单选框**
 
    当 `type="checkbox"` 时，控件为**复选框**
 
-2、**value：**提交数据到服务器的值（后台程序PHP使用）
+2、`value`提交数据到服务器的值（后台程序PHP使用）
 
-3、**name：**为控件命名，以备后台程序 ASP、PHP 使用
+3、`name`为控件命名，以备后台程序 ASP、PHP 使用
 
-4、**checked：**当设置`checked="checked"`时，该选项被默认选中
+4、`checked`当设置`checked="checked"`时，该选项被默认选中
 **示例：**
 ```html
             <form method="post" action="#">
@@ -306,7 +303,7 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
             </form>
 ```
 
-> 注意**:同一组**的单选按钮，name 取值一定要一致，比如上面例子为同一个名称“sex”，这样同一组的单选按钮才可以起到单选的作用。
+> 注意: **同一组**的单选按钮，name 取值一定要一致，比如上面例子为同一个名称“sex”，这样同一组的单选按钮才可以起到单选的作用。
 
 #### 表单控件——下拉框
 
@@ -325,7 +322,7 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 ![drop_down_list.png](../img/html_css_js/drop_down_list.jpg)
 
 1. `<option>`元素定义待选择的选项。
-2. `selected="selected"`：设置`selected="selected"`属性，则该选项就被默认选中。
+2. 在`<select>`标签中设置`selected="selected"`属性，则该选项就被默认选中。
 3. 在`<select>`标签中设置`multiple="multiple"`属性，就可以实现多选功能
 
 ### HTML块
