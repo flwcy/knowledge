@@ -323,7 +323,6 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 1. `<option>`元素定义待选择的选项。
 2. 在`<select>`标签中设置`selected="selected"`属性，则该选项就被默认选中。
-3. 在`<select>`标签中设置`multiple="multiple"`属性，就可以实现多选功能
 
 ### HTML块
 
