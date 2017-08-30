@@ -260,6 +260,8 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 
 4、在`<textarea></textarea>`标签之间可以输入**默认值**。
 
+> `placeholder`属性：当input或者textarea设置了该属性后，该值的内容将作为灰字提示显示在文本框中，当文本框获得焦点时，提示文字消失。
+
 **示例：**
 
 ```html
