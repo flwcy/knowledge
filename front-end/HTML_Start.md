@@ -353,6 +353,32 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
             </form>
 ```
 
+#### 表单控件——label标签
+
+label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。
+
+**语法：**
+
+```html
+<label for="控件id名称">
+```
+
+> 注意：标签的 for 属性中的值应当与相关控件的 id 属性值一定要相同。
+
+**例子：**
+
+```html
+<form>
+  <label for="male">男</label>
+  <input type="radio" name="gender" id="male" />
+  <br />
+  <label for="female">女</label>
+  <input type="radio" name="gender" id="female" />
+  <label for="email">输入你的邮箱地址</label>
+  <input type="email" id="email" placeholder="Enter email">
+</form>
+```
+
 ### HTML块
 
 大多数HTML元素被定义为块级元素或内联元素。
