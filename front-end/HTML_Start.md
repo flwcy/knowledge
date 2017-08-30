@@ -324,6 +324,35 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 1. `<option>`元素定义待选择的选项。
 2. 在`<select>`标签中设置`selected="selected"`属性，则该选项就被默认选中。
 
+#### 表单控件——提交/重置
+
+在表单中有两种按钮可以使用，分别为：提交按钮、重置。
+
+- 当用户需要提交表单信息到服务器时，需要用到**提交按钮**。
+- 当用户需要重置表单信息到初始时的状态时，比如用户输入“用户名”后，发现书写有误，可以使用`重置按钮`使输入框恢复到初始状态。只需要把type设置为"reset"就可以。
+
+**语法**：
+
+```html
+<input type="submit/reset" value="提交/重置">
+```
+
+`type`：只有当type值设置为submit时，按钮才有提交作用/只有当type值设置为reset时，按钮才有重置作用
+
+`value`：按钮上显示的文字
+
+**示例：**
+
+```html
+            <form method="post" action="#">
+                <label>用户名：</label><input type="text" name="userName" />
+                <br/>
+                <label>密码：</label><input type="password" name="password" />
+                <input type="submit" value="提交" />
+                <input type="reset" value="重置" />
+            </form>
+```
+
 ### HTML块
 
 大多数HTML元素被定义为块级元素或内联元素。
