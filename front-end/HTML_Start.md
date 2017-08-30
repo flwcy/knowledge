@@ -337,7 +337,10 @@ name属性：使用name属性创建HTML页面中的书签。（也可以使用id
 <input type="submit/reset" value="提交/重置">
 ```
 
-`type`：只有当type值设置为submit时，按钮才有提交作用/只有当type值设置为reset时，按钮才有重置作用
+`type`属性
+
+- 只有当`type`值设置为`submit`时，按钮才有**提交**作用
+- 只有当`type`值设置为`reset`时，按钮才有**重置**作用
 
 `value`：按钮上显示的文字
 
