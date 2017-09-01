@@ -28,9 +28,9 @@ git config --global user.email "email@example.com"
 
 `git init`初始化可管理的仓库
 
-`git add readme.txt`把文件添加到仓库
+`git add <filename>`/`git add *`把文件添加到仓库
 
-`git commit -m "test commit"`把文件提交到仓库[-m后面输入本次提交的说明]
+`git commit -m "代码提交信息"`把文件提交到仓库[-m后面输入本次提交的说明]
 
 `git status`查看当前仓库状态
 
