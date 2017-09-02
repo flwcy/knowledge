@@ -369,6 +369,11 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 4. 没有冲突或者解决掉冲突后，再用`git push origin branch-name`推送就能成功！
 
 如果`git pull`提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令`git branch --set-upstream branch-name origin/branch-name`。
+
+### 标签管理
+
+标签（`tag`）可以针对某一时间点的版本做标记，常用于版本发布。Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（分支可以移动，标签不能移动）。
+
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
