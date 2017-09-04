@@ -390,6 +390,34 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 - 命令`git tag -d <tagname>`可以删除一个本地标签；
 - 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签。
 
+### 使用Github
+
+通过GitHub，既可以让别人参与你的开源项目，也可以参与别人的开源项目。当你想更正别人仓库里的错误时，要走一个流程：
+
+1. 首先`Fork`别人的仓库，相当于拷贝一份
+2. 从自己的账号下`clone`到本地分支，做一些 bug fix
+3. 发起 pull request 给原仓库，让他看到你修改的 bug
+4. 原仓库 review 这个 bug，如果是正确的话，就会 merge 到他自己的项目中
+
+先点击`fork`仓库，项目现在就在你的账号下了
+
+![fork_project](../img/other/github_fork_project.png)
+
+![fork_project](../img/other/github_fork_from.png)
+
+在你自己的机器上 git clone 这个仓库，切换分支（也可以在 master 下），做一些修改。
+
+```
+git clone https://github.com/flwcy/knowledge.git
+cd knowledge
+git checkout -b test-pr
+git add *
+git commit -m "test-pr"
+git push origin test-pr
+```
+
+
+
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
@@ -403,3 +431,5 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 [开发使用的 Git 分支](https://talk.ninghao.net/t/kai-fa-shi-yong-de-git-fen-zhi/473)
 
 [Whatʼs a Fast Forward Merge?](https://sandofsky.com/images/fast_forward.pdf)
+
+[GitHub 的 Pull Request 是指什么意思？](https://zhihu.com/question/21682976/answer/79489643)
