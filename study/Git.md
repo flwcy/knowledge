@@ -347,9 +347,14 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 查看远程库信息，使用`git remote`或者`git remote -v`
 
-删除已有的GitHub远程库：`git remote rm origin`
+删除已有的`GitHub`远程库：`git remote rm origin`
 
-将远程仓库名称命名为`github`：`git remote add github git@github.com:flwcy/knowledge.git`
+git给远程库起的默认名称是`origin`，如果有多个远程库，我们需要用不同的名称来标识不同的远程库。
+
+```
+git remote add remote_name git@github.com:flwcy/knowledge.git
+git push remote_name branch_name
+```
 
 从本地推送分支，使用`git push origin branch-name`
 
@@ -359,9 +364,9 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 - `dev`分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
 
-- bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+- `bug`分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个`bug`；
 
-- feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+- `feature`分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 
 在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`，本地和远程分支的名称最好一致；
 
