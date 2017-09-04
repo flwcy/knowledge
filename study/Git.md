@@ -37,6 +37,8 @@ git config --global user.email "email@example.com"
 `git diff`查看difference
 
 `git diff HEAD -- readme.txt`命令可以查看工作区和版本库里面最新版本的区别
+`git log --pretty=oneline`显示单行提交日志
+
 
 #### 版本回退
 
