@@ -403,6 +403,8 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 ![fork_project](../img/other/github_fork_project.png)
 
+自己拥有`fork`后的仓库的读写权限；
+
 ![fork_project](../img/other/github_fork_from.png)
 
 在你自己的机器上 git clone 这个仓库，切换分支（也可以在 master 下），做一些修改。
@@ -416,7 +418,15 @@ git commit -m "test-pr"
 git push origin test-pr
 ```
 
+完成修改之后，回到 test-pr 分支，点击旁边绿色的 Compare & pull request 按钮。
 
+![fork_project](../img/other/github_compare_pull_request.png)
+
+添加一些注释信息，确认提交。
+
+![fork_project](../img/other/github_create_pull_request.png)
+
+ 仓库作者看到，你提的确实是对的，就会 merge，合并到他的项目中。
 
 ### Read More
 
