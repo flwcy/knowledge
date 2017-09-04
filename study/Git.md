@@ -374,6 +374,22 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 标签（`tag`）可以针对某一时间点的版本做标记，常用于版本发布。Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（分支可以移动，标签不能移动）。
 
+#### 创建标签
+
+- 命令`git tag <name> `用于新建一个标签，默认标签是打在最新提交的`commit`上的（也就是`HEAD`），也可以指定一个`commit_id`；
+- 创建带有说明的标签，用`-a`指定标签名，`-m`指定说明文字：`git tag -a <tagname> -m "标签说明" commit_id` 
+- 命令`git tag`可以查看所有标签。
+- 用命令`git show <tagname>`可以看到说明文字
+
+> `git tag -s <tagname> -m "标签说明"`可以用PGP签名标签；签名采用PGP签名，因此，必须首先安装gpg（GnuPG），如果没有找到gpg，或者没有gpg密钥对，就会报错
+
+#### 操作标签
+
+- 命令`git push origin <tagname>`可以推送一个本地标签；
+- 命令`git push origin --tags`可以推送全部未推送过的本地标签；
+- 命令`git tag -d <tagname>`可以删除一个本地标签；
+- 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签。
+
 ### Read More
 
 [Git简明指南(中文版)](http://rogerdudler.github.io/git-guide/index.zh.html)
