@@ -392,12 +392,12 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 ### 使用Github
 
-通过GitHub，既可以让别人参与你的开源项目，也可以参与别人的开源项目。当你想更正别人仓库里的错误时，要走一个流程：
+通过`GitHub`，既可以让别人参与你的开源项目，也可以参与别人的开源项目。当你想更正别人仓库里的错误时，要走一个流程：
 
 1. 首先`Fork`别人的仓库，相当于拷贝一份
-2. 从自己的账号下`clone`到本地分支，做一些 bug fix
-3. 发起 pull request 给原仓库，让他看到你修改的 bug
-4. 原仓库 review 这个 bug，如果是正确的话，就会 merge 到他自己的项目中
+2. 从自己的账号下`clone`到本地分支，做一些`bug fix`
+3. 发起`pull request` 给原仓库，让他看到你修改的`bug`
+4. 原仓库`review`这个`bug`，如果是正确的话，就会`merge`到他自己的项目中
 
 先点击`fork`仓库，项目现在就在你的账号下了
 
@@ -407,7 +407,7 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 ![fork_project](../img/other/github_fork_from.png)
 
-在你自己的机器上 git clone 这个仓库，切换分支（也可以在 master 下），做一些修改。
+在你自己的机器上`git clone`这个仓库，切换分支（也可以在`master`下），做一些修改。
 
 ```
 git clone https://github.com/flwcy/knowledge.git
@@ -418,7 +418,7 @@ git commit -m "test-pr"
 git push origin test-pr
 ```
 
-完成修改之后，回到 test-pr 分支，点击旁边绿色的 Compare & pull request 按钮。
+完成修改之后，回到`test-pr`分支，点击旁边绿色的`Compare & pull request`按钮。
 
 ![fork_project](../img/other/github_compare_pull_request.png)
 
