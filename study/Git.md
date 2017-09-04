@@ -376,7 +376,7 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 #### 创建标签
 
-- 命令`git tag <name> `用于新建一个标签，默认标签是打在最新提交的`commit`上的（也就是`HEAD`），也可以指定一个`commit_id`；
+- 命令`git tag <name> `用于新建一个标签，默认标签是打在最新提交的`commit`上的（也就是`HEAD`上），也可以指定一个`commit_id`；
 - 创建带有说明的标签，用`-a`指定标签名，`-m`指定说明文字：`git tag -a <tagname> -m "标签说明" commit_id` 
 - 命令`git tag`可以查看所有标签。
 - 用命令`git show <tagname>`可以看到说明文字
