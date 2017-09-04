@@ -347,6 +347,10 @@ Feature 分支一般只在开发者的 repo 里，而不是在 origin 上。
 
 查看远程库信息，使用`git remote`或者`git remote -v`
 
+删除已有的GitHub远程库：`git remote rm origin`
+
+将远程仓库名称命名为`github`：`git remote add github git@github.com:flwcy/knowledge.git`
+
 从本地推送分支，使用`git push origin branch-name`
 
 但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
