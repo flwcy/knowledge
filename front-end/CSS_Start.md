@@ -79,6 +79,12 @@ selector {property:value}
 
 在{}之前的部分就是“选择器”，“选择器”指明了{}中的“样式”的作用对象，也就是“样式”作用于网页中的哪些元素。
 
-**标签选择器：** 标签选择器其实就是html代码中的标签。
+**标签选择器（tag selector）：** 标签选择器其实就是html代码中的标签。
 
-**类选择器：**
+**类选择器（Class selector）：** 通过设置元素的[`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#attr-class)属性，可以为元素指定类名。类名由开发者自己指定。 文档中的多个元素可以拥有同一个类名，在写样式表时，类选择器是以英文句号（.）开头的。具体语法如下：
+
+```
+.类选器名称{css样式代码;}
+```
+
+**ID选择器（ID selector）：** 通过设置元素的[`id`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#id)属性为该元素制定ID。ID名由开发者指定。每个ID在文档中必须是唯一的。在写样式表时，ID选择器是以#开头的。
