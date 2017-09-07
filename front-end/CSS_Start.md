@@ -55,15 +55,15 @@ p{
 
 在html中，引用CSS样式有3中方式：
 
-**外部样式表：**把CSS代码写一个单独的外部文件中，这个css样式文件以“`.css`”为扩展名，在`<head>`内使用`<link>`标签将CSS样式文件链接到HTML文件内，如下面代码：
+**外部样式表：** 把CSS代码写一个单独的外部文件中，这个css样式文件以“`.css`”为扩展名，在`<head>`内使用`<link>`标签将CSS样式文件链接到HTML文件内，如下面代码：
 
 ```css
 <link href="base.css" rel="stylesheet" type="text/css" />
 ```
 
-**内部样式表：**位于 `<head> `标签内部，把css样式代码写在`<style type="text/css"></style>`标签之间。
+**内部样式表：** 位于 `<head> `标签内部，把css样式代码写在`<style type="text/css"></style>`标签之间。
 
-**内联样式：**把CSS代码直接写在现有的HTML**开始标签**中，并且CSS样式代码要写在style=""双引号中，如果有多条CSS样式代码设置可以写在一起，中间用分号隔开。，如下面代码：
+**内联样式：** 把CSS代码直接写在现有的HTML**开始标签**中，并且CSS样式代码要写在style=""双引号中，如果有多条CSS样式代码设置可以写在一起，中间用分号隔开。，如下面代码：
 
 ```html
 <p style="color:red">这里文字是红色。</p>
@@ -109,7 +109,7 @@ p{font-size:12px;}
 .first span{color:red;}
 ```
 
-**子选择器与后代选择器的区别：** 子选择器仅是指它的直接后代，而后代选择器是作用于所有子后代元素。
+> **子选择器与后代选择器的区别：** 子选择器仅是指它的直接后代，而后代选择器是作用于所有子后代元素。
 
 **通用选择器：** 它使用一个`*`号指定，它的作用是匹配html中所有标签元素。
 
@@ -117,7 +117,7 @@ p{font-size:12px;}
 * {color:red;}
 ```
 
-**伪类选择器：** CSS伪类（[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Pseudo-classes)）是加在选择器后面的用来指定元素状态的关键字。比如，[`:hover`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:hover) 会在鼠标悬停在选中元素上时应用相应的样式。
+**伪类选择器：** CSS伪类（[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Pseudo-classes)）是加在选择器后面的用来指定元素状态的关键字。比如，`:hover`会在鼠标悬停在选中元素上时应用相应的样式。
 
 ```css
 a:hover{color:red;}
