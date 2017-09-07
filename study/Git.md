@@ -371,7 +371,7 @@ git push remote_name branch_name
 
 - `feature`分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 
-在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`，本地和远程分支的名称最好一致；
+使用`git checkout -b branch-name origin/branch-name`在本地创建和远程分支对应的分支，本地和远程分支的名称最好一致；
 
 多人协作的工作模式通常是这样：
 
