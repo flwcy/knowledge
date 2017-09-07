@@ -81,10 +81,51 @@ selector {property:value}
 
 **标签选择器（tag selector）：** 标签选择器其实就是html代码中的标签。
 
-**类选择器（Class selector）：** 通过设置元素的[`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#attr-class)属性，可以为元素指定类名。类名由开发者自己指定。 文档中的多个元素可以拥有同一个类名，在写样式表时，类选择器是以英文句号（.）开头的。具体语法如下：
-
-```
-.类选器名称{css样式代码;}
+```css
+p{font-size:12px;}
 ```
 
-**ID选择器（ID selector）：** 通过设置元素的[`id`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#id)属性为该元素制定ID。ID名由开发者指定。每个ID在文档中必须是唯一的。在写样式表时，ID选择器是以#开头的。
+**类选择器（Class selector）：** 通过设置元素的[`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#attr-class)属性，可以为元素指定类名。类名由开发者自己指定。 文档中的多个元素可以拥有同一个类名，在写样式表时，类选择器是以英文句号（.）开头的。
+
+```css
+.stress{color:red;}/*类前面要加入一个英文圆点*/
+```
+
+**ID选择器（ID selector）：** 通过设置元素的[`id`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#id)属性为该元素制定ID。ID名由开发者指定。**每个ID在文档中必须是唯一的，ID选择器只能在文档中使用一次**。在写样式表时，ID选择器是以#开头的。
+
+```css
+#setGreen{color:green;}
+```
+
+**子选择器：** 即加入大于符号`>`，用于选择指定标签元素的**第一代子元素。**
+
+```css
+.food>li{border:1px solid red;}
+```
+
+**后代选择器：** 即加入空格,用于选择指定标签元素下的**后辈元素。**
+
+```css
+.first span{color:red;}
+```
+
+**子选择器与后代选择器的区别：** 子选择器仅是指它的直接后代，而后代选择器是作用于所有子后代元素。
+
+**通用选择器：** 它使用一个`*`号指定，它的作用是匹配html中所有标签元素。
+
+```css
+* {color:red;}
+```
+
+**伪类选择器：** CSS伪类（[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Pseudo-classes)）是加在选择器后面的用来指定元素状态的关键字。比如，[`:hover`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:hover) 会在鼠标悬停在选中元素上时应用相应的样式。
+
+```css
+a:hover{color:red;}
+```
+
+**选择器分组：** 当你想为html中多个标签元素设置同一个样式时，可以使用分组选择符`,`。
+
+```css
+h1,span{color:red;}
+```
+
