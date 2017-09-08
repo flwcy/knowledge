@@ -50,6 +50,37 @@ HTML(Hyper Text Markup Language)：超文本标记语言
 4. `<!DOCTYPE HTML> `声明文档类型
 
 
+### 理解DOM结构
+
+DOM: Document Object Module, 文档对象模型。我们通过JavaScript操作页面的元素，进行添加、移动、改变或移除的方法和属性, 都是DOM提供的。
+
+#### DOM节点
+
+根据 W3C 的HTML DOM标准，HTML 文档中的所有内容都是节点：
+
+- 整个文档是一个文档节点
+- 每个 HTML 元素是元素节点
+- HTML 元素内的文本是文本节点
+- 每个 HTML 属性是属性节点
+- 注释是注释节点
+
+#### HTML DOM 节点树
+
+HTML文本会被解析为DOM树, 树中的所有节点均可通过 JavaScript 进行访问。所有 HTML 元素（节点）均可被修改，也可以创建或删除节点。
+
+![html_dom_tree.png](../img/html_css_js/html_dom_tree.png)
+
+#### 节点关系
+
+父（parent）、子（child）和同胞（sibling）等术语用于描述这些关系。父节点拥有子节点。同级的子节点被称为同胞（兄弟或姐妹）:
+
+- 在节点树中，顶端节点被称为根（root）
+- 每个节点都有父节点、除了根（它没有父节点）
+- 一个节点可拥有任意数量的子
+- 同胞是拥有相同父节点的节点
+
+![dom_navigate.png](../img/html_css_js/dom_navigate.png)
+
 ### 基本的HTML标签
 
 - HTML标题：HTML标题是通过`<h1>`～`<h6>`等标签进行定义的。
