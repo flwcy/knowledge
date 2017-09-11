@@ -54,7 +54,7 @@ p{
 
 **内部样式表：** 位于 `<head> `标签内部，把css样式代码写在`<style type="text/css"></style>`标签之间。
 
-**内联样式：** 把CSS代码直接写在现有的HTML**开始标签**中，并且CSS样式代码要写在style=""双引号中，如果有多条CSS样式代码设置可以写在一起，中间用分号隔开。，如下面代码：
+**内联样式：** 把CSS代码直接写在现有的HTML**开始标签**中，并且CSS样式代码要写在`style=""`的双引号中，如果有多条CSS样式代码设置可以写在一起，中间用分号隔开。，如下面代码：
 
 ```html
 <p style="color:red">这里文字是红色。</p>
@@ -78,8 +78,6 @@ selector {property:value}
 ```
 
 在{}之前的部分就是“选择器”，“选择器”指明了{}中的“样式”的作用对象，也就是“样式”作用于网页中的哪些元素。
-
-![css_selector_summarize.png](../img/html_css_js/css_selector_summarize.png)
 
 #### 基本选择器
 
