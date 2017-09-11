@@ -107,7 +107,7 @@ p{font-size:12px;}
 * {color:red;}
 ```
 
-**属性选择器：** 通过已经存在的属性名或属性值匹配元素。
+**[属性选择器](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Attribute_selectors)：** 通过已经存在的属性名或属性值匹配元素。
 
 ```css
 /* <a> elements with a title attribute */
