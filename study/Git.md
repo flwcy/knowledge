@@ -40,6 +40,8 @@ git config --global user.email "email@example.com"
 
 `git log --pretty=oneline`显示单行提交日志
 
+`git mv file_from file_to`文件重命名
+
 
 #### 版本回退
 
