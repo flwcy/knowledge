@@ -1,4 +1,4 @@
-### HTML复习
+#### HTML复习
 
 1. **HTML** stands for **H**yper**T**ext **M**arkup **L**anguage and is used to create the structure and content of a webpage.
 2. Most HTML elements contain opening and closing tags with raw text or other HTML tags between them.
@@ -13,6 +13,18 @@
 11. You can add a title to your web page by using the `<title>` element, inside of the head.
 12. A webpage's title appears in a browser's tab.
 13. Code for visible HTML content is placed inside of the `<body>` element.
+
+#### CSS选择器
+
+- CSS can change the look of HTML elements. In order to do this, CSS must select HTML elements, then apply styles to them.
+- CSS can select HTML elements by tag, class, or ID.
+- Multiple CSS classes can be applied to one HTML element.
+- Classes can be reusable, while IDs can only be used once.
+- IDs are more specific than classes, and classes are more specific than tags. That means IDs will override any styles from a class, and classes will override any styles from a tag selector.
+- Multiple selectors can be chained together to select an element. This raises the specificity, but can be necessary.
+- Nested elements can be selected by separating selectors with a space.
+- The `!important` flag will override any style, however it should almost never be used, as it is extremely difficult to override.
+- Multiple unrelated selectors can receive the same styles by separating the selector names with commas.
 
 #### 文字排版
 
@@ -50,5 +62,11 @@ p {text-decoration: underline;}
 
 ```css
 p{text-decoration:line-through;}
+```
+
+`text-align`文本对齐方式
+
+```css
+p{text-align:center}
 ```
 
