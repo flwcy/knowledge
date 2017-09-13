@@ -70,3 +70,31 @@ p{text-decoration:line-through;}
 p{text-align:center}
 ```
 
+`color` 颜色
+
+- Foreground color:Foreground color is the color that an element appears in. 
+- Background color
+
+In CSS, these two design aspects can be styled with the following two properties:
+
+- `color`: this property styles an element's foreground color
+- `background-color`: this property styles an element's background color
+
+`opacity`透明度，从0到1
+
+```css
+.overlay {
+  opacity: 0.5;
+}
+```
+
+`background-image`背景图片
+
+```css
+.main-banner {
+  background-image: url("https://www.example.com/image.jpg");
+}
+```
+
+
+
