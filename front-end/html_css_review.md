@@ -26,50 +26,6 @@
 - The `!important` flag will override any style, however it should almost never be used, as it is extremely difficult to override.
 - Multiple unrelated selectors can receive the same styles by separating the selector names with commas.
 
-#### 文字排版
-
-`font-family`字体
-
-```css
-p{font-family:"Microsoft Yahei"}
-```
-
-`font-size`字号`color`颜色
-
-```css
-p{font-size:20px;color:red;}
-```
-
-`font-weight`设置文字的粗细
-
-```css
-p{font-weight:bold;}
-```
-
-`font-style`设置斜体文字
-
-```css
-p{{font-style:italic;}
-```
-
-`text-decoration:underline`下划线
-
-```css
-p {text-decoration: underline;}
-```
-
-`text-decoration:line-through`删除线
-
-```css
-p{text-decoration:line-through;}
-```
-
-`text-align`文本对齐方式
-
-```css
-p{text-align:center}
-```
-
 `color` 颜色
 
 - Foreground color:Foreground color is the color that an element appears in. 
@@ -80,6 +36,12 @@ In CSS, these two design aspects can be styled with the following two properties
 - `color`: this property styles an element's foreground color
 - `background-color`: this property styles an element's background color
 
+```css
+p{
+  color: red;
+  background-color: blue;
+}
+```
 `opacity`透明度，从0到1
 
 ```css
@@ -95,6 +57,3 @@ In CSS, these two design aspects can be styled with the following two properties
   background-image: url("https://www.example.com/image.jpg");
 }
 ```
-
-
-
