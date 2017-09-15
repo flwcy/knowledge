@@ -67,3 +67,13 @@ p{
 - Mathematical assignment operators make it easy to calculate a new value and assign it to the same variable.
 - The `+` operator is used to interpolate (combine) multiple strings.
 - In JavaScript ES6, backticks (`) and `${}` are used to interpolate values into a string.
+
+All variables that have been created and set are truthy (and will evaluate to true if they are the condition of a control flow statement) unless they contain one of the seven values listed below:
+
+- `false`
+- `0` and `-0`
+- `""` and `''` (empty strings)
+- `null`
+- `undefined`
+- `NaN` (Not a Number)
+- `document.all` (something you will rarely encounter)
