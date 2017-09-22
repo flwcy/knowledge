@@ -58,6 +58,17 @@ p{
 }
 ```
 
+#### Box Model
+
+![box_model.png](../img/html_css_js/box_model.png)
+
+ The model includes the content area's size (*width* and *height*) and the element's *padding*, *border*, and *margin*. The properties include:
+
+1. Width and height — specifies the width and height of the content area.
+2. Padding — specifies the amount of space between the content area and the border.
+3. Border — specifies the thickness and style of the border surrounding the content area and padding.
+4. Margin — specifies the amount of space between the border and the outside edge of the element.
+
 #### JavaScript复习
 
 - Variables hold reusable data in a program.

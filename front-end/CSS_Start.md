@@ -25,20 +25,20 @@ selector {property: value}
 ```html
 <!DOCTYPE HTML>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>认识CSS样式</title>
-<style type="text/css">
-p{
-   font-size:20px;/*设置文字字号*/
-   color:red;/*设置文字颜色*/
-   font-weight:bold;/*设置字体加粗*/
-}
-</style>
-</head>
-<body>
-    <p>This is my first CSS example</p>
-</body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>认识CSS样式</title>
+    <style type="text/css">
+      p{
+         font-size:20px;/*设置文字字号*/
+         color:red;/*设置文字颜色*/
+         font-weight:bold;/*设置字体加粗*/
+      }
+    </style>
+  </head>
+  <body>
+      <p>This is my first CSS example</p>
+  </body>
 </html>
 ```
 
