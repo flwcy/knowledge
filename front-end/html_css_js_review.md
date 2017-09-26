@@ -69,6 +69,93 @@ p{
 3. Border — specifies the thickness and style of the border surrounding the content area and padding.
 4. Margin — specifies the amount of space between the border and the outside edge of the element.
 
+An element's content has two dimensions: a height and a width. 
+
+```css
+p{
+  width:30px;
+  height:30px;
+}
+```
+
+**Border**
+
+A *border* is a line that surrounds an element, like a frame around a painting. Borders can be set with a specific `width`, `style`, and `color`.
+
+1. `width` — The thickness of the border. A border's thickness can be set in pixels or with one of the following keywords: `thin`, `medium`, or `thick`.
+2. `style` — The design of the border. Web browsers can render any of [10 different styles](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values). Some of these styles include: `none`, `dotted`, and `solid`.
+3. `color` — The color of the border. Web browsers can render colors using a few different formats, including [140 built-in color keywords](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
+
+```css
+p {
+  border: 3px solid coral;
+}
+```
+
+The default border is `medium none color`, where `color` is the current color of the element.
+
+You can modify the corners of an element's border box with the `border-radius` property.
+
+```css
+div.container {
+  height: 60px;
+  width: 60px;
+  border: 3px solid rgb(22, 77, 100);
+  border-radius: 100%;
+}
+```
+
+**padding**
+
+The space between the contents of a box and the borders of a box is known as *padding*. 
+
+1. `padding-top`
+2. `padding-right`
+3. `padding-bottom`
+4. `padding-left`
+
+```css
+p.content-header {
+  border: 3px solid grey;
+  padding: 6px 11px 4px 9px;
+}
+```
+
+In the example above, the four values `6px 11px 4px 9px` correspond to the amount of padding in a clockwise rotation.
+
+```css
+p.content-header {
+  padding: 5px 10px;
+}
+```
+
+The first value, `5px`, sets the padding value for the top and bottom sides of the content. The second value, `10px`, sets the padding value for the left and right sides of the content.
+
+**margin**
+
+Margin refers to the space directly outside of the box. 
+
+1. `margin-top`
+2. `margin-right`
+3. `margin-bottom`
+4. `margin-left`
+
+```css
+p {
+  margin: 6px 10px 5px 12px;
+}
+```
+
+In the example above, the four values `6px 10px 5px 12px` refer to the amount of margin around the box in a clockwise rotation.
+
+```css
+p {
+  margin: 6px 12px;
+}
+```
+
+The first value, `6px`, sets a margin value for the top and bottom of the box. The second value, `12px`, sets a margin value for the left and right sides of the box.
+
 #### JavaScript复习
 
 - Variables hold reusable data in a program.
