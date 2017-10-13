@@ -6,15 +6,15 @@
 
 **常用的块状元素有：**
 
-<div>、<p>、<h1>...<h6>、<ol>、<ul>、<dl>、<table>、<address>、<blockquote> 、<form>
+> <div>、<p>、<h1>...<h6>、<ol>、<ul>、<dl>、<table>、<address>、<blockquote> 、<form>
 
 **常用的内联元素有：**
 
-<a>、<span>、<br>、<i>、<em>、<strong>、<label>、<q>、<var>、<cite>、<code>
+> <a>、<span>、<br>、<i>、<em>、<strong>、<label>、<q>、<var>、<cite>、<code>
 
 **常用的内联块状元素有：**
 
-<img>、<input>
+> <img>、<input>
 
 #### 块级元素
 
