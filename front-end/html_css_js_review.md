@@ -156,6 +156,21 @@ p {
 
 The first value, `6px`, sets a margin value for the top and bottom of the box. The second value, `12px`, sets a margin value for the left and right sides of the box.
 
+```css
+div.headline {
+  width: 400px;
+  margin: 0 auto;
+}
+```
+
+The `auto` value instructs the browser to adjust the left and right margins until the element is centered within its containing element.
+
+In order to center an element, a width must be set for that element. Otherwise, the width of the div will be automatically set to the full width of its containing element, like the `<body>`, for example. It's not possible to center an element that takes up the full width of the page.
+
+**Margin Collapse:**One additional difference is that top and bottom margins, also called vertical margins, *collapse*, while top and bottom padding does not.
+
+Horizontal margins (left and right), like padding, are always displayed and added together.
+
 #### JavaScript复习
 
 - Variables hold reusable data in a program.
