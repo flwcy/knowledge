@@ -10,7 +10,7 @@
 
 打开`cd learngit`
 
-然后执行 `git init`创建新的 git 仓库：
+然后执行`git init`创建新的 git 仓库：
 
 ```
 mkdir learngit
@@ -193,7 +193,7 @@ Git创建一个分支是很快的，因为除了增加一个`dev`指针，改变
 - **If Master has diverged since the feature branch was created,then merging the feature branch into master will create a merge commit. This is a `typical merge`.**
 - **If Master has not diverged, instead of creating a new commit, git will just point master to the latest commit of the feature branch.This is a `“fast forward.”`**
 
-![git_branch_08](../img/git/git_merge_mode.png)
+![git_merge_mode](../img/git/git_merge_mode.png)
 
 > 当你试图合并两个分支时，如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候，只会简单的将指针向前推进（指针右移），因为这种情况下的合并操作没有需要解决的分歧（diverged）——这就叫做 “快进（fast-forward）”。不过这种情况如果删除分支，则会丢失分支信息，因为在这个过程中没有创建`commit`对象。
 >

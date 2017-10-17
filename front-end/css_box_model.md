@@ -111,7 +111,7 @@ border-color:#888;//前面的井号不要忘掉。
 
 3、`border-width`（边框宽度）中的宽度也可以设置为：
 
-thin | medium | thick（但不是很常用），最常还是用象素（px）。
+thin | medium | thick（但不是很常用），最常还是用像素（px）。
 
 #### width and height
 
@@ -209,3 +209,12 @@ div{ margin:10px 20px;}
 ```
 
 总结一下：`padding`和`margin`的区别，`padding`在边框内，`margin`在边框外。
+
+**外边距合并（Margin Collapse）：**外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。**合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者**。
+
+![](../img/html_css_js/css_margin_collapsing_example_1.png)
+
+>  **注意：**叠加的只是垂直外边距，水平外边距不叠加。对于水平相邻的元素，它们
+>
+>  的水平间距是相邻外边距之和。
+
