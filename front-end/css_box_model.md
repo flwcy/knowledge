@@ -322,7 +322,9 @@ div{
 
 ##### 层模型——绝对定位
 
-如果想为元素设置层模型中的绝对定位，需要设置**position:absolute**(表示绝对定位)，这条语句的作用将元素从文档流中拖出来，然后使用left、right、top、bottom属性`相对于其最接近的一个具有定位属性的父包含块`进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于**浏览器窗口**。
+如果想为元素设置层模型中的绝对定位，需要设置**position:absolute**(表示绝对定位)，这条语句的作用将元素脱离文档流，然后使用left、right、top、bottom属性`相对于最近的“positioned”祖先元素`进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于**浏览器窗口**。
+
+> 记住一个“positioned”元素是指 position 值不是 `static` 的元素。
 
 如下面代码可以实现div元素相对于浏览器窗口向右移动100px，向下移动50px。
 
@@ -340,67 +342,31 @@ div{
 
 效果如下：
 
-![position_absolute.jpg](../img/html_css_js/position_absolute.jpg)
+![position_absolute.jpg](../img/html_css_js/position_absolute.png)
 
 ##### 层模型——相对定位
 
-如果想为元素设置层模型中的相对定位，需要设置`position:relative`（表示相对定位），它通过left、right、top、bottom属性确定元素在**正常文档流中**的偏移位置。相对定位完成的过程是首先按static(float)方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于**以前的位置移动，**移动的方向和幅度由left、right、top、bottom属性确定，偏移前的位置保留不动。
+如果想为元素设置层模型中的相对定位，需要设置`position:relative`（表示相对定位），就是元素自己本身，用进行定位后，元素会相对于**以前的位置移动，**但由于`position:relative`这个属性并没有脱离文档流的，所以元素本身所占的位置会保留。
 
-如下代码实现相对于以前位置向下移动50px，向右移动100px;
+如果将 top 设置为20px，那么框将在原位置顶部下面 20px的地方。如果left设置为30px，那么会在元素左边创建30px的空间，也就是将元素向右移动。
 
 ```css
-#div1{
-    width:200px;
-    height:200px;
-    border:2px red solid;
-    position:relative;
-    left:100px;
-    top:50px;
+#box_relative {
+  position: relative;
+  left: 30px;
+  top: 20px;
 }
-
-<div id="div1"></div>
 ```
 
 效果图：
 
-![position_relative.jpg](../img/html_css_js/position_relative_01.jpg)
+![css_positioning_relative_example.png](../img/html_css_js/css_positioning_relative_example.png)
 
-什么叫做“`偏移前的位置保留不动`”呢？查看如下代码的效果：
-
-```html
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>relative样式</title>
-<style type="text/css">
-#div1{
-    width:200px;
-    height:200px;
-	border:2px red solid;
-	position:relative;
-    left:100px;
-    top:50px;
-}
-
-</style>
-</head>
-<body>
-	<div id="div1"></div>
-	<span>偏移前的位置还保留不动，覆盖不了前面的div没有偏移前的位置</span>
-</body>
-</html>
-```
-
-效果图：
-
-![position_relative.jpg](../img/html_css_js/position_relative_02.jpg)
-
-从效果图中可以明显的看出，虽然div元素相对于以前的位置产生了偏移，但是div元素以前的位置还是保留着，所以后面的span元素是显示在了div元素以前位置的后面。
+> 注意，在使用相对定位时，无论是否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其它框。
 
 ##### 层模型——固定定位
 
-`fixed`：表示固定定位，与absolute定位类型类似，但它的相对移动的坐标是视图（**屏幕内的网页窗口**）本身。由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，除非你在屏幕中移动浏览器窗口的屏幕位置，或改变浏览器窗口的显示大小，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响，这与background-attachment:fixed;属性功能相同。以下代码可以实现相对于**浏览器视图**向右移动100px，向下移动50px。并且拖动滚动条时位置固定不变。
+`fixed`：表示固定定位，一个固定定位（position属性的值为fixed）元素会相对于视图来定位，这意味着即便页面滚动，它还是会停留在相同的位置。和 `relative` 一样， `top` 、 `right` 、 `bottom` 和 `left` 属性都可用。以下代码可以实现相对于**浏览器视图**向右移动100px，向下移动50px。并且拖动滚动条时位置固定不变。
 
 ```css
 #div1{
