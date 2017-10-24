@@ -171,6 +171,83 @@ In order to center an element, a width must be set for that element. Otherwise, 
 
 Horizontal margins (left and right), like padding, are always displayed and added together.
 
+**Minimum and Maximum Height and Width**
+
+1. `min-width` — this property ensures a minimum width of an element's box.
+2. `max-width` — this property ensures a maximum width of an element's box.
+
+```css
+p {
+  min-width: 300px;
+  max-width: 600px;
+}
+```
+
+1. `min-height` — this property ensures a minimum height for an element's box.
+2. `max-height` — this property ensures a maximum height of an element's box.
+
+```css
+p {
+  min-height: 150px;
+  max-height: 300px;
+}
+```
+
+**Overflow**
+
+The `overflow` property controls what happens to content that spills, or overflows, outside its box. It can be set to one of the following values:
+
+- `hidden` - when set to this value, any content that overflows will be hidden from view.
+- `scroll` - when set to this value, a scrollbar will be added to the element's box so that the rest of the content can be viewed by scrolling.
+- `visible` - when set to this value, the overflow content will be displayed outside of the containing element. Note, this is the default value.
+
+```css
+p {
+  overflow: scroll; 
+}
+```
+
+**Resetting Defaults**
+
+Many developers choose to reset these default values so that they can truly work with a clean slate.
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+}
+```
+
+**Visibility**
+
+Elements can be hidden from view with the `visibility` property.
+
+The `visibility` property can be set to one of the following values:
+
+1. `hidden` — hides an element.
+2. `visible` — displays an element.
+
+```css
+.future {
+  visibility: hidden;
+}
+```
+
+**Note:** What's the difference between `display: none` and `visibility: hidden`? An element with `display: none` will be completely removed from the web page. An element with `visibility: hidden`, however, will not be visible on the web page, but the space reserved for it will.
+
+**Review**
+
+1. The box model comprises a set of properties used to create space around and between HTML elements.
+2. The height and width of a content area can be set in pixels or percentage.
+3. Borders surround the content area and padding of an element. The color, style, and thickness of a border can be set with CSS properties.
+4. Padding is the space between the content area and the border. It can be set in pixels or percent.
+5. Margin is the amount of spacing outside of an element's border.
+6. Horizontal margins add, so the total space between the borders of adjacent elements is equal to the sum of the right margin of one element and the left margin of the adjacent element.
+7. Vertical margins collapse, so the space between vertically adjacent elements is equal to the larger margin.
+8. `margin: 0 auto` horizontally centers an element inside of its parent content area, if it has a width.
+9. The `overflow` property can be set to `display`, `hide`, or `scroll`, and dictates how HTML will render content that overflows its parent's content area.
+10. The `visibility` property can hide or show elements.
+
 #### JavaScript复习
 
 - Variables hold reusable data in a program.
