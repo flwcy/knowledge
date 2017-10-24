@@ -167,7 +167,9 @@ The `auto` value instructs the browser to adjust the left and right margins unti
 
 In order to center an element, a width must be set for that element. Otherwise, the width of the div will be automatically set to the full width of its containing element, like the `<body>`, for example. It's not possible to center an element that takes up the full width of the page.
 
-**Margin Collapse:**One additional difference is that top and bottom margins, also called vertical margins, *collapse*, while top and bottom padding does not.
+**Margin Collapse**
+
+One additional difference is that top and bottom margins, also called vertical margins, *collapse*, while top and bottom padding does not.
 
 Horizontal margins (left and right), like padding, are always displayed and added together.
 
