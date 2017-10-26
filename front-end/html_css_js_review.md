@@ -250,6 +250,18 @@ The `visibility` property can be set to one of the following values:
 9. The `overflow` property can be set to `display`, `hide`, or `scroll`, and dictates how HTML will render content that overflows its parent's content area.
 10. The `visibility` property can hide or show elements.
 
+**Box Model: Content-Box**
+
+![content_box.png](../img/html_css_js/content_box.png)
+
+**Box Model: Border-Box**
+
+1. n the default box model, box dimensions are affected by border thickness and padding.
+2. The `box-sizing` property controls the box model used by the browser.
+3. The default value of the `box-sizing` property is `content-box`.
+4. The value for the new box model is `border-box`.
+5. The `border-box` model is not affected by border thickness or padding.
+
 #### JavaScript复习
 
 - Variables hold reusable data in a program.
