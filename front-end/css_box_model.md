@@ -290,28 +290,22 @@ CSS包含3种基本的布局模型，用英文概括为：Flow、Layer 和 Float
 
 #### 浮动模型(Float）
 
-CSS 设计 float 属性的主要目的，是为了实现文本绕排图片的效果。
+块状元素这么霸道都是独占一行，如果现在我们想让两个块状元素并排显示，怎么办呢？不要着急，设置元素浮动就可以实现这一愿望。
+
+任何元素在默认情况下是不能浮动的，但可以用 CSS 定义为浮动，如 div、p、table、img 等元素都可以被定义为浮动。如下代码可以实现两个 div 元素一行显示。
 
 ```css
-/*为简明起见，省略了字体声明*/
-p {margin:0; border:1px solid red;}
-/*外边距防止图片紧挨文本*/
-img {float:left; margin:0 4px 4px 0;}
-<img …… />
-<p>…the paragraph text…</p>
+div{
+    width:200px;
+    height:200px;
+    border:2px red solid;
+    float:left;
+}
+<div id="div1"></div>
+<div id="div2"></div>
 ```
 
-![css_float_01](../img/html_css_js/css_float_01.jpg)
-
-> 浮动非图片元素时，必须给它设定宽度，否则后果难以预料。图片无所谓，因为它本身有默认的宽度。 
-
-浮动元素脱离了文档流，浮动的块虽然脱离的正常的文档流（normal flow），但是还会占有正常文档流的文本空间。
-
-float的破坏性是指：设置了float的元素会脱离文档流，会导致父元素塌陷、元素重叠等现象。
-
-![css_float_02](../img/html_css_js/css_float_02.png)
-
-![css_float_03](../img/html_css_js/css_float_03.jpg)
+![css_float_05](../img/html_css_js/css_float_05.jpg)
 
 #### 层模型（Layer）
 
