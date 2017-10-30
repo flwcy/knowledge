@@ -40,7 +40,7 @@ img {float:left; margin:0 4px 4px 0;}
 
 如上图，普通的div如果没有设置宽度，它会撑满整个屏幕。而如果给div增加float:left之后，它突然变得紧凑了，宽度发生了变化，把内容“Phone”包裹了——这就是包裹性。**div设置了float之后，其宽度会自动调整为包裹住内容宽度，而不是撑满整个父容器。**
 
-#### 围住浮动元素的三种方法
+#### 清浮动：父级元素
 
 ```html
 <section>
@@ -69,3 +69,50 @@ footer {border:1px solid red; clear:left;}
 
 浮动 section 以后，不管其子元素是否浮动，它都会紧紧地包围（也称收缩包裹）住它的子元素。因此，需要用 `width:100%`再让section与浏览器容器同宽。另外，由于section现在也浮动了，所以 footer 会努力往上挤到它旁边去。为了强制 footer依然呆在 section 下方，要给它应用`clear:left`。被清除的元素不会被提升到浮动元
 素的旁边。
+
+**方法三：添加非浮动的清除元素**
+
+第三种强制父元素包含其浮动子元素的方法，就是给父元素的最后添加一个非浮动的子元素，然后清除该子元素。
+
+这样的方式有两种：
+
+第一种方式不太理想，也就是简单地在 HTML 标记中添加一个子元素，并给它应用clear属性。
+
+```css
+<section>
+<img src="images/rubber_duck.jpg">
+<p>It's fun to float.</p>
+<div class="clear_me"></div>
+</section>
+<footer> Here is the footer element…</footer>
+
+section {border:1px solid blue;}
+img {float:left;}
+.clear_me {clear:left;}
+footer {border:1px solid red;}
+```
+
+第二种方式给父级section元素添加一个类clearfix
+
+```css
+<section class="clearfix">
+<img src="images/rubber_duck.jpg">
+<p>It's fun to float.</p>
+</section>
+<footer> Here is the footer element…</footer>
+
+.clearfix:after {
+content:".";
+display:block;
+height:0;
+visibility:hidden;
+clear:both;
+}
+```
+
+> clear 属性规定元素的哪一侧不允许其他浮动元素。
+>
+> 对于CSS的清除浮动(clear)，一定要牢记：这个规则只能影响使用清除的元素本身，不能影响其他元素。
+
+#### 没有父元素时如何清除
+
