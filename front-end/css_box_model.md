@@ -54,9 +54,9 @@ a{display:block;}
 
 3、内联元素的宽度则是根据其自身的内容或子元素来决定其宽度，不可改变。
 
-#### 内联块状元素
+#### 内联块状元素（inline-block）
 
-**内联块状元素（inline-block）**就是同时具备内联元素、块状元素的特点，代码`display:inline-block`就是将元素设置为内联块状元素。(css2.1新增)，<img>、<input>标签就是这种内联块状标签。
+**内联块状元素**就是同时具备内联元素、块状元素的特点，代码`display:inline-block`就是将元素设置为内联块状元素。(css2.1新增)，<img>、<input>标签就是这种内联块状标签。
 
 ```html
 <!DOCTYPE HTML>
