@@ -116,3 +116,53 @@ clear:both;
 
 #### 没有父元素时如何清除
 
+```html
+    <!-- 无父元素时 -->
+    <section id="noParent">
+        <img src="conley.jpg" />
+        <p>
+            迈克·康利（Mike Conley），男，1987年10月11日出生于美国印第安纳州印第安纳波利斯（Indianapolis,Indiana），美国职业篮球运动员，司职控球后卫，效力于NBA孟菲斯灰熊队。
+        </p>
+        <img src="paul.jpg" />
+        <p>
+            克里斯·保罗（Chris Paul），美国职业篮球运动员，司职控球后卫，效力于NBA休斯顿火箭队。
+        </p>
+        <img src="irving.jpg" />
+        <p>
+            凯里·欧文（Kyrie Irving），1992年3月23日出生于澳大利亚墨尔本，拥有美国/澳大利亚双重国籍，职业篮球运动员，司职控球后卫，效力于NBA波士顿凯尔特人队。
+        </p>
+    </section>
+```
+
+```css
+#noParent{
+    border:1px solid red;
+    width:300px;
+}
+#noParent img{
+    float:left;
+    margin:0 4px 4px 0;
+}
+#noParent p{
+    margin: 0 0 5px 0;
+}
+```
+
+
+
+![css_float_06.png](../img/html_css_js/css_float_06.png)
+
+由于第二段文字下方有空间，所以第三张图片及说明文字会上浮到第二张图片右侧，这不是我们想要的结果。
+
+我们照样可以使用`clearfix` 规则，像这样给每个段落都加上`clearfix`类。
+
+```css
+.clearfix:after {
+content:".";
+display:block;
+height:0;
+visibility:hidden;
+clear:both;
+}
+```
+
