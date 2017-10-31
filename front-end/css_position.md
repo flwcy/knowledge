@@ -1,4 +1,4 @@
-### 浮动
+### position
 
 CSS 布局的核心是`position`属性，对元素盒子应用这个属性，可以相对于它在常规文档流中的位置重新定位。`position`属性有 4 个值：`static`、 `relative`、 `absolute`、`fixed`，默认值为`static`。
 
@@ -39,9 +39,9 @@ CSS 布局的核心是`position`属性，对元素盒子应用这个属性，可
 
 #### 绝对定位
 
-如果想为元素设置层模型中的绝对定位，需要设置**position:absolute**(表示绝对定位)，这条语句的作用将元素脱离文档流，然后使用left、right、top、bottom属性`相对于最近的“positioned”祖先元素`进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于**浏览器窗口**。
+如果想为元素设置层模型中的绝对定位，需要设置**position:absolute**(表示绝对定位)，绝对定位的元素完全脱离了常规文档流，然后使用left、right、top、bottom属性`相对于最近的“positioned”祖先元素`进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于**浏览器窗口**。
 
-> 记住一个“positioned”元素是指 position 值不是 `static` 的元素。
+> 记住一个“positioned”元素是指position值不是 `static` 的元素。
 
 这里有一个简单的例子：
 
@@ -64,3 +64,19 @@ CSS 布局的核心是`position`属性，对元素盒子应用这个属性，可
 
 ![position_absolute.jpg](../img/html_css_js/position_absolute.png)
 
+#### 固定定位
+
+`fixed`：表示固定定位，固定定位元素的定位上下文是视图本身（浏览器窗口或手持设备的屏幕），因此它不会随页面滚动而移动。和 `relative` 一样， `top` 、 `right` 、 `bottom` 和 `left` 属性都可用。以下代码可以实现相对于**浏览器视图**向右移动100px，向下移动50px。并且拖动滚动条时位置固定不变。
+
+```css
+#div1{
+    width:200px;
+    height:200px;
+    border:2px red solid;
+    position:fixed;
+    left:100px;
+    top:50px;
+}
+<p>文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本。</p>
+....
+```
