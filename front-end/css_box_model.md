@@ -237,7 +237,7 @@ div{ margin:10px 20px;}
 
 总结一下：`padding`和`margin`的区别，`padding`在边框内，`margin`在边框外。
 
-**外边距合并（Margin Collapse）：**外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。**合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者**。
+**外边距合并（Margin Collapse）**：外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。**合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者**。
 
 ![](../img/html_css_js/css_margin_collapsing_example_1.png)
 
