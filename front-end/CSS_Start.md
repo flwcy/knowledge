@@ -296,6 +296,36 @@ CSS的某些样式是具有继承性的，那么什么是继承呢？继承就�
 
 > 注意：!important要写在分号的前面;
 
+### 背景
+
+CSS颜色分为前景色和背景色，前景色会影响元素的内容和边框。当然，有一个前提条件，就是在使用border设定边框的样式和宽度，而没有设定边框颜色。在CSS中，可以使用以下两个属性来定义前景色和背景色：
+
+- `color`: this property styles an element's foreground color
+- `background-color`: this property styles an element's background color
+
+```css
+p{
+  color: red;
+  background-color: blue;
+}
+```
+
+`opacity`透明度，从0到1
+
+```css
+.overlay {
+  opacity: 0.5;
+}
+```
+
+`background-image`背景图片
+
+```css
+.main-banner {
+  background-image: url("https://www.example.com/image.jpg");
+}
+```
+
 ### 字体和文本
 
 #### 字体
@@ -384,6 +414,172 @@ p{text-decoration:line-through;}
 ```css
 p{text-align:center}
 ```
+
+### 水平居中设置
+
+我们在实际工作中常会遇到需要设置水平居中的场景，比如为了美观，文章的标题一般都是水平居中显示的。
+
+这里我们又得分两种情况：行内元素还是 块状元素，块状元素里面又分为定宽块状元素，以及不定宽块状元素。
+
+#### 行内元素
+
+如果被设置元素为文本、图片等行内元素时，水平居中是通过给**父元素**设置 `text-align:center` 来实现的。
+
+html代码：
+
+```html
+<body>
+  <div class="txtCenter">我想要在父容器中水平居中显示。</div>
+</body>
+```
+
+css代码：
+
+```css
+<style>
+  .txtCenter{
+    text-align:center;
+  }
+</style>
+```
+
+#### 定宽块状元素
+
+定宽块状元素：块状元素的宽度width为固定值。满足定宽和块状两个条件的元素是可以通过设置“左右margin”值为“auto”来实现居中的。我们来看个例子就是设置 div 这个块状元素水平居中：
+
+html代码：
+
+```html
+<body>
+  <div>我是定宽块状元素，哈哈，我要水平居中显示。</div>
+</body>
+```
+
+css代码：
+
+```css
+<style>
+div{
+    border:1px solid red;/*为了显示居中效果明显为 div 设置了边框*/
+    
+    width:200px;/*定宽*/
+    margin:20px auto;/* margin-left 与 margin-right 设置为 auto */
+}
+
+</style>
+```
+
+也可以写成：
+
+```css
+margin-left:auto;
+margin-right:auto;
+```
+
+注意：元素的“上下 margin” 是可以随意设置的。
+
+#### 不定宽的块状元素
+
+在实际工作中我们会遇到需要为“不定宽度的块状元素”设置居中，比如网页上的分页导航，因为分页的数量是不确定的，所以我们不能通过设置宽度来限制它的弹性。(不定宽块状元素：块状元素的宽度width不固定。)
+
+1. 加入`table`标签
+2. 第一步：为需要设置的居中的元素外面加入一个 table 标签 ( 包括 <tbody>、<tr>、<td> )。
+3. 为这个 table 设置“左右 margin 居中”（这个和定宽块状元素的方法一样）。
+
+##### 不定宽块状元素方法（一）
+
+方法一：加入`table`标签
+
+html代码：
+
+```html
+<div>
+ <table>
+  <tbody>
+    <tr><td>
+    <ul>
+        <li>我是第一行文本</li>
+        <li>我是第二行文本</li>
+        <li>我是第三行文本</li>
+    </ul>
+    </td></tr>
+  </tbody>
+ </table>
+</div>
+```
+
+css代码：
+
+```
+<style>
+table{
+    border:1px solid;
+    margin:0 auto;
+}
+</style>
+```
+
+#####　不定宽块状元素方法（二）
+
+父级块状元素设置`text-align:center`使内容居中，子级作为父级内容，通过`display:inline`先设置成行内元素设置为行内元素后就可以以文本的方式居中了。如下例子：
+
+html代码：
+
+```html
+<body>
+<div class="container">
+    <ul>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+    </ul>
+</div>
+</body>
+```
+
+css代码：
+
+```css
+<style>
+.container{
+    text-align:center;
+}
+.container ul{
+    display:inline;
+}
+.container li{
+    display:inline;
+}
+</style>
+```
+
+##### 不定宽块状元素方法（三）
+
+方法三：通过给父元素设置`float`（利用float的包裹性），然后给父元素设置`position:relative`和 `left:50%`，子元素设置 `position:relative`和`left: -50%`来实现水平居中。
+
+代码如下：
+
+```html
+<div class="wrap">
+    <div class="wrap-center">我们来学习一下这种方法。</div>
+</div>
+```
+CSS代码：
+
+```css
+.wrap{
+    position:relative;
+    float:left;  
+    left:50%;  
+}
+
+.wrap-center{
+    background:#ccc;
+    position:relative;
+    left:-50%;
+}
+```
+
 ### Read More
 
 [CSS魔法堂：选择器及其优先级](http://www.cnblogs.com/fsjohnhuang/p/3940732.html)
