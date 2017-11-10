@@ -36,13 +36,11 @@ create table db_user(
     email VARCHAR(50),
     birthday DATE
 );
-
 ```
 为了方便，先插入两条测试数据
-```
+```sql
 insert into db_user(id,user_name,`password`,email,birthday) values(1,"jjr" ,"jjr123" ,"jjr123@126.net" ,"1991-09-08" );
 insert into db_user(id,user_name,`password`,email,birthday) values(2,"js123" ,"123456" ,"js123@126.net" ,"1991-09-08" )
-
 ```
 ![测试数据](../img/jdbc/jdbc_start_02.jpg)
 
@@ -52,7 +50,7 @@ insert into db_user(id,user_name,`password`,email,birthday) values(2,"js123" ,"1
 Installing a JDBC driver generally consists of copying the driver to your computer, then adding the location of it to your class path.
 ```
 编写查询所有数据的代码
-```
+```java
     @Test
     public void test() throws SQLException {
         //1、注册驱动(Driver)
@@ -83,7 +81,7 @@ Installing a JDBC driver generally consists of copying the driver to your comput
 ##### 注册驱动的三种方式
 在步骤一中我们注册了数据库的驱动，常用的注册驱动有三种方式
 方式一：通过DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-```
+```java
     @Test
     public void secondConn() throws SQLException {
         //该方法在编译时需要导入对应的jar包
@@ -93,7 +91,7 @@ Installing a JDBC driver generally consists of copying the driver to your comput
     }
 ```
 方式二：通过Class.forName("com.mysql.jdbc.Driver")
-```
+```java
     @Test
     public void firstConn() throws ClassNotFoundException,SQLException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -107,20 +105,20 @@ Installing a JDBC driver generally consists of copying the driver to your comput
 
 因此我们可以通过System.setProperty("jdbc.drivers","com.mysql.jdbc.Driver");注册驱动，该方式可以一次注册多个驱动，中间用":"隔开就可以了.比如System.setProperty("jdbc.drivers","XXXDriver:XXXDriver:XXXDriver");
 
-```
+```java
     @Test
     public void thridConn() throws SQLException {
         /*
         As part of its initialization, the DriverManager class will attempt to load the driver classes referenced in the "jdbc.drivers" system property.
          */
-        System.setProperty("jdbc.Drivers", "com.mysql.jdbc.Driver");
+        System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_jdbc", "root", "123456");
         Assert.assertEquals(false, conn.isClosed());
     }
 ```
 这点我们可以查看DriverManager源码发现：
 
-```
+```java
     private static void loadInitialDrivers() {
         String drivers;
         try {
@@ -139,7 +137,7 @@ Drivers以":"分隔`String[] driversList = drivers.split(":");`
 获取数据库连接Connection推荐使用Class.forName这种方式。
 我们进行源代码分析，DriverManager自身内部维护了一个registeredDrivers集合，DriverManager决定使用哪个驱动来获取连接并不是由开发者所决定的，而是遍历所有已注册的驱动来尝试获取连接，成功就返回连接，失败就略过。
 
-```
+```java
 for(DriverInfo aDriver : registeredDrivers) {
             // If the caller does not have permission to load the driver then
             // skip it.
@@ -165,7 +163,7 @@ for(DriverInfo aDriver : registeredDrivers) {
         }
 ```
 哪么registeredDrivers集合是从哪来的呢？从DriverManager类中我们发现只能通过registerDriver方法可以往registeredDrivers中注册驱动，因此应该是由驱动类自行将自己注册到registeredDrivers中，这一点可以查看com.mysql.jdbc.Driver的源代码，Class.forName将类加载到JVM时会执行静态代码块的代码
-```
+```java
 public class Driver extends NonRegisteringDriver implements java.sql.Driver {
     public Driver() throws SQLException {
     }
@@ -186,7 +184,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 
 ![Connection](../img/jdbc/jdbc_start_06.jpg)
 
-```
+```java
     @Test
     public void firstGetConn() throws ClassNotFoundException,SQLException {
         Class.forName("com.mysql.jdbc.Driver");
@@ -219,7 +217,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 
 ##### 代码优化
 加载数据库驱动只需执行一次(放在静态代码块中)，资源的获取以及获取数据库的连接可以抽离成独立的方法。一般这些都是写在工具类中，工具类禁止继承(final),工具类只构造一个实例(单例模式/static方法)
-```
+```java
 package com.rooike.util;
 
 import java.sql.*;
@@ -290,7 +288,7 @@ public final class JdbcUtils {
 }
 ```
 关于单例模式可以查看[如何正确的写出单例模式](http://blog.csdn.net/mrjjr007/article/details/50966837)，这里我们写一个单例数据库工具类
-```
+```java
 package com.rooike.util;
 
 import java.sql.*;
@@ -351,6 +349,5 @@ public final class SelfDbUtils {
         }
     }
 }
-
 ```
 数据库的连接是非常稀有的资源，因此涉及数据库的操作时，我们使用完成后，应该及时释放资源。另外程序在运行过程中可能会出现各种异常，我们的应用有义务告诉上层使用者到底出现了什么问题，因此需要保证异常链不能中断，这样就需要一个异常传递的过程。
