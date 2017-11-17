@@ -28,7 +28,7 @@
 6、关闭连接，释放资源
 #### Talk is cheap.Show me the code
 首先进行一些准备工作，创建表，本bolg是在mysql新建的db_jdbc库中创建了表
-```
+```sql
 create table db_user(
     id int primary key auto_increment,
     user_name varchar(50) not null ,
