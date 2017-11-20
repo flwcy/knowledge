@@ -39,7 +39,7 @@ create table db_user(
 ```
 为了方便，先插入两条测试数据
 ```sql
-insert into db_user(id,user_name,`password`,email,birthday) values(1,"flwcy" ,"jjr123" ,"flwcy123@126.net" ,"1993-11-01" );
+insert into db_user(id,user_name,`password`,email,birthday) values(1,"flwcy" ,"flwcy56" ,"flwcy123@126.net" ,"1993-11-01" );
 insert into db_user(id,user_name,`password`,email,birthday) values(2,"js123" ,"123456" ,"js123@126.net" ,"1995-11-08" )
 ```
 ![测试数据](../img/jdbc/jdbc_start_02.jpg)
