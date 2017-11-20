@@ -39,7 +39,7 @@ create table db_user(
 ```
 为了方便，先插入两条测试数据
 ```sql
-insert into db_user(id,user_name,`password`,email,birthday) values(1,"jjr" ,"jjr123" ,"jjr123@126.net" ,"1991-09-08" );
+insert into db_user(id,user_name,`password`,email,birthday) values(1,"flwcy" ,"jjr123" ,"flwcy123@126.net" ,"1991-09-08" );
 insert into db_user(id,user_name,`password`,email,birthday) values(2,"js123" ,"123456" ,"js123@126.net" ,"1991-09-08" )
 ```
 ![测试数据](../img/jdbc/jdbc_start_02.jpg)
@@ -224,7 +224,7 @@ import java.sql.*;
 
 /**
  * 数据库操作的工具类
- * Created by Rooike on 2015/9/29.
+ * Created by flwcy on 2015/9/29.
  */
 public final class JdbcUtils {
 
@@ -295,7 +295,7 @@ import java.sql.*;
 
 /**
  * 单例（静态内部类的形式）的数据库连接工具类
- * Created by Rooike on 2015/9/29.
+ * Created by flwcy on 2015/9/29.
  */
 public final class SelfDbUtils {
     private SelfDbUtils(){}
