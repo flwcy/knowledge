@@ -127,6 +127,10 @@ class MethodClass {
 }
 ```
 
+> 为什么获得Method object时不需要指定返回类型?
+>
+> 因为method overloading机制要求signature必须唯一，而返回类型并非signature的一个成分。换句话说，只要指定method名称和参数列，就一定指出了一个独一无二的method。
+
 另外，使用反射机制可以调用对象的私有方法、访问对象的私有成员变量，因此可能会破坏封装性而导致安全问题。
 
 ```java
@@ -176,7 +180,16 @@ class MethodClass {
 
 #### 利用反射创建数组
 
+通过Java反射来创建数组需要用到`java.lang.reflect.Array`类。下面的这个例子中会展示如何去创建一个数组：
 
+```java
+        Class<?> clazz = Class.forName("java.lang.String");
+        Object array = Array.newInstance(clazz,10);
+        // 往数组里添加内容
+        Array.set(array,5,"Hello World");
+        // 获取某一项的内容
+        System.out.println(Array.get(array,5));
+```
 
 ### Read More
 
