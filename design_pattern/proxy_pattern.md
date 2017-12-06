@@ -278,12 +278,50 @@ after calling:public abstract java.lang.String com.flwcy.dynamicproxy.Subject.sa
 Hello,flwcy
 ```
 
+执行`subject.sayHello("flwcy")`时，，为什么会自动调用`DynamicProxy`的`invoke`方法？
 
+```
+因为JDK生成的最终真正的代理类，它继承自Proxy并实现了我们定义的Subject接口，在实现Subject接口方法的内部，通过反射调用了DynamicProxy的invoke方法。
+```
+
+```java
+ Subject subject = (Subject) Proxy.newProxyInstance(handler.getClass().getClassLoader(),realSubject.getClass().getInterfaces(),handler);
+```
+
+为什么我们这里可以将其转化为`Subject`类型的对象？
+
+所谓`DynamicProxy`是这样一种`class`：它是在**运行时**生成的`class`，在生成它时你必须提供一组`interface`给它，然后该`class`就宣称它实现了这些`interface`。你当然可以把该`class`的实例当作这些`interface`中的任何一个来用。当然，这个`DynamicProxy`其实就是一个`Proxy`，它不会替你作实质性的工作，在生成它的实例时你必须提供一个`handler`，由它接管实际的工作。
+
+#### 总结
+
+一个典型的动态代理创建对象过程可分为以下四个步骤：
+
+1、通过实现`InvocationHandler`接口创建自己的调用处理器`IvocationHandler handler = new InvocationHandlerImpl(...);`
+2、通过为`Proxy`类指定`ClassLoader`对象和一组`interface`创建动态代理类`Class clazz = Proxy.getProxyClass(classLoader,new Class[]{...});`
+3、通过反射机制获取动态代理类的构造函数，其参数类型是调用处理器接口类型
+`Constructor constructor = clazz.getConstructor(new Class[]{InvocationHandler.class});`
+4、通过构造函数创建代理类实例，此时需将调用处理器对象作为参数被传入`Interface Proxy = (Interface)constructor.newInstance(new Object[] (handler));`
+
+实际使用过程更加简单，因为`Proxy`的静态方法`newProxyInstance`已经为我们封装了步骤 2 到步骤 4 的过程，只需两步即可完成代理对象的创建：
+
+```java
+// InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
+InvocationHandler handler = new InvocationHandlerImpl(..); 
+ 
+// 通过 Proxy 直接创建动态代理类实例
+Interface proxy = (Interface)Proxy.newProxyInstance( classLoader, 
+     new Class[] { Interface.class }, 
+     handler );
+```
+
+**缺点**：我们可以看到，无论是静态代理还是动态代理，它都需要一个接口。那如果我们想要包装的方法，它就没有实现接口怎么办呢？可以使用CGLib动态代理，CGLib 是一个类库，它可以在运行期间动态的生成字节码，动态生成代理类。
 
 ### Read More
 
 [java的动态代理机制详解](http://www.cnblogs.com/xiaoluo501395377/p/3383130.html)
 
 [Java JDK 动态代理（AOP）使用及实现原理分析](http://blog.csdn.net/jiankunking/article/details/52143504)
+
+[Java 动态代理机制分析及扩展，第 1 部分](https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html)
 
 [Spring 容器AOP的实现原理——动态代理](http://wiki.jikexueyuan.com/project/ssh-noob-learning/dynamic-proxy.html)
