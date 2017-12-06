@@ -103,15 +103,183 @@ public class RealSubject implements Subject {
     }
 ```
 
-
-
 **静态代理总结:**
 1.可以做到在不修改目标对象的功能前提下,对目标功能扩展.
 2.缺点:
 
-- 因为代理对象需要与目标对象实现一样的接口,所以会有很多代理类,类太多.同时,一旦接口增加方法,目标对象与代理对象都要维护.
+- 在实际使用中，一个真实角色必须对应一个代理角色，如果大量使用会导致类的急剧膨胀。同时,一旦接口增加方法，目标对象与代理对象都要维护。
 
-如何解决静态代理中的缺点呢?答案是可以使用动态代理方式
+如何解决静态代理中的缺点呢？答案是可以使用动态代理方式
 
 #### 动态代理
 
+在java的动态代理机制中，有两个重要的类或接口，一个是`InvocationHandler(Interface)`，另一个则是 `Proxy(Class)`，这一个类和接口是实现我们动态代理所必须用到的。首先我们先来看看`java API`是怎么样对这两个类进行描述的：
+
+`InvocationHandler`
+
+```
+InvocationHandler is the interface implemented by the invocation handler of a proxy instance.
+Each proxy instance has an associated invocation handler. When a method is invoked on a proxy instance, the method invocation is encoded and dispatched to the invoke method of its invocation handler.
+```
+
+每一个动态代理类都必须要实现`InvocationHandler`这个接口，并且每个代理类的实例都关联到了一个`handler`，当我们通过代理对象调用一个方法的时候，这个方法的调用就会被转发为由`InvocationHandler`这个接口的`invoke`方法来进行调用。我们来看看`InvocationHandler`这个接口的唯一一个方法`invoke`方法：
+
+```java
+Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+```
+
+invoke()方法有三个参数：
+
++ `proxy`参数是实现要代理接口的动态代理对象，通常情况下不需要它。
++ `Method`参数代表了被动态代理的接口中要调用的方法
++ `args`参数包含了被动态代理的方法需要的方法参数。注意基本类型(int,long)会被装箱成对象类型(Interger, Long)。
+
+接下来我们来看看`Proxy`这个类：
+
+```
+Proxy provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created by those methods. 
+```
+
+Proxy这个类的作用就是用来动态创建一个代理对象的类，它提供了许多的方法，但是我们用的最多的就是`newProxyInstance`这个方法：
+
+```java
+public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,  InvocationHandler h)  throws IllegalArgumentException
+
+Returns an instance of a proxy class for the specified interfaces that dispatches method invocations to the specified invocation handler.
+```
+
+`newProxyInstance()`方法有三个参数：
+
++ 类加载器`ClassLoader`用来加载动态代理类。
++ 一个要实现的接口的数组。
++ `InvocationHandler`接口。所有动态代理类的方法调用，都会交由`InvocationHandler`接口实现类里的`invoke()`方法去处理。这是动态代理的关键所在。
+
+
+
+需要动态代理的接口：
+
+```java
+package com.flwcy.dynamicproxy;
+
+/**
+ * 抽象角色，真实角色与代理角色均需要实现该接口
+ * 动态代理只能代理接口
+ */
+public interface Subject {
+
+    public String sayHello(String name);
+
+    public void request();
+}
+```
+
+需要代理的真实角色：
+
+```java
+package com.flwcy.dynamicproxy;
+
+/**
+ * 真实角色
+ */
+public class RealSubject implements Subject {
+    public String sayHello(String name) {
+        return String.format("Hello,%s",name);
+    }
+
+    public void request() {
+        System.out.println("From real subject.");
+    }
+}
+```
+
+我们就要定义一个动态代理类了，前面说个，每一个动态代理类都必须要实现`InvocationHandler`这个接口，因此我们这个动态代理类也不例外：
+
+```java
+package com.flwcy.dynamicproxy;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+/**
+ * 每一个动态代理类都必须要实现 InvocationHandler 这个接口
+ */
+public class DynamicProxy implements InvocationHandler {
+
+    /**
+     *  这个就是我们要代理的真实对象
+     */
+    private Object obj;//这是动态代理的好处，被封装的对象是Object类型，接受任意类型的对象
+
+    public DynamicProxy(Object obj){
+        this.obj = obj;
+    }
+
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 在代理真实对象前我们可以添加一些自己的操作
+        System.out.println("before calling:" + method);
+        // 当代理对象调用真实对象的方法时，其会自动的跳转到代理对象关联的handler对象的invoke方法来进行调用
+        Object result = method.invoke(obj, args);
+        // 在代理真实对象后我们也可以添加一些自己的操作
+        System.out.println("after calling:" + method);
+        return result;
+    }
+}
+```
+
+测试：
+
+```java
+package com.flwcy.dynamicproxy;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+
+/**
+ * 动态代理演示
+ */
+public class Client {
+
+    public static void main(String[] args) {
+        // 我们要代理的真实对象
+        RealSubject realSubject = new RealSubject();
+        /**
+         * DynamicProxy 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
+         * 其内部通常包含指向委托类实例的引用，用于真正执行分派转发过来的方法调用.
+         * 即：要代理哪个真实对象，就将该对象传进去，最后是通过该真实对象来调用其方法
+         */
+        InvocationHandler handler = new DynamicProxy(realSubject);
+        // 通过Proxy的newProxyInstance方法来创建我们的代理对象
+        Subject subject = (Subject) Proxy.newProxyInstance(handler.getClass().getClassLoader(),realSubject.getClass().getInterfaces(),handler);
+
+        //这里可以通过运行结果证明subject是Proxy的一个实例，这个实例实现了Subject接口
+        System.out.println(subject instanceof Proxy);
+
+        //这里可以看出subject的Class类是$Proxy0,这个$Proxy0类继承了Proxy，实现了Subject接口
+        System.out.println("subject的Class类是："+subject.getClass().toString());
+
+        subject.request();
+        System.out.println(subject.sayHello("flwcy"));
+    }
+}
+```
+
+输出结果如下：
+
+```
+true
+subject的Class类是：class com.sun.proxy.$Proxy0
+before calling:public abstract void com.flwcy.dynamicproxy.Subject.request()
+From real subject.
+after calling:public abstract void com.flwcy.dynamicproxy.Subject.request()
+before calling:public abstract java.lang.String com.flwcy.dynamicproxy.Subject.sayHello(java.lang.String)
+after calling:public abstract java.lang.String com.flwcy.dynamicproxy.Subject.sayHello(java.lang.String)
+Hello,flwcy
+```
+
+
+
+### Read More
+
+[java的动态代理机制详解](http://www.cnblogs.com/xiaoluo501395377/p/3383130.html)
+[Java JDK 动态代理（AOP）使用及实现原理分析](http://blog.csdn.net/jiankunking/article/details/52143504)
+[Spring 容器AOP的实现原理——动态代理](http://wiki.jikexueyuan.com/project/ssh-noob-learning/dynamic-proxy.html)
