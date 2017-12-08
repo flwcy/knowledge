@@ -351,6 +351,21 @@ public final String sayHello(String paramString)
 `Constructor constructor = clazz.getConstructor(new Class[]{InvocationHandler.class});`
 4、通过构造函数创建代理类实例，此时需将调用处理器对象作为参数被传入`Interface Proxy = (Interface)constructor.newInstance(new Object[] (handler));`
 
+```java
+// InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
+// 其内部通常包含指向委托类实例的引用，用于真正执行分派转发过来的方法调用
+InvocationHandler handler = new InvocationHandlerImpl(..); 
+ 
+// 通过 Proxy 为包括 Interface 接口在内的一组接口动态创建代理类的类对象
+Class clazz = Proxy.getProxyClass(classLoader, new Class[] { Interface.class, ... }); 
+ 
+// 通过反射从生成的类对象获得构造函数对象
+Constructor constructor = clazz.getConstructor(new Class[] { InvocationHandler.class }); 
+ 
+// 通过构造函数对象创建动态代理类实例
+Interface Proxy = (Interface)constructor.newInstance(new Object[] { handler });
+```
+
 实际使用过程更加简单，因为`Proxy`的静态方法`newProxyInstance`已经为我们封装了步骤 2 到步骤 4 的过程，只需两步即可完成代理对象的创建：
 
 ```java
