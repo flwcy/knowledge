@@ -233,7 +233,11 @@ public class DynamicProxy implements InvocationHandler {
 ```java
 package com.flwcy.dynamicproxy;
 
+import sun.misc.ProxyGenerator;
+
+import java.io.*;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
 /**
@@ -245,11 +249,11 @@ public class Client {
         // 我们要代理的真实对象
         RealSubject realSubject = new RealSubject();
         /**
-         * DynamicProxy 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
+         * InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
          * 其内部通常包含指向委托类实例的引用，用于真正执行分派转发过来的方法调用.
          * 即：要代理哪个真实对象，就将该对象传进去，最后是通过该真实对象来调用其方法
          */
-        InvocationHandler handler = new DynamicProxy(realSubject);
+        InvocationHandler handler = new InvocationHandlerImpl(realSubject);
         // 通过Proxy的newProxyInstance方法来创建我们的代理对象
         Subject subject = (Subject) Proxy.newProxyInstance(handler.getClass().getClassLoader(),realSubject.getClass().getInterfaces(),handler);
 
@@ -261,6 +265,37 @@ public class Client {
 
         subject.request();
         System.out.println(subject.sayHello("flwcy"));
+
+        // 将生成的字节码保存到本地
+        createProxyClass(realSubject.getClass().getInterfaces());
+    }
+
+    private static void createProxyClass(Class<?>[] interfaces){
+        String proxyName = "ProxySubject";
+        BufferedOutputStream out = null;
+        File file = new File(String.format("E:/tmp/%s.class",proxyName));
+
+        /*
+         * Look up or generate the designated proxy class.
+         */
+        byte[] proxyClassFile = ProxyGenerator.generateProxyClass(
+                proxyName, interfaces, Modifier.PUBLIC);
+
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(file));
+            out.write(proxyClassFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(out != null)
+                    out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 ```
@@ -278,10 +313,10 @@ after calling:public abstract java.lang.String com.flwcy.dynamicproxy.Subject.sa
 Hello,flwcy
 ```
 
-执行`subject.sayHello("flwcy")`时，为什么会自动调用`DynamicProxy`的`invoke`方法？
+执行`subject.sayHello("flwcy")`时，为什么会自动调用`InvocationHandlerImpl`的`invoke`方法？
 
 ```
-因为JDK生成的最终真正的代理类，它继承自Proxy并实现了我们定义的Subject接口，在实现Subject接口方法的内部，通过反射调用了DynamicProxy的invoke方法。
+因为JDK生成的最终真正的代理类，它继承自Proxy并实现了我们定义的Subject接口，在实现Subject接口方法的内部，通过反射调用了InvocationHandlerImpl的invoke方法。
 ```
 
 查看`Proxy`类的静态方法`newProxyInstance`的源代码发现`JDK`会为我们生成真正的代理类，并实现接口中的方法（省略了反编译的过程）：
