@@ -278,17 +278,66 @@ after calling:public abstract java.lang.String com.flwcy.dynamicproxy.Subject.sa
 Hello,flwcy
 ```
 
-执行`subject.sayHello("flwcy")`时，，为什么会自动调用`DynamicProxy`的`invoke`方法？
+执行`subject.sayHello("flwcy")`时，为什么会自动调用`DynamicProxy`的`invoke`方法？
 
 ```
 因为JDK生成的最终真正的代理类，它继承自Proxy并实现了我们定义的Subject接口，在实现Subject接口方法的内部，通过反射调用了DynamicProxy的invoke方法。
 ```
 
+查看`Proxy`类的静态方法`newProxyInstance`的源代码发现`JDK`会为我们生成真正的代理类，并实现接口中的方法（省略了反编译的过程）：
+
 ```java
- Subject subject = (Subject) Proxy.newProxyInstance(handler.getClass().getClassLoader(),realSubject.getClass().getInterfaces(),handler);
+public class ProxySubject extends Proxy
+  implements Subject
+
+...
+  
+public final String sayHello(String paramString)
+    throws 
+  {
+    try
+    {
+      return (String)this.h.invoke(this, m4, new Object[] { paramString });
+    }
+    catch (Error|RuntimeException localError)
+    {
+      throw localError;
+    }
+    catch (Throwable localThrowable)
+    {
+      throw new UndeclaredThrowableException(localThrowable);
+    }
+  }
+
+...
+  
+  static
+  {
+    try
+    {
+      m1 = Class.forName("java.lang.Object").getMethod("equals", new Class[] { Class.forName("java.lang.Object") });
+      m4 = Class.forName("com.flwcy.dynamicproxy.Subject").getMethod("sayHello", new Class[] { Class.forName("java.lang.String") });
+      m2 = Class.forName("java.lang.Object").getMethod("toString", new Class[0]);
+      m3 = Class.forName("com.flwcy.dynamicproxy.Subject").getMethod("request", new Class[0]);
+      m0 = Class.forName("java.lang.Object").getMethod("hashCode", new Class[0]);
+      return;
+    }
+    catch (NoSuchMethodException localNoSuchMethodException)
+    {
+      throw new NoSuchMethodError(localNoSuchMethodException.getMessage());
+    }
+    catch (ClassNotFoundException localClassNotFoundException)
+    {
+      throw new NoClassDefFoundError(localClassNotFoundException.getMessage());
+    }
+  }  
 ```
 
 为什么我们这里可以将其转化为`Subject`类型的对象？
+
+```java
+ Subject subject = (Subject) Proxy.newProxyInstance(handler.getClass().getClassLoader(),realSubject.getClass().getInterfaces(),handler);
+```
 
 所谓`DynamicProxy`是这样一种`class`：它是在**运行时**生成的`class`，在生成它时你必须提供一组`interface`给它，然后该`class`就宣称它实现了这些`interface`。你当然可以把该`class`的实例当作这些`interface`中的任何一个来用。当然，这个`DynamicProxy`其实就是一个`Proxy`，它不会替你作实质性的工作，在生成它的实例时你必须提供一个`handler`，由它接管实际的工作。
 
