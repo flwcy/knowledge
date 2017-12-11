@@ -31,9 +31,8 @@
 
 有两个方法用来判断`File`对象是文件还是目录：
 
-　　`public boolean isDirectory()//是否为目录`　　
-
-​	`public boolean isFile()//是否为文件`
++ `public boolean isDirectory()//是否为目录`　　
++ `public boolean isFile()//是否为文件`
 
 **一个File类对象既可以表示目录也可以表示文件。**
 
@@ -41,9 +40,8 @@
 
 操作目录的方法如下：
 
-​	　　`public boolean mkdir()`　　
-
-​		`public boolean mkdirs()`
++ `public boolean mkdir()`　　
++ `public boolean mkdirs()`
 
 示例：
 
@@ -64,7 +62,7 @@
 
 在进行文件操作时，常需要知道一个关于文件的信息。`Java`的`File`类提供了方法来操纵文件和获得一个文件的信息。如`getName()`返回文件名，`getParent()`返回父目录名，`exists()`测试文件或目录是否存在。
 
-然而，File类是不对称的，说它不对称，意思是虽然存在允许验证一个简单文件对象属性的很多方法，但是没有响应的方法来修改这些属性，即有`get`无`set`。
+然而，File类是不对称的，说它不对称，意思是虽然存在允许验证一个简单文件对象属性的很多方法，但是没有相应的方法来修改这些属性，即有`get`无`set`。
 
 另外，File类还可以对目录和文件进行删除（删除目录时，目录必须为空时才能删除）、属性修改等工作。方法名都比较直观，在此不多做介绍了。
 
