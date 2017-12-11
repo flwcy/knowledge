@@ -417,8 +417,6 @@ Interface proxy = (Interface)Proxy.newProxyInstance( classLoader,
 
 ### Read More
 
-[java的动态代理机制详解](http://www.cnblogs.com/xiaoluo501395377/p/3383130.html)
-
 [Java JDK 动态代理（AOP）使用及实现原理分析](http://blog.csdn.net/jiankunking/article/details/52143504)
 
 [Java 动态代理机制分析及扩展，第 1 部分](https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html)
