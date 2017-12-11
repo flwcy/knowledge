@@ -413,6 +413,8 @@ Interface proxy = (Interface)Proxy.newProxyInstance( classLoader,
      handler );
 ```
 
+> 动态代理：用户调用proxy类（代理类）的newInstance方法产生实现对应接口的proxy实例，该实例调用对应接口的方法的时候，会交由与代理类所对应的实现了InvocationHandler的处理器类的invoke方法处理，该处理器类内部封装了一个在构造时传递进来的真实对象，在invoke方法执行的时候会通过反射机制执行真实对象的对应的方法，并将方法的返回值返回出去。
+
 **缺点**：我们可以看到，无论是静态代理还是动态代理，它都需要一个接口。那如果我们想要包装的方法，它就没有实现接口怎么办呢？可以使用CGLib动态代理，CGLib 是一个类库，它可以在运行期间动态的生成字节码，动态生成代理类。
 
 ### Read More
