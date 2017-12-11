@@ -205,14 +205,14 @@ import java.lang.reflect.Method;
 /**
  * 每一个动态代理类都必须要实现 InvocationHandler 这个接口
  */
-public class DynamicProxy implements InvocationHandler {
+public class InvocationHandlerImpl implements InvocationHandler {
 
     /**
      *  这个就是我们要代理的真实对象
      */
     private Object obj;//这是动态代理的好处，被封装的对象是Object类型，接受任意类型的对象
 
-    public DynamicProxy(Object obj){
+    public InvocationHandlerImpl(Object obj){
         this.obj = obj;
     }
 
