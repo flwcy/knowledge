@@ -130,8 +130,11 @@ public enum EasySingleton{
 
 ### Read More
 [Double Checked Locking on Singleton Class in Java](http://javarevisited.blogspot.sg/2014/05/double-checked-locking-on-singleton-in-java.html)
+
 [Why Enum Singleton are better in Java](http://javarevisited.blogspot.my/2012/07/why-enum-singleton-are-better-in-java.html)
+
 [How to create thread safe Singleton in Java](http://javarevisited.blogspot.com/2012/12/how-to-create-thread-safe-singleton-in-java-example.html)
+
 [10 Singleton Pattern Interview questions in Java](http://javarevisited.blogspot.com/2011/03/10-interview-questions-on-singleton.html)
 
 
