@@ -21,6 +21,7 @@
 
 **Unchecked Exception(编译器不要求强制处置的异常)**:包括运行时异常（RuntimeException与其子类）和错误（Error）.
 ![Difference between Unchecked exception or runtime exception](../../img/exception/exception_02.jpg)
+
 java.lang.Exception又分为两大类:运行时异常和非运行时异常(编译异常),程序中应当尽可能的去处理这些异常.
 
 **运行时异常**:都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查的异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。
@@ -50,6 +51,7 @@ try、catch、finally语句块的执行顺序:
 
 try/catch/finally语句块的执行顺序如下图所示:
 ![try/catch执行顺序](../../img/exception/exception_03.jpg)
+
 小结：
 
 + try 块：用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。
