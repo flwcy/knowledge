@@ -19,11 +19,17 @@
 
 #### 数据库连接的基本步骤
 1、注册数据库驱动(Driver)
+
 2、建立连接(Connection)
+
 3、创建执行sql语句(一般是Statement及其子类)
+
 4、执行sql语句获得结果集(ResultSet)
+
 5、处理执行结果（在非查询语句中，该步骤可以省略）
+
 6、关闭连接，释放资源
+
 #### Talk is cheap.Show me the code
 首先进行一些准备工作，创建表，本bolg是在mysql新建的db_jdbc库中创建了表
 ```sql
