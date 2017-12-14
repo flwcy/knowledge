@@ -52,7 +52,7 @@ SELECT email FROM db_user WHERE user_name IN (?)
 
 ```
 
-准备好`SELEC email FROM db_user where user_name = ?`语句，并执行该语句，需要为该语句准备与`IN`语句相同长度的参数集合。
+准备好`SELECT my_column FROM my_table WHERE search_column IN (?,?,?)`语句，并执行该语句，需要为该语句准备与`IN`语句相同长度的参数集合。
 
 ```java
 
