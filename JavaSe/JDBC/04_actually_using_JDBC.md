@@ -422,3 +422,82 @@ public class DaoException extends RuntimeException {
         return result;
     }
 ```
+
+### DAO与工厂模式的整合
+
+虽然通过 DAO模式将数据库的操作细节隐藏起来了，业务逻辑的处理虽然也是依赖接
+口但是同时也依赖了接口的实现。
+
+为了解决依赖了接口实现这个问题，我们采用工厂模式，详细代码如下：
+
+```java
+package com.flwcy.factory;
+
+import com.flwcy.dao.UserDao;
+import com.flwcy.exception.DaoException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/**
+ * 工厂模式
+ */
+public class SimpleDAOFactory {
+
+    private Properties properties;
+
+    private static class SingletonHandler{
+        private static final SimpleDAOFactory INSTANCE = new SimpleDAOFactory();
+    }
+
+    private SimpleDAOFactory(){
+        InputStream inputStream = null;
+        try {
+            properties = new Properties();
+            inputStream = SimpleDAOFactory.class.getClassLoader().getResourceAsStream("dao_config.properites");
+            //从输入流中读取属性列表（键和元素对）
+            properties.load(inputStream);
+        } catch (Exception e) {
+            throw  new ExceptionInInitializerError(e);
+        } finally {
+            try {
+                if(inputStream != null)
+                    inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public UserDao getUserDao(){
+        UserDao userDao;
+        try {
+            String userDaoClassName = properties.getProperty("userDaoClass");
+            Class clazz = Class.forName(userDaoClassName);
+            userDao = (UserDao)clazz.newInstance();
+        } catch (Exception e) {
+            throw new DaoException("获取UserDao的实现类出错", e);
+        }
+
+        return userDao;
+    }
+
+    public static SimpleDAOFactory newInstance(){
+        return SingletonHandler.INSTANCE;
+    }
+}
+```
+
+配置文件为`dao_config.properties`
+
+```
+userDaoClass=com.flwcy.dao.impl.UserDaoImpl
+```
+
+修改一下之前的业务逻辑层
+
+```java
+
+```
+
