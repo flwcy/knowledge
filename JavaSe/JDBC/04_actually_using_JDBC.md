@@ -455,7 +455,7 @@ public class SimpleDAOFactory {
         InputStream inputStream = null;
         try {
             properties = new Properties();
-            inputStream = SimpleDAOFactory.class.getClassLoader().getResourceAsStream("dao_config.properites");
+            inputStream = SimpleDAOFactory.class.getClassLoader().getResourceAsStream("dao_config.properties");
             //从输入流中读取属性列表（键和元素对）
             properties.load(inputStream);
         } catch (Exception e) {
@@ -498,6 +498,15 @@ userDaoClass=com.flwcy.dao.impl.UserDaoImpl
 修改一下之前的业务逻辑层
 
 ```java
-
+    @Test
+    public  void selectAll(){
+        SimpleDAOFactory factory = SimpleDAOFactory.newInstance();
+        UserDao userDao = factory.getUserDao();
+        List<User> users = userDao.selectAll();
+        for(User user : users){
+            System.out.println(user);
+        }
+    }
 ```
 
+这样一来，业务逻辑的所有行为只会和数据层相关的接口打交道，实现了真正的面向接口编程，更换 DAO 的实现只需要修改工厂或者新增工厂中的接口即可。
