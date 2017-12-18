@@ -23,8 +23,15 @@
 
 #### JDBC中使用事务
 
+JDBC的一切行为包括事务是基于一个`Connection`的，在JDBC中是通过`Connection`对象进行事务管理。在JDBC中，常用的和事务相关的方法是： `setAutoCommit`、`commit`、`rollback`等。
+
+```java
 connection.setAutoCommit(false);// 打开事务
 
 connection.commit();// 提交事务
 
 connection.rollback();// 回滚事务
+```
+
+
+
