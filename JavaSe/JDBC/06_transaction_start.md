@@ -194,6 +194,8 @@ ALTER TABLE db_user ADD money FLOAT NOT NULL DEFAULT 450; #账户余额
  解决办法：如果在操作事务完成数据处理之前，任何其他事务都不可以添加新数据，则可避免该问题
 ```
 
+> 很多人容易搞混不可重复读和幻读，确实这两者有些相似。但不可重复读重点在于update和delete，而幻读的重点在于insert。
+
 事务的隔离级别从低到高有：
 
 + 未提交读（READ UNCOMMITTED）是最低的隔离级别。允许“脏读”（dirty reads），事务可以看到其他事务“尚未提交”的修改。
