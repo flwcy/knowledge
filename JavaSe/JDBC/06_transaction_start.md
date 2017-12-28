@@ -210,3 +210,66 @@ ALTER TABLE db_user ADD money FLOAT NOT NULL DEFAULT 450; #账户余额
 | 可重复读（Repeatable read）  | 不可能            | 不可能                       | 可能               |
 | 可串行化（Serializable ）    | 不可能            | 不可能                       | 不可能              |
 
+但是隔离级别越高，对数据正确性的保证会越好，但同时牺牲很多的数据库性能，并发性会越差，具体的调整需要根据自己的需要进行，建议不要设置为可串行化与读未提交这样的级别，当然各个数据库提供对隔离级别的支持是不一样的，有些数据库压根就没有实现和支持相应的隔离级别。
+
+#### 隔离级别实验演示
+
+##### 读未提交隔离级别
+
+我们先将事务的隔离级别设置为`read committed`：
+
+```
+mysql> set GLOBAL transaction isolation level read uncommitted;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @@tx_isolation;
++------------------------+
+| @@session.tx_isolation |
++------------------------+
+| READ-UNCOMMITTED       |
++------------------------+
+1 row in set (0.00 sec)
+```
+
+在下面我们开了两个终端分别用来模拟事务一和事务二，p.s: 操作一和操作二的意思是按照时间顺序来执行的。
+
+**事务1**
+
+```
+mysql> start transaction; # 操作1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作3
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   600 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> update db_user set money=200 where id=1; # 操作4
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+```
+
+**事务2**
+
+```
+mysql> start transaction; # 操作2
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作5
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   200 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+```
+
+从上面的执行结果可以和清晰的看出来，在`read uncommited`级别下面我们在事务一中可能会读取到事务二中没有`commit`的数据，这就是脏读。
+
+##### 读提交隔离级别
+
