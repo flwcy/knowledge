@@ -273,3 +273,166 @@ mysql> select * from db_user; # 操作5
 
 ##### 读提交隔离级别
 
+通过设置隔离级别为`committed`可以解决上面的脏读问题。
+
+```
+mysql> set GLOBAL transaction isolation level read committed;
+```
+
+**事务1**
+
+```
+mysql> start transaction; # 操作1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作3
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   600 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from db_user; # 操作5，操作4的修改并没有影响到事务一
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   600 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from db_user; # 操作7
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   200 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> commit; # 操作8
+Query OK, 0 rows affected (0.00 sec)
+```
+
+**事务2**
+
+```
+mysql> start transaction; # 操作2
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update db_user set money=200 where id=1; # 操作4
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> commit; # 操作6
+Query OK, 0 rows affected (0.04 sec)
+```
+
+虽然脏读的问题解决了，但是注意在事务1的操作7中，事务2在操作6`commit`后会造成事务1在同一个`transaction`中两次读取到的数据不同，这就是不可重复读问题，使用第三个事务隔离级别`repeatable read`可以解决这个问题。
+
+#####  可重复读隔离级别
+
+`MySQL`的`Innodb`存储引擎默认的事务隔离级别就是可重复读隔离级别，所以我们不用进行多余的设置。
+
+**事务1**
+
+```
+mysql> start transaction; # 操作1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作5
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   200 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> commit; # 操作6
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作7
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   600 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+```
+
+**事务2**
+
+```
+mysql> start transaction; # 操作2
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update db_user set money=600 where id=1; # 操作3
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> commit; # 操作4
+Query OK, 0 rows affected (0.03 sec)
+```
+
+在事务1的操作5中我们并没有读取到事务2在操作3中的`update`，只有在`commit`之后才能读到更新后的数据。
+
+###### Innodb解决了幻读么
+
+实际上RR级别是可能产生幻读，`InnoDB`引擎官方称中利用`MVCC`多版本并发控制解决了这个问题，下面我们验证一下`Innodb`真的解决了幻读了么？
+
+**事务1**
+
+```
+mysql> start transaction; # 操作1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from db_user; # 操作3
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   600 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   500 |
++----+-----------+----------+---------------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> update db_user set money=300; # 操作6,影响了3行
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from db_user; # 操作7，Innodb并没有完全解决幻读
++----+-----------+----------+---------------+------------+-------+
+| id | user_name | password | email         | birthday   | money |
++----+-----------+----------+---------------+------------+-------+
+|  1 | zhangsan  | test11   | test@163.com  | 2017-12-14 |   300 |
+|  2 | lisi      | 123456   | js123@126.net | 1995-11-08 |   300 |
+|  3 | abc       | abcd11   | abc@163.com   | 2017-12-14 |   300 |
++----+-----------+----------+---------------+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> commit; # 操作8
+Query OK, 0 rows affected (0.16 sec)
+```
+
+**事务2**
+
+```
+mysql> start transaction; # 操作2
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO `db_user` VALUES (3,'abc', 'abcd11', 'abc@163.com', '2017-12-
+14',200); # 操作4
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit; # 操作5
+Query OK, 0 rows affected (0.16 sec)
+```
+
+从上面的例子可以看出，`Innodb`并没有如官方所说解决幻读，不过上面这样的场景中也不是很常见不用过多的担心。
+
+##### 串行化隔离级别
+
+所有事务串行执行，最高隔离级别，不会出现幻读性能会很差，实际开发中很少使用到。
