@@ -188,3 +188,38 @@ a new PreparedStatement object, containing the pre-compiled SQL statement, that 
     }
 ```
 
+#### 批处理的使用
+
+批处理是指你将关联的`SQL`语句组合成一个批处理，并将他们当成一个调用提交给数据库。当你一次发送多个`SQL`语句到数据库时，可以减少通信的资源消耗，从而提高了性能。
+
+```java
+public void batchInsert(){
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = SelfDbUtils.getInstance().getConnection();
+
+            String sql = "insert into db_user(user_name,`password`,email,birthday) values(?,?,?,?)";
+
+            statement = connection.prepareStatement(sql);
+
+            for(int i=0;i<200;i++){
+                statement.setString(1,"test" + i);
+                statement.setString(2,"test~" + i);
+                statement.setString(3,"test"+i+"@163.com");
+                statement.setDate(4,new Date(new java.util.Date().getTime()));
+
+                statement.addBatch();
+            }
+
+            int[] rows = statement.executeBatch();
+            System.out.println(rows);
+        } catch (SQLException e) {
+            throw new DaoException("批量插入数据出错",e);
+        } finally {
+            SelfDbUtils.getInstance().close(connection,statement,null);
+        }
+    }
+```
+
