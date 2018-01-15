@@ -10,3 +10,7 @@
 
 [深入分析事务的隔离级别](http://www.hollischuang.com/archives/943)
 
+
+
+[javaweb学习总结(三十九)——数据库连接池](https://www.cnblogs.com/xdp-gacl/p/4002804.html)
+
