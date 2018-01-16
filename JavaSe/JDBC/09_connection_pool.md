@@ -2,5 +2,181 @@
 
 用户每次请求都需要向数据库获得连接，而数据库创建连接通常需要消耗相对较大的资源，创建时间也较长。**数据库连接池负责分配,管理和释放数据库连接,它允许应用程序重复使用一个现有的数据库连接,而不是重新建立一个**。
 
+实现连接池功能的步骤：
+
+1. 在`DataSource`构造函数中批量创建与数据库的连接，并把创建的连接加入`LinkedList`对象中。
+2. 实现`getConnection`方法，让`getConnection`方法每次调用时，从`LinkedList`中取一个`Connection`返回给用户。
+3. 当用户使用完`Connection`，调用`Connection.close()`方法时，`Collection`对象应保证将自己返回到`LinkedList`中,而不要把`conn`还给数据库。**Collection保证将自己返回到LinkedList中是此处编程的难点**。
+
 #### 数据库连接池雏形 
+
+编写`SimpleDataSource.java`
+
+```java
+package com.flwcy.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.LinkedList;
+
+/**
+ * 简单的数据库连接池
+ */
+public class SimpleDataSource {
+
+    /**
+     * 因为需要频繁的读写，使用双向链表结构的LinkedList
+     */
+    private static LinkedList<Connection> pool;
+
+    private static final String USER = "root";
+
+    private static final String PASSWORD = "123456";
+
+    private static final String URL = "jdbc:mysql://localhost:3306/db_jdbc";
+
+    static {
+        pool = new LinkedList<>();
+
+        // 加载驱动
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public SimpleDataSource(){
+        try {
+            for (int i=0;i<5;i++){
+                pool.addLast(this.createConnection());
+            }
+        } catch (SQLException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public Connection createConnection() throws SQLException {
+        return DriverManager.getConnection(URL,USER,PASSWORD);
+    }
+
+    public Connection getConnection(){
+        return this.pool.removeFirst();
+    }
+
+    public void free(Connection connection){
+        pool.addLast(connection);
+    }
+}
+```
+
+修改之前的工具类
+
+```java
+package com.flwcy.util;
+
+import java.sql.*;
+
+/**
+ * 静态内部类的单例DbUtils
+ */
+public class SelfDbUtils {
+
+    private static SimpleDataSource dataSource = new SimpleDataSource();
+
+    private SelfDbUtils(){}
+
+    private static class SelfDbUtilsHolder{
+        private static final SelfDbUtils INSTANCE = new SelfDbUtils();
+    }
+
+    public static SelfDbUtils getInstance(){
+        return SelfDbUtilsHolder.INSTANCE;
+    }
+
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
+    }
+
+    public void close(Connection connection,Statement statement,ResultSet resultSet){
+        try {
+            if(resultSet != null)
+                resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(statement != null)
+                    statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally{
+                if(connection != null)
+                    dataSource.free(connection);
+            }
+        }
+    }
+}
+```
+
+开始进行单元测试
+
+```java
+    @Test
+    public void createConnection(){
+        try {
+            for(int i=0;i<10;i++){
+                Connection connection = SelfDbUtils.getInstance().getConnection();
+                System.out.println(connection);
+                SelfDbUtils.getInstance().close(connection,null,null);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+```
+
+执行结果为：
+
+```
+com.mysql.jdbc.JDBC4Connection@4ca8195f
+com.mysql.jdbc.JDBC4Connection@65e579dc
+com.mysql.jdbc.JDBC4Connection@61baa894
+com.mysql.jdbc.JDBC4Connection@b065c63
+com.mysql.jdbc.JDBC4Connection@768debd
+com.mysql.jdbc.JDBC4Connection@4ca8195f
+com.mysql.jdbc.JDBC4Connection@65e579dc
+com.mysql.jdbc.JDBC4Connection@61baa894
+com.mysql.jdbc.JDBC4Connection@b065c63
+com.mysql.jdbc.JDBC4Connection@768debd
+```
+
+可以看出数据库连接被重复使用了，因为通过打印的语句可以看出，有相同`hashcode`的`Connection`
+
+#### 数据库连接池优化
+
+为了保证，每一个线程获取的数据库连接实例是不同的，我们需要对线程池进行加锁，保证多线程并发时获取的连接各不相干，修改其中的代码片段如下
+
+```java
+    public Connection getConnection() throws SQLException {
+        synchronized (pool){
+            if(pool.size() > 0)
+                return this.pool.removeFirst();
+            // 无可用连接，且已创建的连接数小于最大连接数
+            if(currentCount < maxCount){
+                currentCount++;
+                return this.createConnection();
+            }
+        }
+
+        throw new SQLException(" don't have connection now!");
+    }
+```
+
+#### 数据库连接池之代理模式
+
+在使用`JDBC`连接数据库的时候，最后需要用户释放资源，如果使用者按照传统的方式关闭连接，那么我们的连接池就没有存在的意义了，因为每一次使用者都会给关闭掉，导致连接池的连接会是无效的或者越来越少，为了防止这样的事情发生，我们需要保留使用者的使用习惯，也就是说允许使用者通过`close`方法释放连接，这个时候我们应该如何做既能起到用户的使用习惯，又能在进行关闭的时候不是真的关掉数据库连接，而是直接存放至数据库连接池中。
+
+##### 静态代理
 
