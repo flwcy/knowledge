@@ -176,7 +176,66 @@ com.mysql.jdbc.JDBC4Connection@768debd
 
 #### 数据库连接池之代理模式
 
-在使用`JDBC`连接数据库的时候，最后需要用户释放资源，如果使用者按照传统的方式关闭连接，那么我们的连接池就没有存在的意义了，因为每一次使用者都会给关闭掉，导致连接池的连接会是无效的或者越来越少，为了防止这样的事情发生，我们需要保留使用者的使用习惯，也就是说允许使用者通过`close`方法释放连接，这个时候我们应该如何做既能起到用户的使用习惯，又能在进行关闭的时候不是真的关掉数据库连接，而是直接存放至数据库连接池中。
+在使用`JDBC`连接数据库的时候，会经常使用`connection.close()`这样的方法，去关闭数据库连接，如果使用者按照传统的方式关闭连接，那么我们的连接池就没有存在的意义了，因为每一次使用者都会给关闭掉，导致连接池的连接会是无效的或者越来越少，为了防止这样的事情发生，我们需要保留使用者的使用习惯，也就是说允许使用者通过`close`方法释放连接，这个时候我们应该如何做既能起到保留使用者的使用习惯，又能在进行关闭的时候不是真的关掉数据库连接，而是直接存放至数据库连接池中。
 
 ##### 静态代理
 
+解决这一问题的办法就是使用代理模式，因为代理模式可以替代原有类的行为，所以我们要做的就是替换掉`connection`的`close`方法。
+
+我们实现`Connection`这个接口，我去掉了很多方法，因为都类似，全贴上来占地方。
+
+```java
+/**
+ * 静态代理，自定义连接
+ */
+public class CustomConnection implements Connection {
+
+    /**
+     * 真实的连接对象
+     */
+    private static Connection realConnection;
+
+    /**
+     * 数据库连接池
+     */
+    private static CustomDataSource dataSource;
+
+    /**
+     * 包访问权限，即在整个包内均可被访问
+     * @param realConnection
+     * @param dataSource
+     */
+    CustomConnection(Connection realConnection,CustomDataSource dataSource){
+        this.realConnection = realConnection;
+        this.dataSource = dataSource;
+    }
+
+    @Override
+    public void close() throws SQLException {
+        dataSource.getPool().addLast(this);
+    }
+
+    @Override
+    public Statement createStatement() throws SQLException {
+        return this.realConnection.createStatement();
+    }
+  
+    // 省略其他方法
+} 
+```
+
+修改数据库连接池的代码：
+
+```java
+    public Connection createConnection() throws SQLException {
+        Connection realConneciton = DriverManager.getConnection(URL,USER,PASSWORD);
+        CustomConnection connection = new CustomConnection(realConneciton,this);
+        return connection;
+    }
+```
+
+在上述代码中我们可以看出我们自定义了一个`Connection`的实现类，并且在连接池中存放的是我们自定义的`Connection`类，这样在进行关闭的时候我们可以将数据库连接存放至连接池中。
+
+##### 动态代理
+
+可以看出，静态代理的机制，在实现上很死板，并且我们需要重复写的东西实在太多了，从`JDK1.3`开始有了一个动态代理机制，我们可以利用该机制来实现我们刚才想要的功能。
