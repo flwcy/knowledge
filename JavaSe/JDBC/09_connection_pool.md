@@ -239,3 +239,61 @@ public class CustomConnection implements Connection {
 ##### 动态代理
 
 可以看出，静态代理的机制，在实现上很死板，并且我们需要重复写的东西实在太多了，从`JDK1.3`开始有了一个动态代理机制，我们可以利用该机制来实现我们刚才想要的功能。
+
+每一个动态代理类都必须要实现`InvocationHandler`这个接口，并且需要通过`Proxy`的`newProxyInstance`方法来创建我们的代理对象：
+
+```java
+package com.flwcy.datasource;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.sql.Connection;
+
+public class ConnectionHandler implements InvocationHandler {
+
+    private Connection realConnection;
+
+    private CustomDataSource dataSource;
+
+    private Connection warpedConnection;
+
+    ConnectionHandler(CustomDataSource dataSource){
+        this.dataSource = dataSource;
+    }
+
+    public Connection bind(Connection realConnection) {
+        this.realConnection = realConnection;
+        this.warpedConnection = (Connection) Proxy.newProxyInstance(this.getClass().getClassLoader(),new Class[]{Connection.class},this);
+        return  warpedConnection;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Object result = null;
+        if(method.getName().equals("close")){
+           this.dataSource.free(this.warpedConnection);
+        } else {
+            result = method.invoke(realConnection,args);
+        }
+        return result;
+    }
+}
+```
+
+修改`DataSource`中创建`Connection`方法
+
+```java
+    public Connection createConnection() throws SQLException {
+        Connection realConnection = DriverManager.getConnection(URL,USER,PASSWORD);
+        // CustomConnection connection = new CustomConnection(realConneciton,this);
+        ConnectionHandler handler = new ConnectionHandler(this);
+        return handler.bind(realConnection);
+    }
+```
+
+可以发现代码简化了好多，并且实现了我们所需要的功能。
+
+#### DBCP 数据库连接池的使用 
+
+写到这里，我们的连接池已经有些接近真实的数据库连接池了，但是其功能还是很单一，健壮性远远不够，不能直接在实际项目中应用，但是通过前面几个小节的讲解和逐步改进，我们最起码了解了什么是数据库连接池，以及连接池或与应该具备怎样的功能，在开源界，连接池框架实在太多了，并且健壮性足够而且还有专门的优秀团队维护，比如 DBCP， C3P0，DbPool 等等。
