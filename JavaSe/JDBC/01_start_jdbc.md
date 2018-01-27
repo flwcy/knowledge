@@ -6,8 +6,6 @@
 ### (一) 初识JDBC
 #### jdbc的概念
 
-
-
 **什么是JDBC?**
 
 **Java语言访问数据库的一种规范,是一套API，JDBC (Java Database Connectivity) API，即Java数据库编程接口，是一组标准的Java语言中的接口和类，使用这些接口和类，Java客户端程序可以访问各种不同类型的数据库。比如建立数据库连接、执行SQL语句进行数据的存取操作。**
