@@ -194,7 +194,7 @@ public class RealSubject implements Subject {
 }
 ```
 
-我们就要定义一个动态代理类了，前面说个，每一个动态代理类都必须要实现`InvocationHandler`这个接口，因此我们这个动态代理类也不例外：
+我们就要定义一个动态代理类了，前面说过，每一个动态代理类都必须要实现`InvocationHandler`这个接口，因此我们这个动态代理类也不例外：
 
 ```java
 package com.flwcy.dynamicproxy;

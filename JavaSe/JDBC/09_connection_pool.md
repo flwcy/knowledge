@@ -297,3 +297,70 @@ public class ConnectionHandler implements InvocationHandler {
 #### DBCP 数据库连接池的使用 
 
 写到这里，我们的连接池已经有些接近真实的数据库连接池了，但是其功能还是很单一，健壮性远远不够，不能直接在实际项目中应用，但是通过前面几个小节的讲解和逐步改进，我们最起码了解了什么是数据库连接池，以及连接池或与应该具备怎样的功能，在开源界，连接池框架实在太多了，并且健壮性足够而且还有专门的优秀团队维护，比如 DBCP， C3P0，DbPool 等等。
+
+项目建好之后，首先需要引入必须的依赖，打开项目的pom.xml，将下面的内容copy到<dependencies>标签内：
+
+```xml
+      <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+      <dependency>
+          <groupId>commons-dbcp</groupId>
+          <artifactId>commons-dbcp</artifactId>
+          <version>1.4</version>
+      </dependency>
+```
+
+在项目的`../src/main/resources/`路径下，新建一个`properties`类型的文件`dbcp.properties`，文件内容如下：
+
+```
+# dbcp配置
+# 参考说明：http://commons.apache.org/proper/commons-dbcp/configuration.html
+username=root
+password=123456
+url=jdbc:mysql://localhost:3306/db_jdbc
+driverClassName=com.mysql.jdbc.Driver
+# 初始连接数
+initialSize=30
+#最大活跃数
+maxTotal=30
+#最大空闲连接数
+maxIdle=10
+#最小空闲连接数
+minIdle=5
+#最长等待时间(毫秒)
+maxWaitMillis=1000
+```
+
+简单的DBCP的示例代码：
+
+```java
+package com.flwcy.datasource;
+
+import org.apache.commons.dbcp.BasicDataSourceFactory;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+public class DBCPDataSource {
+
+    private static DataSource dataSource;
+
+    static {
+        try {
+            Properties properties = new Properties();
+            InputStream in  = DBCPDataSource.class.getClassLoader().getResourceAsStream("dbcp.properties");
+            properties.load(in);
+
+            dataSource = BasicDataSourceFactory.createDataSource(properties);
+        } catch (Exception e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
+    }
+}
+```
+
