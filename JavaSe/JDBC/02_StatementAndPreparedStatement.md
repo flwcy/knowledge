@@ -166,7 +166,7 @@ strSQL = "SELECT * FROM db_user WHERE name = '" + userName + "' and pw = '"+ pas
 ```SQL
 strSQL = "SELECT * FROM db_user WHERE name = 'any_value' or '1' = '1';show tables -- rooike and pw = 'any_value';"
 ```
-**在MySQL中，最后连续的两个减号表示忽略此SQL减号后面的语句.**因为WHERE条件恒为真，这就相当于执行：
+**在MySQL中，最后连续的两个减号表示忽略此SQL减号后面的语句**.因为WHERE条件恒为真，这就相当于执行：
 ```SQL
 strSQL = "SELECT * FROM db_user;SHOW TABLES"
 ```
@@ -189,7 +189,7 @@ strSQL = "SELECT * FROM db_user WHERE name = 'any_value' and pw = ''; DROP TABLE
 - 为了防止恶意数据我们还需要编写附加的程序（过滤器）带来不必要的开支.
 - 拼接 sql 字符串很容易出现错误.
 
-## 参数化查询
+### 参数化查询
 
 SQL Query 1:字符串追加形式的PreparedStatement
 
