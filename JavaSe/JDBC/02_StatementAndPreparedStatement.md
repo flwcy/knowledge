@@ -253,7 +253,7 @@ PreparedStatement是java.sql包下面的一个驱动，PreparedStatement继承�
 ```
 应用程序在创建好PreparedStatement后，DBMS就已经对SQL进行了预编译(数据库对SQL语句的分析，编译，优化已经在第一次查询前完成了)，同时DBMS会把SQL保存到高速缓存中，调用executeupdate()后，DBMS就直接执行SQL语句了，第二次执行时DBMS会直接查询高速缓存，只要高速缓存中还能找到相同的SQL就无需重新对SQL进行语法语义分析了，这样一来， 这种预处理语句查询比普通的查询运行速度更快。另外，传递给PreparedStatement对象的参数可以被强制进行类型转换，使开发人员可以确保在插入或查询数据时与底层的数据库格式相匹配。
 
-在使用参数化查询的情况下，数据库系统（eg:MySQL）不会将参数的内容视为SQL指令的一部分来处理，而是在数据库完成SQL指令的编译后，才套用参数运行，因此，**即使参数里有敏感字符如 or ‘1=1’数据库也会将其作为一个参数来处理，而不会作为一个SQL指令。**因此使用PreparedStatement的参数化的查询可以阻止大部分的SQL注入。为了减少数据库的负载，生产环境中的JDBC代码你应该尽量使用PreparedStatement 。
+在使用参数化查询的情况下，数据库系统（eg:MySQL）不会将参数的内容视为SQL指令的一部分来处理，而是在数据库完成SQL指令的编译后，才套用参数运行，因此，**即使参数里有敏感字符如 or ‘1=1’数据库也会将其作为一个参数来处理，而不会作为一个SQL指令**。因此使用PreparedStatement的参数化的查询可以阻止大部分的SQL注入。为了减少数据库的负载，生产环境中的JDBC代码你应该尽量使用PreparedStatement 。
 
 ### PreparedStatement的优缺点
  为了防止SQL注入攻击，PreparedStatement不允许一个占位符（？）有多个值，在执行有**IN**子句查询的时候这个问题变得棘手起来。下面这个SQL查询使用PreparedStatement就不会返回任何结果
