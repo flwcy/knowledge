@@ -289,7 +289,7 @@ public final class JdbcUtils {
 
 }
 ```
-关于单例模式可以查看[如何正确的写出单例模式](http://blog.csdn.net/mrjjr007/article/details/50966837)，这里我们写一个单例数据库工具类
+关于单例模式可以查看[如何正确的写出单例模式](https://github.com/flwcy/knowledge/blob/master/design_pattern/Singleton_pattern.md)，这里我们写一个单例数据库工具类
 ```java
 package com.rooike.util;
 
