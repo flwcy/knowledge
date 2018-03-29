@@ -1,6 +1,6 @@
 ### DAO层代码重构
 
-在实际项目中，针对不同的业务会有不同的`domain`对象。查看之前的`DAO`层代码：
+在`dao`中,我们经常要做增删改查操作,如果每个对每个业务对象的操作都写一遍,代码量非常庞大。因此，我们可以将`dao`中增删改查分开为两个部分，一些是不变的代码,比如创建局部变量Connection conn,PreparedStatement ps,ResultSet rs等等。
 
 ```java
     public int update(User user) {
@@ -30,7 +30,7 @@
     }
 ```
 
-我们发现代码中存在很多公共的代码（冗余代码），因此我们重构代码时可以考虑将不变的部分和变化的部分区分开来，可以抽离成一个超类，对于变化的部分可以通过参数传递或者子类来实现：
+另外一部分是变化的代码 ，因此我们重构代码时可以考虑将不变的部分和变化的部分区分开来，我们可以将冗余代码抽离成一个超类，对于变化的部分可以通过参数传递或者子类来实现：
 
 ```java
 package com.flwcy.dao.refactor;
@@ -274,7 +274,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
     @Override
-    public User rowMapper(ResultSet resultSet) throws SQLException {
+    public Object rowMapper(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setUserName(resultSet.getString("user_name"));
@@ -286,3 +286,53 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 }
 ```
 
+#### 使用策略模式对模板方法设计模式进行改进
+
+不过上面代码查询的时候存在一个问题:假如我只需要查找`username`这一列的数据,我们必须重写`rowMapper`这个实现，而且不方便，程序不够灵活
+
+```java
+@Override  
+protected Object rowMapper(ResultSet rs) throws SQLException {  
+    return rs.getString("userName");  
+}  
+```
+
+这显然不是我们想要看到的，为了解决这个问题，我们可以使用策略模式来改进我们的程序。
+
+> 在阎宏博士的《JAVA与模式》一书中开头是这样描述策略（Strategy）模式的：
+>
+> 　　**策略模式属于对象的行为模式。其用意是针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。**
+
+在处理`ResultSet`结果集的时候，我们可以使用接口变成，将结果集的操作交给一个接口来处理 
+
+```java
+public Object select(String sql, Object[] args, RowMapper rowMapper) 
+```
+
+其中`RowMapper`这个接口里面只有一个方法 
+
+```
+public Object mapRow(ResultSet rs) throws SQLException
+```
+
+用它来处理我们查询到的结果集 
+
+```
+
+```
+
+这样我们就可以根据不同的需要使用实现了`RowMapper`这个接口的类来处理我们的结果集(在这里我们使用的是匿名类) 
+
+```java
+
+```
+
+ 通过这样的修改程序变得更加灵活了，对于不同的查询我们只需要用相对的策略写一个匿名类就可以 。通过上面例子我们可以总结一下策略模式的优缺点： 
+
+__优点__: 
+1.可以很方便的动态改变算法或行为 
+2.避免使用多重条件转移语句 
+
+__缺点__: 
+1.客户端必须知道所有的策略类，并自行决定使用哪一个策略类。 
+2.造成很多的策略类(实现类)。 
