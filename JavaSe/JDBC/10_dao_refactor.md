@@ -35,68 +35,50 @@
 ```java
 package com.flwcy.dao.refactor;
 
-import com.flwcy.entity.User;
 import com.flwcy.enums.ErrorCode;
 import com.flwcy.exception.DaoException;
 import com.flwcy.util.SelfDbUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseDao {
-    public int update(String sql,Object... args) {
+    /**
+     *
+     * @param sql
+     * @param flag true插入操作,false删除/更新操作
+     * @param args
+     * @return
+     */
+    public int update(String sql,boolean flag,Object... args) {
         int result = -1;
-        if(args.length != 0){
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-
-            try {
-                connection = SelfDbUtils.getInstance().getConnection();
-                statement = connection.prepareStatement(sql);
-                for(int i=0;i<args.length;i++){
-                    statement.setObject(i+1,args[i]);
-                }
-
-                result = statement.executeUpdate();
-            } catch (SQLException e) {
-                throw DaoException.wrap(e, ErrorCode.UPDATE_ERROR);
-            } finally {
-                SelfDbUtils.getInstance().close(connection,statement,resultSet);
-            }
-        }
-
-        return result;
-    }
-
-    public int insert(String sql,Object... args){
-        int result = -1;
-        Integer id = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        if(args.length != 0){
-            try {
-                connection = SelfDbUtils.getInstance().getConnection();
-
-                statement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                for(int i=0;i<args.length;i++){
-                    statement.setObject(i+1,args[i]);
+        try {
+            connection = SelfDbUtils.getInstance().getConnection();
+            statement = (flag) ? connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS) : connection.prepareStatement(sql);
+            if (args != null && args.length > 0) {
+                for(int i = 0; i<args.length; i++){
+                    statement.setObject(i+1, args[i]);
                 }
-
-                result = statement.executeUpdate();
-                resultSet = statement.getGeneratedKeys();
-                if (resultSet.next())
-                    id = resultSet.getInt(1);
-            } catch (SQLException e) {
-                throw DaoException.wrap(e,ErrorCode.INSERT_ERROR);
-            } finally {
-                SelfDbUtils.getInstance().close(connection, statement, resultSet);
             }
+            result = statement.executeUpdate();
+            if(flag) {
+                resultSet = statement.getGeneratedKeys();
+                while (resultSet.next()) {
+                    result = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw DaoException.wrap(e,ErrorCode.UPDATE_ERROR);
+        } finally {
+            SelfDbUtils.getInstance().close(connection,statement,resultSet);
         }
-
-        return id;
+        
+        return result;
     }
-
 }
 ```
 
@@ -125,20 +107,20 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     public int update(User user) {
         String sql = "update db_user set user_name = ?,password = ?,email = ?,birthday = ? where id = ?;";
         Object[] args = new Object[] {user.getUserName(),user.getPassword(),user.getEmail(),user.getBirthday(),user.getId()};
-        return super.update(sql,args);
+        return super.update(sql,false,args);
     }
 
     @Override
     public int insert(User user) {
         String sql = "insert into db_user(user_name,password,email,birthday) values(? , ?, ?, ?)";
         Object[] args = new Object[] {user.getUserName(),user.getPassword(),user.getEmail(),user.getBirthday()};
-        return super.insert(sql,args);
+        return super.update(sql,true,args);
     }
 
     @Override
     public int delete(Integer id) {
         String sql = "delete from db_user where id = ?";
-        return super.update(sql,id);
+        return super.update(sql,false,id);
     }
 }
 ```
@@ -158,103 +140,149 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 ```java
 package com.flwcy.dao.refactor;
 
-import com.flwcy.entity.User;
 import com.flwcy.enums.ErrorCode;
 import com.flwcy.exception.DaoException;
 import com.flwcy.util.SelfDbUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseDao {
-    public int update(String sql,Object... args) {
+    /**
+     *
+     * @param sql
+     * @param flag true插入操作,false删除/更新操作
+     * @param args
+     * @return
+     */
+    public int update(String sql,boolean flag,Object... args) {
         int result = -1;
-        if(args.length != 0){
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-
-            try {
-                connection = SelfDbUtils.getInstance().getConnection();
-                statement = connection.prepareStatement(sql);
-                for(int i=0;i<args.length;i++){
-                    statement.setObject(i+1,args[i]);
-                }
-
-                result = statement.executeUpdate();
-            } catch (SQLException e) {
-                throw DaoException.wrap(e, ErrorCode.UPDATE_ERROR);
-            } finally {
-                SelfDbUtils.getInstance().close(connection,statement,resultSet);
-            }
-        }
-
-        return result;
-    }
-
-    public int insert(String sql,Object... args){
-        int result = -1;
-        Integer id = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        if(args.length != 0){
-            try {
-                connection = SelfDbUtils.getInstance().getConnection();
-
-                statement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                for(int i=0;i<args.length;i++){
-                    statement.setObject(i+1,args[i]);
+        try {
+            connection = SelfDbUtils.getInstance().getConnection();
+            statement = (flag) ? connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS) : connection.prepareStatement(sql);
+            if (args != null && args.length > 0) {
+                for(int i = 0; i<args.length; i++){
+                    statement.setObject(i+1, args[i]);
                 }
-
-                result = statement.executeUpdate();
+            }
+            result = statement.executeUpdate();
+            if(flag) {
                 resultSet = statement.getGeneratedKeys();
-                if (resultSet.next())
-                    id = resultSet.getInt(1);
-            } catch (SQLException e) {
-                throw DaoException.wrap(e,ErrorCode.INSERT_ERROR);
-            } finally {
-                SelfDbUtils.getInstance().close(connection, statement, resultSet);
-            }
-        }
-
-        return id;
-    }
-
-    public Object select(String sql,Object... args){
-        Object result = null;
-        if(args.length != 0){
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-
-            try {
-                connection = SelfDbUtils.getInstance().getConnection();
-                statement = connection.prepareStatement(sql);
-                for(int i=0;i<args.length;i++){
-                    // 占位符从1开始
-                    statement.setObject(i+1,args[i]);
-                }
-                resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    result = rowMapper(resultSet);
+                    result = resultSet.getInt(1);
                 }
-            } catch (SQLException e) {
-                throw DaoException.wrap(e,ErrorCode.SELECT_ERROR);
-            } finally {
-                SelfDbUtils.getInstance().close(connection, statement, resultSet);
             }
+        } catch (SQLException e) {
+            throw DaoException.wrap(e,ErrorCode.UPDATE_ERROR);
+        } finally {
+            SelfDbUtils.getInstance().close(connection,statement,resultSet);
         }
+
         return result;
     }
 
-    protected abstract Object rowMapper(ResultSet resultSet) throws SQLException;
+    /**
+     *
+     * @param sql
+     * @param flag true查询所有,false查询单个结果
+     * @param args
+     * @return
+     */
+    public Object select(String sql,boolean flag,Object... args) {
+        Object result = null;
+        List<Object> list = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
+        try {
+            if(flag)
+                list = new ArrayList<>();
+            connection = SelfDbUtils.getInstance().getConnection();
+            statement = connection.prepareStatement(sql);
+            if (args != null && args.length > 0) {
+                for(int i = 0; i<args.length; i++){
+                    statement.setObject(i+1, args[i]);
+                }
+            }
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result = rowMapper(resultSet);
+                if(flag)
+                    list.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw DaoException.wrap(e, ErrorCode.SELECT_ERROR);
+        } finally {
+            SelfDbUtils.getInstance().close(connection,statement,resultSet);
+        }
+        return (flag) ? list : result;
+    }
+
+    protected abstract Object rowMapper(ResultSet resultSet) throws SQLException;
 }
 ```
 
 修改`UserDaoImpl`的查询方法：
 
 ```java
+package com.flwcy.dao.refactor;
 
+import com.flwcy.dao.UserDao;
+import com.flwcy.entity.User;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+public class UserDaoImpl extends BaseDao implements UserDao {
+    @Override
+    public List<User> selectAll() {
+        String sql = "select id,user_name,password,email,birthday from db_user";
+        return (List<User>) super.select(sql,true,null);
+    }
+
+    @Override
+    public User selectByName(String name) {
+        String sql = "select id,user_name,password,email,birthday from db_user where user_name = ?";
+        return (User) super.select(sql,false,name);
+    }
+
+    @Override
+    public int update(User user) {
+        String sql = "update db_user set user_name = ?,password = ?,email = ?,birthday = ? where id = ?;";
+        Object[] args = new Object[] {user.getUserName(),user.getPassword(),user.getEmail(),user.getBirthday(),user.getId()};
+        return super.update(sql,false,args);
+    }
+
+    @Override
+    public int insert(User user) {
+        String sql = "insert into db_user(user_name,password,email,birthday) values(? , ?, ?, ?)";
+        Object[] args = new Object[] {user.getUserName(),user.getPassword(),user.getEmail(),user.getBirthday()};
+        return super.update(sql,true,args);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        String sql = "delete from db_user where id = ?";
+        return super.update(sql,false,id);
+    }
+
+    @Override
+    public User rowMapper(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setUserName(resultSet.getString("user_name"));
+        user.setPassword(resultSet.getString("password"));
+        user.setEmail(resultSet.getString("email"));
+        user.setBirthday(resultSet.getDate("birthday"));
+        return user;
+    }
+}
 ```
 
