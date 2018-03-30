@@ -317,14 +317,83 @@ public Object mapRow(ResultSet rs) throws SQLException
 
 用它来处理我们查询到的结果集 
 
-```
+```java
+package com.flwcy.dao.refactor;
+
+
+import com.flwcy.enums.ErrorCode;
+import com.flwcy.exception.DaoException;
+import com.flwcy.util.SelfDbUtils;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DaoTemplate {
+
+    /**
+     *
+     * @param sql
+     * @param flag true查询所有,false查询单个结果
+     * @param args
+     * @param rowMapper 将结果集的行组装成对象的接口
+     * @return
+     */
+    public Object select(String sql,boolean flag,RowMapper rowMapper,Object... args) {
+        Object result = null;
+        List<Object> list = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            if(flag)
+                list = new ArrayList<>();
+            connection = SelfDbUtils.getInstance().getConnection();
+            statement = connection.prepareStatement(sql);
+            if (args != null && args.length > 0) {
+                for(int i = 0; i<args.length; i++){
+                    statement.setObject(i+1, args[i]);
+                }
+            }
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result = rowMapper.mapping(resultSet);
+                if(flag)
+                    list.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw DaoException.wrap(e, ErrorCode.SELECT_ERROR);
+        } finally {
+            SelfDbUtils.getInstance().close(connection,statement,resultSet);
+        }
+        return (flag) ? list : result;
+    }
+
+}
 
 ```
 
 这样我们就可以根据不同的需要使用实现了`RowMapper`这个接口的类来处理我们的结果集(在这里我们使用的是匿名类) 
 
 ```java
+    public List<String> selectNamesByBirthday(Date[] dates) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Date date : dates){
+            stringBuilder.append("?,");
+        }
 
+        String sql = "SELECT user_name FROM db_user WHERE birthday IN(" + stringBuilder.deleteCharAt(stringBuilder.length() - 1) +")";
+        List<String> names = (List<String>) new DaoTemplate().select(sql, true, new RowMapper() {
+            @Override
+            public Object mapping(ResultSet resultSet) throws SQLException {
+                return resultSet.getString("user_name");
+            }
+        }, dates);
+
+        return names;
+    }
 ```
 
  通过这样的修改程序变得更加灵活了，对于不同的查询我们只需要用相对的策略写一个匿名类就可以 。通过上面例子我们可以总结一下策略模式的优缺点： 
