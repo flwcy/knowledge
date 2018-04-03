@@ -14,3 +14,6 @@
 
 [javaweb学习总结(三十九)——数据库连接池](https://www.cnblogs.com/xdp-gacl/p/4002804.html)
 
+[十六 JdbcTemplate一](https://blog.csdn.net/yalishadaa/article/details/70199419)
+
+[JDBC学习之路（十二）使用Spring中的JdbcTemple实现数据查询](https://blog.csdn.net/a352193394/article/details/7272550)
