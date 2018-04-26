@@ -112,7 +112,9 @@ public class Singleton {
     }  
 }
 ```
-这种写法仍然使用JVM本身机制保证了线程安全问题；由于 SingletonHolder 是私有的，除了 getInstance() 之外没有办法访问它，因此它是懒汉式的；同时读取实例的时候不会进行同步，没有性能缺陷；也不依赖 JDK 版本。
+> 因为内部静态类是要在有引用了以后才会装载到内存的。所以在你第一次调用`getInstance()`之前，`SingletonHolder`是没有被装载进来的，只有在你第一次调用了`getInstance()`之后，里面涉及到了` return SingletonHolder.INSTANCE; `产生了对`SingletonHolder`的引用，内部静态类的实例才会真正装载。
+
+这种写法仍然使用`JVM`本身机制保证了线程安全问题；由于`SingletonHolder`是私有的，除了`getInstance()`之外没有办法访问它，因此它是懒汉式的；同时读取实例的时候不会进行同步，没有性能缺陷；也不依赖`JDK`版本。
 
 ### 枚举 Enum
 用枚举写单例实在太简单了！这也是它最大的优点。下面这段代码就是声明枚举实例的通常做法。
