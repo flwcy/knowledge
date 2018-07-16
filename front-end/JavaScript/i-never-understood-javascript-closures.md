@@ -109,3 +109,24 @@
 
 #### 一个返回函数的函数
 
+在第一个例子中函数`addTwo`返回的是一个数字。从之前的内容我们记得函数能够返回任何东西。让我们看一个返回函数的函数，因为这对理解闭包很重要。以下是我们要分析的例子。
+
+```JavaScript
+ 1: let val = 7
+ 2: function createAdder() {
+ 3:   function addNumbers(a, b) {
+ 4:     let ret = a + b
+ 5:     return ret
+ 6:   }
+ 7:   return addNumbers
+ 8: }
+ 9: let adder = createAdder()
+10: let sum = adder(val, 8)
+11: console.log('example of function returning a function: ', sum)
+```
+
+让我们回到逐步分解。
+
+1. 第一行，我们在全局上下文中声明了一个变量`val`并将数字`7`分配给这个变量。
+2. 第二到八行，我们在全局上下文中声明了一个变量`createAdder`并将一个函数定义分配给了它。第三到七行描述了函数定义。像之前一样，在这个点，我们并没有跳进这个函数。我们只是将函数定义存储到该变量（`createAdder`）中。
+3. 第九行，我们在全局上下文中声明了一个名为`adder`的新的变量。暂时将`undefined`分配给变量`adder`。
