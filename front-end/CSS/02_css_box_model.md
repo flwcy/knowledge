@@ -95,7 +95,7 @@ a{
 
 盒模型(box model)是CSS中的一个重要概念，它是元素大小的呈现方式。需要记住的是："every element in web design is a rectangular box"。
 
-![box_model.png](../img/html_css_js/box_model.png)
+![box_model.png](../../img/html_css_js/box_model.png)
 
  盒模型包含了内容区域的大小（`width`以及`height`）和元素的内边距`padding`，边框`border`和外边距`margin`。
 
