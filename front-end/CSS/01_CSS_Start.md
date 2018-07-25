@@ -6,13 +6,13 @@
 
 `css`样式由**选择器**和**声明**组成，而**声明**又由**属性**和**值**组成
 
-![ct_css_selector](../img/html_css_js/ct_css_selector.png)
+![ct_css_selector](../../img/html_css_js/ct_css_selector.png)
 
 **选择器：** 通常是您需要改变样式的 HTML 元素。
 
 **声明：** 在英文大括号`{}`中的就是声明，属性和值之间用英文冒号`:`分隔。当有多条声明时，中间可以英文分号`;`分隔；
 
-![ct_css_selector](../img/html_css_js/css_syntax_declaration.png)
+![ct_css_selector](../../img/html_css_js/css_syntax_declaration.png)
 
 [属性](https://developer.mozilla.org/en-US/docs/Glossary/property/CSS)（property）是您希望设置的样式属性（style attribute）。每个属性有一个值。属性和值被`冒号`分开。
 
@@ -67,7 +67,7 @@ selector {property: value}
 1. 浏览器将[HTML](https://developer.mozilla.org/en-US/docs/Glossary/HTML) 和[CSS](https://developer.mozilla.org/en-US/docs/Glossary/CSS) 转化成[DOM](https://developer.mozilla.org/en-US/docs/Glossary/DOM) （*文档对象模型*）。DOM在计算机内存中表示文档。它把文档内容和其样式结合在一起。
 2. 浏览器显示 DOM 的内容。
 
-![rendering.png](../img/html_css_js/rendering.png)
+![rendering.png](../../img/html_css_js/rendering.png)
 
 ### 选择器
 
@@ -214,7 +214,7 @@ CSS的某些样式是具有继承性的，那么什么是继承呢？继承就�
 
 比如下图：如某种颜色应用于p标签，这个颜色设置不仅应用p标签，还应用于p标签中的所有子元素文本，这里子元素为em标签。
 
-![rendering.png](../img/html_css_js/css_inheritance.png)
+![rendering.png](../../img/html_css_js/css_inheritance.png)
 
 > 注意有一些css样式是不具有继承性的。如border:1px solid red;
 >

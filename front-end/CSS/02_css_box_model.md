@@ -83,7 +83,7 @@ a{
 </html>
 ```
 
-![display:inline-block](../img/html_css_js/inline-block.png)
+![display:inline-block](../../img/html_css_js/inline-block.png)
 
 **inline-block元素特点：**
 
@@ -239,7 +239,7 @@ div{ margin:10px 20px;}
 
 **外边距合并（Margin Collapse）**：外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。**合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者**。
 
-![](../img/html_css_js/css_margin_collapsing_example_1.png)
+![](../../img/html_css_js/css_margin_collapsing_example_1.png)
 
 >  **注意：**叠加的只是垂直外边距，水平外边距不叠加。对于水平相邻的元素，它们的水平间距是相邻外边距之和。
 >
@@ -305,7 +305,7 @@ div{
 <div id="div2"></div>
 ```
 
-![css_float_05](../img/html_css_js/css_float_05.jpg)
+![css_float_05](../../img/html_css_js/css_float_05.jpg)
 
 #### 层模型（Layer）
 
@@ -339,7 +339,7 @@ div{
 <div id="div1"></div>
 ```
 
-![position_absolute_02.jpg](../img/html_css_js/position_absolute_02.jpg)
+![position_absolute_02.jpg](../../img/html_css_js/position_absolute_02.jpg)
 
 ##### 层模型——相对定位
 
@@ -362,7 +362,7 @@ div{
 
 效果图：
 
-![position_relative_01.jpg](../img/html_css_js/position_relative_01.jpg)
+![position_relative_01.jpg](../../img/html_css_js/position_relative_01.jpg)
 
 什么叫做“`偏移前的位置保留不动`”呢？查看如下代码的效果：
 
@@ -393,7 +393,7 @@ div{
 
 效果图：
 
-![position_relative_02.jpg](../img/html_css_js/position_relative_02.jpg)
+![position_relative_02.jpg](../../img/html_css_js/position_relative_02.jpg)
 
 从效果图中可以明显的看出，虽然div元素相对于以前的位置产生了偏移，但是div元素以前的位置还是保留着，所以后面的span元素是显示在了div元素以前位置的后面。
 

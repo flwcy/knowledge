@@ -11,7 +11,7 @@ img {float:left; margin:0 4px 4px 0;}
 <p>…the paragraph text…</p>
 ```
 
-![css_float_01](../img/html_css_js/css_float_01.jpg)
+![css_float_01](../../img/html_css_js/css_float_01.jpg)
 
 > 浮动非图片元素时，必须给它设定宽度，否则后果难以预料。图片无所谓，因为它本身有默认的宽度。 
 
@@ -21,9 +21,9 @@ img {float:left; margin:0 4px 4px 0;}
 
 **float的破坏性**是指：设置了float的元素会脱离文档流，会导致父元素塌陷、元素重叠等现象。
 
-![css_float_02](../img/html_css_js/css_float_02.png)
+![css_float_02](../../img/html_css_js/css_float_02.png)
 
-![css_float_03](../img/html_css_js/css_float_03.jpg)
+![css_float_03](../../img/html_css_js/css_float_03.jpg)
 
 #### 包裹性
 
@@ -36,7 +36,7 @@ img {float:left; margin:0 4px 4px 0;}
 </div>
 ```
 
-![css_float_04.png](../img/html_css_js/css_float_04.png)
+![css_float_04.png](../../img/html_css_js/css_float_04.png)
 
 如上图，普通的div如果没有设置宽度，它会撑满整个屏幕。而如果给div增加float:left之后，它突然变得紧凑了，宽度发生了变化，把内容“Phone”包裹了——这就是包裹性。**div设置了float之后，其宽度会自动调整为包裹住内容宽度，而不是撑满整个父容器。**
 
@@ -150,7 +150,7 @@ clear:both;
 
 
 
-![css_float_06.png](../img/html_css_js/css_float_06.png)
+![css_float_06.png](../../img/html_css_js/css_float_06.png)
 
 由于第二段文字下方有空间，所以第三张图片及说明文字会上浮到第二张图片右侧，这不是我们想要的结果。
 

@@ -33,7 +33,7 @@ CSS 布局的核心是`position`属性，对元素盒子应用这个属性，可
 
 效果图：
 
-![css_positioning_relative_example.png](../img/html_css_js/css_positioning_relative_example.png)
+![css_positioning_relative_example.png](../../img/html_css_js/css_positioning_relative_example.png)
 
 > 注意，在使用相对定位时，无论是否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其它框。
 
@@ -62,7 +62,7 @@ CSS 布局的核心是`position`属性，对元素盒子应用这个属性，可
 
 效果如下：
 
-![position_absolute.jpg](../img/html_css_js/position_absolute.png)
+![position_absolute.jpg](../../img/html_css_js/position_absolute.png)
 
 #### 固定定位
 
