@@ -166,7 +166,73 @@ console.log(person1)
 
 因此，当`person1.name`被调用时，JavaScript引擎检查`person1`对象上是否存在该属性。当前情况下，`name`属性并不在`person`对象上。因此，现在JavaScript引擎将检查`person`对象的`dunder proto`或者`prototype`上是否存在`name`属性。当前情况下，`name`属性在`person`对象的`dunder proto`或`prototype`上。于是，输出返回`Ashwin`。
 
+让我们使用`Person`构造函数创建另一个对象`person2`。
 
+```javascript
+var person2 = new Person();
+//Access the name property using the person2 object
+console.log(person2.name)// Output: Ashwin
+```
+
+现在，让我们在对象`person1`上定义一个`name`属性
+
+```javascript
+person1.name = "Anil"
+console.log(person1.name)//Output: Anil
+console.log(person2.name)//Output: Ashwin
+```
+
+这里的`person1.name`输出“Anil”，因为就像之前所提到的那样，JavaScript引擎首先尝试在对象本身上查找属性，在当前情况下，该属性在`person1`中存在，JavaScript引擎输出`person1`的`name`属性的值。
+
+对于`person2`来讲，`name`属性在对象中并不存在，于是，它输出`person2`的`prototype`属性`name`
+
+#### 原型问题
+
+由于原型对象在使用构造函数创建的所有对象之间共享，因此它的属性和方法也在所有对象之间共享。如果一个对象`A`修改了`prototype`的属性的原始值，其他对象将不会受此影响，因为`A`将在其对象上创建属性，如下所示。
+
+```javascript
+console.log(person1.name);//Output: Ashwin
+console.log(person2.name);//Output: Ashwin
+
+person1.name = "Ganguly"
+
+console.log(perosn1.name);//Output: Ganguly
+console.log(person2.name);//Output: Ashwin
+```
+
+> 这里（第1和第二行），`person1`和`person2`都没有`name`属性，于是他们访问原型（peototype）中的name属性，因此两者的输出相同。
+
+ 当`person1`想要为`name`属性设置不同的值时，它会在其对象上创建一个`name`属性。
+
+**考虑另一个示例，当原型对象包含引用类型的属性时，使用`prototypes`显示问题。**
+
+```javascript
+
+//Create an empty constructor function
+function Person(){
+}
+//Add property name, age to the prototype property of the Person constructor function
+Person.prototype.name = "Ashwin" ;
+Person.prototype.age = 26;
+Person.prototype.friends = ['Jadeja', 'Vijay'],//Arrays are of reference type in JavaScript
+Person.prototype.sayName = function(){
+	console.log(this.name);
+}
+
+//Create objects using the Person constructor function
+var person1= new Person();
+var person2 = new Person();
+
+//Add a new element to the friends array
+person1.friends.push("Amit");
+
+console.log(person1.friends);// Output: "Jadeja, Vijay, Amit"
+console.log(person2.friends);// Output: "Jadeja, Vijay, Amit"
+```
+
+在上面的例子中，`person1`和`person2`都指向原型对象中的`friends`数组。`person1`通过在数组中添加另一个字符串来修改`friends`属性。
+
+因为`Person.prototype`上存在`friends`数组。
 
 
 
