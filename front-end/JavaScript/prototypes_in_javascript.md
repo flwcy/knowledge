@@ -232,9 +232,45 @@ console.log(person2.friends);// Output: "Jadeja, Vijay, Amit"
 
 在上面的例子中，`person1`和`person2`都指向原型对象中的`friends`数组。`person1`通过在数组中添加另一个字符串来修改`friends`属性。
 
-因为`Person.prototype`上存在`friends`数组。
+因为`Person.prototype`上存在`friends`数组，而不是在`person1`上，`person1`对象在`friends`属性中所做的修改也会反映到`person2.friends`（指向同一个数组）上。
 
+如果目的是让所有实例共享一个数组，那么这个结果是可以的。但事实并非如此。
 
+#### 结合构造函数/原型
+
+为了解决原型问题和构造函数的问题，我们可以将构造函数和函数结合起来。
+
+1. 构造函数的问题：每个对象都有自己的函数实例。
+2. 原型问题：使用一个对象修改属性也会反映到另一个对象上。
+
+为了解决上述问题，我们可以在构造函数内定义所有对象特定的属性，在原型内定义所有共享属性和方法，如下所示：
+
+```javascript
+//Define the object specific properties inside the constructor
+function Human(name, age){
+	this.name = name,
+	this.age = age,
+	this.friends = ["Jadeja", "Vijay"]
+}
+//Define the shared properties and methods using the prototype
+Human.prototype.sayName = function(){
+	console.log(this.name);
+}
+//Create two objects using the Human constructor function
+var person1 = new Human("Virat", "Kohli");
+var person2 = new Human("Sachin", "Tendulkar");
+
+//Lets check if person1 and person2 have points to the same instance of the sayName function
+console.log(person1.sayName === person2.sayName) // true
+
+//Let's modify friends property and check
+person1.friends.push("Amit");
+
+console.log(person1.friends)// Output: "Jadeja, Vijay, Amit"
+console.log(person2.frinds)//Output: "Jadeja, Vijay"
+```
+
+在上面的例子中，`person2`的`friends`属性并没有伴随着`person1`的`friends`属性的改变而改变。
 
 ![combine_constructoror_prototype](../../img/html_css_js/combine_constructoror_prototype.png)
 
