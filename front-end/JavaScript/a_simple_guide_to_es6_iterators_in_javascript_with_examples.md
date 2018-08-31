@@ -147,3 +147,14 @@ const myFavouriteAuthors = {
 
 #### JavaScript中的迭代
 
+在JavaScript中很多东西是迭代，它可能不会立即可见，但如果你仔细检查，迭代将开始显现。
+
+**这些都是迭代——**
+
++ **Arrays和[TypedArrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)**
++ **Strings**——迭代每个字符或者 [Unicode](https://developer.mozilla.org/en-US/docs/Glossary/Unicode)代码点。
++ **Maps**——迭代每个键值对
++ **Sets**——迭代他们的元素
++ `arguments`——函数中类似数组的特殊变量
++ DOM元素（正在进行中）
+
