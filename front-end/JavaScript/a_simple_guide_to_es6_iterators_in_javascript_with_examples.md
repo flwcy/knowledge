@@ -120,9 +120,9 @@ const myFavouriteAuthors = {
 
 如果我们制定一个**规则**，方法的**名称**和**返回类型**都是**固定的和不可改变的**。该怎么办？
 
-让我们将这个方法命名为——**iteratorMethod。**
+让我们将这个方法命名为——**iteratorMethod**。
 
-**[ECMA](https://en.wikipedia.org/wiki/Ecma_International)**采用类似的步骤来标准化循环自定义对象的过程。但是，ECMA没有使用`iteratorMethod`这个名字，而是使用`Symbol.iterator`这个名字。[Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol)提供唯一且不与其他属性名称冲突的名称。当然，`Symbol.iterator`将会**返回一个叫做`iterator`的对象。**这个`iterator`将会拥有一个名为`next`的方法，它将返回一个键为`value`和`done`的对象。
+[ECMA](https://en.wikipedia.org/wiki/Ecma_International)采用类似的步骤来标准化循环自定义对象的过程。但是，ECMA没有使用`iteratorMethod`这个名字，而是使用`Symbol.iterator`这个名字。[Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol)提供唯一且不与其他属性名称冲突的名称。当然，`Symbol.iterator`将会**返回一个叫做`iterator`的对象**。这个`iterator`将会拥有一个名为`next`的方法，它将返回一个键为`value`和`done`的对象。
 
 `value`键包含当前的值。它可以是任意类型。`done`的类型是boolean，它表示是否已获取所有值。
 
