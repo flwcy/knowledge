@@ -2,7 +2,7 @@
 
 > [A Simple Guide to ES6 Iterators in JavaScript with Examples](https://codeburst.io/a-simple-guide-to-es6-iterators-in-javascript-with-examples-189d052c3d8e)
 
-我们将在本文中分析迭代器。**迭代器是循环JavaScript中任何集合的一种新方法。**它们是在ES6中引入的，由于广泛的用途和在不同的地方使用而变得非常流行。
+我们将在本文中分析迭代器。**迭代器是循环JavaScript中任何集合的一种新方法**。它们是在ES6中引入的，由于广泛的用途和在不同的地方使用而变得非常流行。
 
 我们准备通过例子来从概念上理解迭代器是什么以及在哪里使用它们。我们还将在JavaScript中看到它的一些实现。
 
@@ -65,7 +65,7 @@ const myFavouriteAuthors = {
 }
 ```
 
-现在，`myFavouriteAuthors`是一个包含另一个对象`allAuthors`的对象。`allAuthors`对象包含三个key值为`fiction`，`scienceFiction`和`fantasy`的数组。**现在，如果我要求你循环`myFavouriteAuthors`来获取所有作者，你的方法是什么？**你可以继续尝试一些循环的组合来获取所有的数据。
+现在，`myFavouriteAuthors`是一个包含另一个对象`allAuthors`的对象。`allAuthors`对象包含三个key值为`fiction`，`scienceFiction`和`fantasy`的数组。**现在，如果我要求你循环`myFavouriteAuthors`来获取所有作者，你的方法是什么**？你可以继续尝试一些循环的组合来获取所有的数据。
 
 然而，如果你像这样做的话——
 
@@ -76,7 +76,7 @@ for (let author of myFavouriteAuthors) {
 // TypeError: {} is not iterable
 ```
 
-你会得到一个`TypeError`说这个对象是不可迭代的。**让我们看看什么是迭代，以及如何使对象可迭代。**在这篇文章的结尾，你将了解怎么在自定义对象上使用`for-of`循环，在本例中，在`myFavouriteAuthors`上。
+你会得到一个`TypeError`说这个对象是不可迭代的。**让我们看看什么是迭代，以及如何使对象可迭代**。在这篇文章的结尾，你将了解怎么在自定义对象上使用`for-of`循环，在本例中，在`myFavouriteAuthors`上。
 
 #### 迭代和迭代器
 
@@ -118,7 +118,7 @@ const myFavouriteAuthors = {
 
 开发人员需要知道返回所有数据的方法的**确切名称和返回类型。**
 
-如果我们制定一个**规则**，方法的**名称**和**返回类型**都是**固定的和不可改变的。**该怎么办？
+如果我们制定一个**规则**，方法的**名称**和**返回类型**都是**固定的和不可改变的**。该怎么办？
 
 让我们将这个方法命名为——**iteratorMethod。**
 
@@ -143,7 +143,7 @@ const myFavouriteAuthors = {
 
 在第4行，我们创建了一个迭代器。它是一个默认带有`next`方法的对象。`next`方法通过变量`step`来返回值。在第25行，我们检索迭代器。第27行，我们调用`next`方法。我们一直调用`next`方法直到`done`为`true`为止。
 
-这正是`for-of`循环中发生的事情。`for-of`循环接受一个**迭代（iterable）**，并创建它的**迭代器（iterator）。**它一直调用`next`方法直到`done`为`true`为止。
+这正是`for-of`循环中发生的事情。`for-of`循环接受一个**迭代（iterable）**，并创建它的**迭代器（iterator）**。它一直调用`next`方法直到`done`为`true`为止。
 
 #### JavaScript中的迭代
 
@@ -220,7 +220,7 @@ Map的构造函数将可迭代的[key,value]对转换成Map，Set构造函数将
 const map = new Map([[1, 'one'], [2, 'two']]);
 map.get(1) 
 // one
-const set = new Set(['a', 'b', 'c]);
+const set = new Set(['a', 'b', 'c']);
 set.has('c');
 // true
 ```
