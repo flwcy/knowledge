@@ -158,3 +158,159 @@ const myFavouriteAuthors = {
 + `arguments`——函数中类似数组的特殊变量
 + DOM元素（正在进行中）
 
+**JS中使用迭代的其他一些结构——**
+
++ `for-of`循环——`for-of`循环要求必须可迭代，否则它将会抛出一个`TypeError`
+
+```javascript
+for (const value of iterable) { ... }
+```
+
++ **数组的解构**——因为迭代而发生解构。
+
+让我们来看看如何实现的？
+
+代码如下
+
+```javascript
+const array = ['a', 'b', 'c', 'd', 'e'];
+const [first, ,third, ,last] = array;
+```
+
+等价于
+
+```javascript
+const array = ['a', 'b', 'c', 'd', 'e'];
+const iterator = array[Symbol.iterator]();
+const first = iterator.next().value
+iterator.next().value // Since it was skipped, so it's not assigned
+const third = iterator.next().value
+iterator.next().value // Since it was skipped, so it's not assigned
+const last = iterator.next().value
+```
+
++ **扩展运算符（...）**
+
+代码如下
+
+```javascript
+const array = ['a', 'b', 'c', 'd', 'e'];
+const newArray = [1, ...array, 2, 3];
+```
+
+可写成
+
+```javascript
+const array = ['a', 'b', 'c', 'd', 'e'];
+const iterator = array[Symbol.iterator]();
+const newArray = [1];
+for (let nextValue = iterator.next(); nextValue.done !== true; nextValue = iterator.next()) {
+  newArray.push(nextValue.value);
+}
+newArray.push(2)
+newArray.push(3)
+```
+
++ `Promise.all`和`Promise.race`接受Promises上的迭代
++ **Maps和Sets**
+
+Map的构造函数将可迭代的[key,value]对转换成Map，Set构造函数将可迭代的元素转换成Set——
+
+```javascript
+const map = new Map([[1, 'one'], [2, 'two']]);
+map.get(1) 
+// one
+const set = new Set(['a', 'b', 'c]);
+set.has('c');
+// true
+```
+
++ 迭代器也是理解生成器函数的先驱。
+
+#### 使MyFavouriteAuthors可迭代
+
+这是一个使`myFavouriteAuthors`可迭代的实现。
+
+```javascript
+
+const myFavouriteAuthors = {
+  allAuthors: {
+    fiction: [
+      'Agatha Christie', 
+      'J. K. Rowling',
+      'Dr. Seuss'
+    ],
+    scienceFiction: [
+      'Neal Stephenson',
+      'Arthur Clarke',
+      'Isaac Asimov', 
+      'Robert Heinlein'
+    ],
+    fantasy: [
+      'J. R. R. Tolkien',
+      'J. K. Rowling',
+      'Terry Pratchett'
+    ],
+  },
+  [Symbol.iterator]() {
+    // Get all the authors in an array
+    const genres = Object.values(this.allAuthors);
+    
+    // Store the current genre and author index
+    let currentAuthorIndex = 0;
+    let currentGenreIndex = 0;
+    
+    return {
+      // Implementation of next()
+      next() {
+        // authors according to current genre index
+        const authors = genres[currentGenreIndex];
+        
+        // doNotHaveMoreAuthors is true when the authors array is exhausted.
+        // That is, all items are consumed.
+        const doNothaveMoreAuthors = !(currentAuthorIndex < authors.length);
+        if (doNothaveMoreAuthors) {
+          // When that happens, we move the genre index to the next genre
+          currentGenreIndex++;
+          // and reset the author index to 0 again to get new set of authors
+          currentAuthorIndex = 0;
+        }
+        
+        // if all genres are over, then we need tell the iterator that we 
+        // can not give more values.
+        const doNotHaveMoreGenres = !(currentGenreIndex < genres.length);
+        if (doNotHaveMoreGenres) {
+          // Hence, we return done as true.
+          return {
+            value: undefined,
+            done: true
+          };
+        }
+        
+        // if everything is correct, return the author from the 
+        // current genre and incerement the currentAuthorindex
+        // so next time, the next author can be returned.
+        return {
+          value: genres[currentGenreIndex][currentAuthorIndex++],
+          done: false
+        }
+      }
+    };
+  }
+};
+
+for (const author of myFavouriteAuthors) {
+  console.log(author);
+}
+
+console.log(...myFavouriteAuthors)
+```
+
+借助从文章中获得的知识，你可以轻松的了解迭代器的工作原理。这个逻辑可能有点难以理解。因此，我用代码写了注释。但是，消化和理解概念的最佳方式是在浏览器或者node中使用代码。
+
+如果你还有任何问题，只需要回复这篇文章！参考文献：
+
+- [*ExploringJS*](http://exploringjs.com/es6/ch_iteration.html#sec_iterable-data-sources) *by Dr Axel Rauschmayer.*
+- [*MDN on Iterator Protocol*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterator_protocol)
+
+> 我希望你喜欢这篇帖子！本文由Arfat Salmon专门为[CodeBurst.io](https://codeburst.io/)编写
