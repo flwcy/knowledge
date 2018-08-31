@@ -1,4 +1,4 @@
-﻿# knowledge
+# knowledge
  个人学习总结备份
 
 ### HTML_CSS_JS
@@ -22,6 +22,8 @@
 [[译]我从未理解过的JavaScript闭包](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/i-never-understood-javascript-closures.md)
 
 [[译]JavaScript中的原型](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/prototypes_in_javascript.md)
+
+[[译]JavaScript中ES6迭代器的简单指南和示例](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/a_simple_guide_to_es6_iterators_in_javascript_with_examples.md)
 
 ### 设计模式
 
