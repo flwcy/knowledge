@@ -160,7 +160,7 @@ console.log(person1)
 
 ![person1_has_name_property](../../img/html_css_js/person1_has_name_property.png)
 
-正如我们所看到的，`person1`对象是空的，除了它的`dunder proto`属性之外它没有任何属性。那么**console.log(person1.name)**是怎么输出`Ashwin`的呢？
+正如我们所看到的，`person1`对象是空的，除了它的`dunder proto`属性之外它没有任何属性。那么**console.log(person1.name)** 是怎么输出`Ashwin`的呢？
 
 当我们试图访问对象的一个属性时，JavaScript引擎首先尝试在对象上查找属性；如果属性存在则输出它的值。但是，如果这个属性在对象上不存在，引擎将尝试查找对象的原型对象对象或者`dunder proto`上的属性。如果找到该属性就将它的值返回，否则JavaScript引擎将会尝试在对象的`dunder proto`的`dunder proto`上查找该属性。该链将一直持续到`dunder proto`属性为null为止。这种情况下，输出将是`undefined`。
 
