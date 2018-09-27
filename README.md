@@ -25,6 +25,8 @@
 
 [[译]JavaScript中ES6迭代器的简单指南和示例](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/a_simple_guide_to_es6_iterators_in_javascript_with_examples.md)
 
+[[译]call/apply/bind之间的区别](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/the_differences_between_call_apply_bind.md)
+
 ### 设计模式
 
 [01.如何正确地写出单例模式](https://github.com/flwcy/knowledge/blob/master/design_pattern/Singleton_pattern.md)
