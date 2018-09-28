@@ -2,7 +2,7 @@
 
 > [The Simple Rules to ‘this’ in Javascript](https://codeburst.io/the-simple-rules-to-this-in-javascript-35d97f31bde3)
 
-*一些规则确定JavaScript中的“this“”关键字是什么*
+*一些规则确定JavaScript中的“this”关键字是什么*
 
 确定`this`是什么实际上相当简单。最重要的规则是，`this`在调用函数时通过检查调用它的调用位置来确定的。它遵循这些规则，按优先顺序排列。
 
