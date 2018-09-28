@@ -90,7 +90,7 @@ obj.printThis(); // -> { value: 5, printThis: ƒ }
 
    让我们通过一段代码示例来应用我们的规则。尝试确定两个不同的函数调用中的`this`是什么。
 
-   #### 决定哪个规则适用
+   ##### 决定哪个规则适用
 
    ```javascript
    var obj = {
