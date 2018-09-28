@@ -27,6 +27,8 @@
 
 [[译]call/apply/bind之间的区别](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/the_differences_between_call_apply_bind.md)
 
+[[译]JavaScript中"this"的简单规则](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/the_simple_rules_to_this_in_javascript.md)
+
 ### 设计模式
 
 [01.如何正确地写出单例模式](https://github.com/flwcy/knowledge/blob/master/design_pattern/Singleton_pattern.md)
