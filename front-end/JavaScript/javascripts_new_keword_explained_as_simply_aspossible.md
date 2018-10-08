@@ -57,3 +57,73 @@ function PersonConstructor(name, age) {
 
 1. 创建一个新的对象并将其绑定到`this`关键字。
 2. 设置对象的内部[[Prototype]]属性，`__proto__`设置为构造函数的原型。这也使得新对象的构造函数是原型继承的。
+3. 设置逻辑，以便在函数体中返回除对象、数组或函数之外的任何类型的变量时，返回`this`，返回新构造的对象，而不是函数要返回的内容。
+4. 在函数末尾，如果函数体中没有`return`语句，则返回`this`。
+
+让我们逐一证明这些陈述是有效的。
+
+```javascript
+function Demo() {
+    console.log(this);
+    this.value = 5;
+    return 10;
+}
+/*1*/ var demo = new Demo(); // -> {}
+/*2*/ console.log(demo.__proto__ === Demo.prototype); // -> true
+      console.log(demo.constructor === Demo); // -> true
+/*3*/ console.log(demo); // -> { value: 5 }
+function SecondDemo() {
+    this.val = '2nd demo';
+}
+/*4*/ console.log(new SecondDemo()); // -> { val: '2nd demo' }
+```
+
+如果您不熟悉构造函数或原型，请不要过于担心。您将在继续学习JavaScript时遇到它们。现在，只需要理解由构造函数隐式返回的新对象将能够继承属性和方法。
+
+#### 使用new调用非构造函数
+
+如果我们使用`new`调用一个像`personFn`这样的普通函数会发生什么？没什么特别的。适用相同的规则。对于`personFn`来说，我们看不到任何明确的事情发生。
+
+```javascript
+var alex = new personFn('Alex', 30);
+// -> { name: 'Alex', age: 30 }
+```
+
+为什么？让我们在`personFn`中添加我们的隐式代码。
+
+```javascript
+function personFn(name, age) {
+    // this = {};
+    // this.constructor = PersonConstructor;
+    // this.__proto__ = PersonConstructor.prototype;
+
+    // 设置如下逻辑: 如果这里有一个return语句
+    // 在函数体中返回除了一个对象，数组或者函数之外的
+    // 任意东西：返回“this”（最新的构造对象）而不是return语句；
+    var personObj = {};
+    personObj.name = name;
+    personObj.age = age;
+    
+    return personObj;
+    
+    // return this;
+}
+```
+
+隐式代码仍然添加在：
+
++ 它将`this`绑定到一个新对象并设置其构造函数和原型。
++ 它添加了返回`this`而不是非对象的逻辑。
++ 它在最后添加了一个隐含的`return this`。
+
+这不会影响我们的代码，因为我们在代码中没有使用`this`关键字。我们还明确地返回一个对象，`personObj`，所以返回逻辑并`return this`没有用。实际上，使用`new`来调用我们的函数对输出没有影响。如果我们使用`new`或者我们并没有返回一个对象，当使用或不使用`new`时，函数将具有不同的效果。
+
+如果觉得这篇文章对您有用，请打心和免费订阅和阅读我的其他文章。
+
+[Master Map & Filter, Javascript’s Most Powerful Array Functions](https://codeburst.io/array-functions-map-filter-18a6e5f75da1)
+
+[Master the Power Behind Javascript’s Logical Operators](https://codeburst.io/javascript-and-logical-operators-89b2ac3409f8)
+
+[Master Javascript’s New, Cutting-Edge Object Spread Operator](https://codeburst.io/master-javascripts-object-spread-operator-3803430e99aa)
+
+**仅此而已，去写一些代码。**
