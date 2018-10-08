@@ -118,7 +118,7 @@ function personFn(name, age) {
 
 这不会影响我们的代码，因为我们在代码中没有使用`this`关键字。我们还明确地返回一个对象，`personObj`，所以返回逻辑并`return this`没有用。实际上，使用`new`来调用我们的函数对输出没有影响。如果我们使用`new`或者我们并没有返回一个对象，当使用或不使用`new`时，函数将具有不同的效果。
 
-如果觉得这篇文章对您有用，请打心和免费订阅和阅读我的其他文章。
+如果觉得这篇文章对您有用，请点击❤，并随时订阅和查看我的其他一些文章。
 
 [Master Map & Filter, Javascript’s Most Powerful Array Functions](https://codeburst.io/array-functions-map-filter-18a6e5f75da1)
 
@@ -126,4 +126,4 @@ function personFn(name, age) {
 
 [Master Javascript’s New, Cutting-Edge Object Spread Operator](https://codeburst.io/master-javascripts-object-spread-operator-3803430e99aa)
 
-**仅此而已，去写一些代码。**
+**仅此而已，去写一些代码吧。**

@@ -29,6 +29,8 @@
 
 [[译]JavaScript中"this"的简单规则](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/the_simple_rules_to_this_in_javascript.md)
 
+[[译]尽可能简单的解释JavaScript的“new”关键字](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/javascripts_new_keword_explained_as_simply_aspossible.md)
+
 ### 设计模式
 
 [01.如何正确地写出单例模式](https://github.com/flwcy/knowledge/blob/master/design_pattern/Singleton_pattern.md)
