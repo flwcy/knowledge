@@ -20,7 +20,7 @@
 
 
 
-[JavaScript继承方式详解](https://segmentfault.com/a/1190000002440502)
+[](https://segmentfault.com/a/1190000002440502)
 
 [【优雅代码】深入浅出 妙用Javascript中apply、call、bind](https://www.cnblogs.com/coco1s/p/4833199.html)
 
