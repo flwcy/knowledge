@@ -1,4 +1,4 @@
- 待总结阅读的博客
+﻿ 待总结阅读的博客
 
 ### TODO_READ
 
@@ -20,14 +20,16 @@
 
 
 
-[](https://segmentfault.com/a/1190000002440502)
-
-[【优雅代码】深入浅出 妙用Javascript中apply、call、bind](https://www.cnblogs.com/coco1s/p/4833199.html)
-
 [Master JavaScript Prototypes & Inheritance](https://codeburst.io/master-javascript-prototypes-inheritance-d0a9a5a75c4e)
+
+[Explaining Value vs. Reference in Javascript](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 
 [Master the JavaScript Interview: What’s the Difference Between Class & Prototypal Inheritance?](https://medium.com/javascript-scene/master-the-javascript-interview-what-s-the-difference-between-class-prototypal-inheritance-e4cd0a7562e9)
 
 [JavaScript深入之继承的多种方式和优缺点](https://github.com/mqyqingfeng/Blog/issues/16)
 
-[JS实现继承的几种方式](http://www.cnblogs.com/humin/p/4556820.html)
+[JavaScript — Inheritance, delegation patterns and Object linking](https://codeburst.io/javascript-inheritance-25fe61ab9f85)
+
+[JavaScript Arrow Functions: How, Why, When (and WHEN NOT) to Use Them](https://codeburst.io/javascript-arrow-functions-how-why-when-and-when-not-to-use-them-fb8c2de9dbdc)
+
+[3 Different Kinds of Prototypal Inheritance: ES6+ Edition](https://medium.com/javascript-scene/3-different-kinds-of-prototypal-inheritance-es6-edition-32d777fa16c9)
