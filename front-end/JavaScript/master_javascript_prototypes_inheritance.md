@@ -5,3 +5,49 @@
 #### 继承
 
 继承指的是对象从另一个对象访问方法和其他属性的能力。对象能够从其他对象中继承东西。JavaScript中的继承是通过一种叫做原型的东西来工作的，这种继承形式通常称为原型继承。
+
+在这篇文章中，我们将介绍许多看似无关的主题，并在最后将它们联系在一起。最后还有一个太长(若)不看(请看这里)，给那些想要简短版本的人。
+
+#### 对象，数组和函数
+
+JavaScript给我们提供了三个全局函数：`Object`，`Array`和`Function`。是的，它们都是函数。
+
+```javascript
+console.log(Object); // -> ƒ Object() { [native code] }
+console.log(Array); // -> ƒ Array() { [native code] }
+console.log(Function); // -> ƒ Function() { [native code] }
+```
+
+您不知道它，但每次创建对象字面量时，JavaScript引擎就会有效地调用`new Object()`。一个对象字面量是一个通过编写`{}`创建的对象，如`var obj = {};`。因此，对象字面量是对`Object`的隐式调用。
+
+数组和函数也是如此。我们可以认为数组来自`Array`构造函数，而函数来自`Function`构造函数。
+
+#### 对象原型
+
+##### `__proto__`
+
+所有的JavaScript对象都有一个原型。浏览器通过`__proto__`属性实现原型，这就是我们引用它的方式。这通常被成为`dunder proto`，双下划线原型的简写。永远不要重新分配这个属性或直接使用它。`__proto__`的[MDN页面](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/proto)用红色的大方块警告我们永远不要这样做。
+
+##### 原型
+
+函数还有一个`prototype`属性。这不同于它们的`__proto__`属性。这使得讨论相当混乱，因此我将阐明我将使用的语法。当我提到原型并且`prototype`这个词没有突出显示为灰色时，我指的是`__proto__`属性。当我使用灰色的`prototype`时，我指的是函数的`prototype`属性。
+
+如果我们在Chrome中记录对象的原型，这就是我们所看到的。
+
+```javascript
+var obj = {};
+console.log(obj.__proto__);
+// -> {constructor: ƒ, __defineGetter__: ƒ, …}
+```
+
+`__proto__`属性是对另一个具有多个属性的对象的[引用](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)。我们创建的每个对象字面量都有`__proto__`属性指向同一个对象。一个对象字面量是一个通过编写`{}`创建的对象，如`var obj = {};`。
+
+有几点很重要：
+
++ 对象字面量的`__proto__`等于`Object.prototype`
++ `Object.prototype`的`__proto__`是`null`
+
+我们很快就会解释原因。
+
+#### 原型链
+
