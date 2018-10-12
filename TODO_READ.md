@@ -33,3 +33,9 @@
 [JavaScript Arrow Functions: How, Why, When (and WHEN NOT) to Use Them](https://codeburst.io/javascript-arrow-functions-how-why-when-and-when-not-to-use-them-fb8c2de9dbdc)
 
 [3 Different Kinds of Prototypal Inheritance: ES6+ Edition](https://medium.com/javascript-scene/3-different-kinds-of-prototypal-inheritance-es6-edition-32d777fa16c9)
+
+
+
+
+
+[我如何零基础转行成为一个自信的前端](https://juejin.im/post/5bb9aed1e51d451a3f4c3923)
