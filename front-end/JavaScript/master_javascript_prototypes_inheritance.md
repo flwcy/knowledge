@@ -55,3 +55,40 @@ console.log(obj.__proto__);
 
 如果没有找到，它将转到原型的原型，直到找到一个`__proto__`属性等于`null`的对象。因此，如果我们试图从上面的obj对象上查找属性`someProperty`，引擎将首先检查对象本身。
 
+它找不到它，然后转到它的`__proto__`对象，它等于`Object.prototype`。它也不会在那里找到它，当看到下一个`__proto__`是`null`时，它将返回`undefined`。
+
+这被称为原型链，它通常被描述为一个向下的链条，在顶部是`null`，在底部是我们使用的对象。
+
+执行查找时，引擎将遍历链查找属性并返回它找到的第一个属性，如果原型链中没有，则为`undefined`。
+
+```javascript
+__proto__ === null
+|
+|
+__proto__ === Object.prototype
+|
+|
+{ object literal }
+```
+
+这可以证明。在这里，我们将直接使用`__proto__`进行演示。再说一次，永远不要这样做。
+
+```javascript
+var obj = {};
+obj.__proto__.testValue = 'Hello!';
+console.log(obj); // -> {}
+console.log(obj.testValue); // -> Hello!
+```
+
+该原型链如下所示。
+
+```javascript
+__proto__ === null
+|
+|
+__proto__ === Object.prototype -> testValue: 'Hello!'
+|
+|
+obj
+```
+
