@@ -92,3 +92,28 @@ __proto__ === Object.prototype -> testValue: 'Hello!'
 obj
 ```
 
+当我们打印`obj`时，我们得到一个空对象，因为`testValue`没有直接显示在对象上。然而，打印`obj.testValue`会触发查找。引擎沿着原型链向上，在对象的原型上找到`testValue`，然后我们看到这个值打印出来。
+
+#### hasOwnProperty
+
+在对象上有一个方法叫做`hasOwnProperty`。它将根据对象本身是否包含被测试的属性返回`true`或`false`。但是，测试`__proto__`将始终返回`false`。
+
+```javascript
+var obj = {};
+obj.__proto__.testValue = 'Hello!';
+console.log(obj.hasOwnProperty('testValue'));
+// -> false
+console.log(obj.__proto__.hasOwnProperty('testValue'));
+// -> true
+```
+
+#### 函数原型
+
+如上所述，函数都有一个与`__proto__`属性不同的`prototype`属性。它是一个对象。一个函数的`prototype`的`__proto__`属性等于`Object.prototype`。换一种说法：
+
+```javascript
+function fn() {}
+console.log(fn.prototype.__proto__ === Object.prototype);
+// -> true
+```
+
