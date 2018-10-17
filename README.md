@@ -31,6 +31,8 @@
 
 [[译]尽可能简单的解释JavaScript的“new”关键字](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/javascripts_new_keword_explained_as_simply_aspossible.md)
 
+[[译]掌握JavaScript原型和继承](https://github.com/flwcy/knowledge/blob/master/front-end/JavaScript/master_javascript_prototypes_inheritance.md)
+
 ### 设计模式
 
 [01.如何正确地写出单例模式](https://github.com/flwcy/knowledge/blob/master/design_pattern/Singleton_pattern.md)
