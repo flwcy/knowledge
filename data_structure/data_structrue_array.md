@@ -98,7 +98,7 @@ public class Array {
 
 图解：
 
-![data-structure-array](../img/data_structure/data-structure-array4.jpg)
+![向数组末位添加元素](../img/data_structure/data-structure-array4.jpg)
 
 代码如下：
 
@@ -125,7 +125,7 @@ public class Array {
 
 图解：
 
-![data-structure-array5](../img/data_structure/data-structure-array5.jpg)
+![向指定位置添加元素](../img/data_structure/data-structure-array5.jpg)
 
 代码如下：
 
@@ -166,8 +166,223 @@ public class Array {
     }
 ```
 
+#### get/set
+
+现在我们可以往数组中添加元素，那么也可以尝试查询数组中的元素以及修改数组中的元素。
+
+```java
+    /**
+     * 获取指定索引的元素值
+     * @param index
+     * @return
+     */
+    public int get(int index) {
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Get failed. Index is illegal.");
+        return data[index];
+    }
+
+    /**
+     * 修改指定索引的元素值
+     * @param index
+     * @param ele
+     */
+    public void set(int index,int ele) {
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Set failed. Index is illegal.");
+        data[index] = ele;
+    }
+```
+
+这也解决了我们之前提出的问题：如何表示没有的元素？通过`private`隐藏`data`，通过封装的方式保证数据安全，用户永远无法访问没有使用的空间。
+
+在很多时候，我们在数据结构中存储了一些元素，我们需要查找在这些元素中是否包含某个元素，搜索元素所在的位置。
+
+```java
+    /**
+     * 判断数组中是否存在某元素
+     * @param ele
+     * @return
+     */
+    public boolean contains(int ele) {
+        for(int i=0; i<size; i++) {
+            if(data[i] == ele)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 查找数组中元素所在的索引，如果不存在，则返回-1
+     * @param ele
+     * @return
+     */
+    public int find(int ele) {
+        for(int i=0; i<size; i++) {
+            if(data[i] == ele)
+                return i;
+        }
+        return -1;
+    }
+```
+
+#### 删除数组中的元素
+
+现在让我们来看一下如何从数组中删除指定位置的元素。比如说在我们的数组中有66,77,88,99,100这五个元素，指定了想删除索引为1的元素(77)。
+
+分析：我们想要删除索引为1前，需要将这个索引后的所有元素向左移动（其实相当于把索引1的元素覆盖掉）
+
++ 将索引为2的元素移动到索引为1的位置上，即`data[1] = data[2]`
++ 如此反复……，直至`data[size–1] = data[size]`
++ 最后维护下`size`，进行`size–-`操作
+
+图解：![删除指定位置元素](../img/data_structure/data-structure-array6.jpg)
+
+代码入下：
+
+```java
+/**
+     * 从数组中删除index位置的元素
+     * @param index
+     * @return  被删除的元素
+     */
+    public int remove(int index) {
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Remove failed.Index is illegal");
+        int res = data[index];
+        for(int i=index + 1; i<size; i++) {
+            data[i - 1] = data[i];
+        }
+        size--;
+        return res;
+    }
+```
+
+同理，我们可以复用这个方法，构建删除指定元素`removeElement`,删除第一个元素`removeFirst`，删除最后一个元素`removeLast`：
+
+```java
+    /**
+     * 删除指定元素
+     * @param ele
+     * @return
+     */
+    public int removeElement(int ele) {
+        for(int i=0; i<size; i++) {
+            if(data[i] == ele) {
+                remove(i);
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 删除第一个元素
+     * @return
+     */
+    public int removeFirst() {
+        return remove(0);
+    }
+
+    /**
+     * 删除最后一个元素
+     * @return
+     */
+    public int removeLast() {
+        return remove(size - 1);
+    }
+```
+
+#### 动态数组
+
+目前为止所实现的数组类，有一个非常严重的局限性，由于内部使用的是一个静态数组，内部容量有限。在实际使用的时候，我们往往无法预估要在这个数组中存入多少个元素。
+
+##### 解决方案
+
+在这种情况下，如果容量首次开太大，可能会浪费很多空间，但容量太小，又有可能不够用。这时候，需要有一种解决方案使得这个数组的容量是**可伸缩的**，也就是所谓的**动态数组**。
+
+##### 思路
+
+1. 首先，原数组data，容量capacity为4，数组中元素size为4
+2. 然后新开一个数组new data(原数组data)，开的空间要比原来大一些(从4–>8)
+3. 遍历原数组data，赋值到new data中。此时容量capacity为8，数组中的元素size为4
+4. 本身data指向4个空间的数组，现在指向8个空间的数组(new data也指向它)
+
+图解：![dynamic_array.jpg](../img/data_structure/dynamic_array.jpg)
+
+总结：整个过程封装在一个函数内，对于`new data`这个变量在函数执行完便失效了，而`data`由于是类的成员变量，与整个类的生存周期一致(只要类还在使用，`data`就是有效的)。
+
+对于原来4个空间的数组，由于没有对象指向它，所以利用java的垃圾回收机制将其回收。
+
+##### 代码实现
+
+修改`add`方法：
+
+```java
+    /**
+     * 在指定位置添加元素
+     * @param index
+     * @param ele
+     */
+    public void add(int index,E ele) {
+        if(index < 0 || index > size)
+            throw new IllegalArgumentException("Add failed. Require index >= 0 and index <= size.");
+        if(size == data.length)
+            resize(2 * data.length);
+        // 从最后一个元素开始向后挪动一个位置
+        for(int i = size - 1; i >= index; i--)
+            data[i + 1] = data[i];
+        data[index] = ele;
+        size++;
+    }
+```
+
+编写`resize`方法：
+
+```java
+    /**
+     * 将数组空间的容量变成newCapacity大小
+     * @param newCapacity
+     */
+    private void resize(int newCapacity) {
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i=0; i<size; i++) {
+            newData[i] = data[i];
+        }
+        data = newData;
+    }
+```
+
+同理可以修改`remove`方法：
+
+```java
+    /**
+     * 从数组中删除index位置的元素
+     * @param index
+     * @return  被删除的元素
+     */
+    public E remove(int index) {
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Remove failed.Index is illegal");
+        E res = data[index];
+        for(int i=index + 1; i<size; i++) {
+            data[i - 1] = data[i];
+        }
+        size--;
+        data[size] = null; // loitering objects != memory leak
+
+        if(size == data.length / 2)
+            resize(data.length / 2);
+        return res;
+    }
+```
+
+#### 简单的时间复杂度分析
 
 
-https://loubobooo.com/2018/07/21/%E5%88%9D%E5%AD%A6%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/
+
+#### 参考阅读
+
+[初学数据结构-数组](https://loubobooo.com/2018/07/21/初学数据结构-数组/)
 
 https://www.jianshu.com/p/7b93b3570875
