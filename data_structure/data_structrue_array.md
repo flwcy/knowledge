@@ -141,8 +141,8 @@ public class Array {
         if(size == data.length)
             throw new IllegalArgumentException("Add failed. Array is full");
         // 从最后一个元素开始向后挪动一个位置
-        for(int i = size; i >= index; i--)
-            data[i] = data[i - 1];
+        for(int i = size - 1; i >= index; i--)
+            data[i + 1] = data[i];
         data[index] = ele;
         size++;
     }
