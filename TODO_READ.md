@@ -1,4 +1,4 @@
-﻿ 待总结阅读的博客
+ 待总结阅读的博客
 
 ### TODO_READ
 
@@ -19,10 +19,6 @@
 [JDBC学习之路（十二）使用Spring中的JdbcTemple实现数据查询](https://blog.csdn.net/a352193394/article/details/7272550)
 
 [Mastering the JavaScript this Keyword – Detailed Guide](https://www.thecodingdelight.com/javascript-this/#ftoc-heading-2)
-
-[What is lexical scope?](https://stackoverflow.com/questions/1047454/what-is-lexical-scope)
-
-[What is Lexical Scope Anyway?](http://astronautweb.co/javascript-lexical-scope/)
 
 [this: 嘿嘿嘿，你怕不怕我？](https://github.com/lizhongzhen11/lizz-blog/issues/8)
 
