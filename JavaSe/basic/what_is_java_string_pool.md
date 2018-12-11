@@ -54,3 +54,10 @@ s1 == s3 :false
 String str = new String("Cat");
 ```
 
+在上面的语句中，将创建1或者2个字符串。如果池中已存在一个字符串文字"Cat"，那么只会在堆空间中创建一个`str`的`String`对象。如果池中不存在字符串文字"Cat"，那么它将首先在池中创建，然后在对空间中创建，因此总共将创建2个字符串对象。
+
+**阅读**: [Java字符串面试问题](https://www.journaldev.com/1321/java-string-interview-questions-and-answers)
+
+#### Read More
+
+[Questions about Java's String pool](https://stackoverflow.com/questions/1881922/questions-about-javas-string-pool)
