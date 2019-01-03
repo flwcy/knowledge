@@ -493,12 +493,12 @@ public class UserService {
 >
 > 最后，如果你不知道要在项目的业务层采用`@Service`还是`@Component`注解。那么，`@Service`是一个更好的选择。
 >
-> | 注解        | 含义                                         |
-> | ----------- | -------------------------------------------- |
+> | 注解          | 含义                        |
+> | ----------- | ------------------------- |
 > | @Component  | 最普通的组件，可以被注入到spring容器进行管理 |
-> | @Repository | 作用于持久层                                 |
-> | @Service    | 作用于业务逻辑层                             |
-> | @Controller | 作用于表现层（spring-mvc的注解）             |
+> | @Repository | 作用于持久层                    |
+> | @Service    | 作用于业务逻辑层                  |
+> | @Controller | 作用于表现层（spring-mvc的注解）     |
 
 ##### 事务管理配置
 
@@ -667,5 +667,5 @@ public class UserServiceTest {
 
 ##### Controller层代码编写
 
-
+https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#jetty-run-goal
 
