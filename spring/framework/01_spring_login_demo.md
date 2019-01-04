@@ -12,7 +12,7 @@ CREATE TABLE `t_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_name` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL unique COMMENT '用户名',
   `password` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '密码',
-	`crodits` int(11) DEFAULT NULL COMMENT '积分',
+	`credits` int(11) DEFAULT NULL COMMENT '积分',
 	`last_ip` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '最后登录IP',
 	`last_visit` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后访问时间',
   PRIMARY KEY (`user_id`)
@@ -74,7 +74,7 @@ public class User {
     /**
      * 积分
      */
-    private Integer crodits;
+    private Integer credits;
 
     /**
      * 最后登录的ip地址
@@ -135,7 +135,7 @@ public class LoginLog {
     </dependency>
 ```
 
-#### 数据访问层
+#### Dao
 
 ##### 添加相关依赖
 
@@ -195,17 +195,17 @@ import java.util.List;
 
 /**
  * @Description: UserDao
- * @author: flwcy
- * @date: 2019/1/2 10:16
+ * @author flwcy
+ * @date 2019/1/2 10:16
  */
 @Repository
 public class UserDao {
 
     private static final String SELECT_BY_USER_NAME_SQL = "select * from t_user where user_name = ?";
 
-    private static final String UPDATE_USER_SQL = "update t_user set user_name=?,password=?,crodits=?,last_ip=?,last_visit=? where user_id=?;";
+    private static final String UPDATE_USER_SQL = "update t_user set user_name=?,password=?,credits=?,last_ip=?,last_visit=? where user_id=?;";
 
-    private static final String INSERT_USER_SQL = "insert into t_user(user_name,`password`,crodits,last_ip,last_visit) values(?,?,?,?,?);";
+    private static final String INSERT_USER_SQL = "insert into t_user(user_name,`password`,credits,last_ip,last_visit) values(?,?,?,?,?);";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -225,7 +225,7 @@ public class UserDao {
                 u.setUserId(rs.getInt("user_id"));
                 u.setUserName(userName);
                 u.setPassword(rs.getString("password"));
-                u.setCrodits(rs.getInt("crodits"));
+                u.setCredits(rs.getInt("credits"));
                 return u;
             }
         });
@@ -236,7 +236,7 @@ public class UserDao {
     public int insert(User user) {
         int result = 0;
         if(user != null) {
-            result = jdbcTemplate.update(INSERT_USER_SQL,new Object[]{user.getUserName(),user.getPassword(),user.getCrodits(),user.getLastIp(),user.getLastVisit()});
+            result = jdbcTemplate.update(INSERT_USER_SQL,new Object[]{user.getUserName(),user.getPassword(),user.getCredits(),user.getLastIp(),user.getLastVisit()});
         }
         return result;
     }
@@ -244,7 +244,7 @@ public class UserDao {
     public int update(User user) {
         int result = 0;
         if(user != null) {
-            result = jdbcTemplate.update(UPDATE_USER_SQL,new Object[]{user.getUserName(),user.getPassword(),user.getCrodits(),user.getLastIp(),user.getLastVisit(),user.getUserId()});
+            result = jdbcTemplate.update(UPDATE_USER_SQL,new Object[]{user.getUserName(),user.getPassword(),user.getCredits(),user.getLastIp(),user.getLastVisit(),user.getUserId()});
         }
 
         return result;
@@ -378,7 +378,7 @@ public class UserDaoTest {
         User user = new User();
         user.setUserName("flwcy");
         user.setPassword("123456");
-        user.setCrodits(0);
+        user.setCredits(0);
         user.setLastIp("127.0.0.1");
         user.setLastVisit(new Date());
         userDao.insert(user);
@@ -389,7 +389,7 @@ public class UserDaoTest {
         User user = new User();
         user.setUserName("flwcy");
         user.setPassword("123456");
-        user.setCrodits(5);
+        user.setCredits(5);
         user.setUserId(1);
         user.setLastIp("127.0.0.1");
         user.setLastVisit(new Date());
@@ -436,7 +436,7 @@ public class LoginLogDaoTest {
 }
 ```
 
-#### 业务层
+#### Service
 
 ##### service层代码编写
 
@@ -471,7 +471,7 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class)
     public void loginSuccess(User user) {
-        user.setCrodits(user.getCrodits() + 5);
+        user.setCredits(user.getCredits() + 5);
         userDao.update(user);
         LoginLog loginLog = new LoginLog();
         loginLog.setUserId(user.getUserId());
@@ -596,7 +596,7 @@ public class UserServiceTest {
         User user = new User();
         user.setUserName("flwcy");
         user.setPassword("123456");
-        user.setCrodits(15);
+        user.setCredits(15);
         user.setUserId(1);
         user.setLastIp("127.0.0.1");
         user.setLastVisit(new Date());
@@ -605,7 +605,7 @@ public class UserServiceTest {
 }
 ```
 
-#### 展示层
+#### Controller
 
 ##### 配置Spring MVC框架
 
@@ -643,7 +643,7 @@ public class UserServiceTest {
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value></param-value>
+            <param-value>classpath*:spring-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -653,6 +653,8 @@ public class UserServiceTest {
         <url-pattern>.html</url-pattern>
     </servlet-mapping>
 ```
+
+> 该`DispatcherServlet`默认使用`WebApplicationContext`作为上下文，Spring默认配置文件为`/WEB-INF/[servlet-name]-servlet.xml`。因此我们可以通过添加`init-param`来初始化上下文。
 
 引入依赖
 
@@ -666,6 +668,147 @@ public class UserServiceTest {
 ```
 
 ##### Controller层代码编写
+
+首先编写`LoginController`来处理用户的登录请求：
+
+```java
+package com.flwcy.sl.controller;
+
+import com.flwcy.sl.entity.User;
+import com.flwcy.sl.service.UserService;
+import com.flwcy.sl.vo.LoginVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+
+/**
+ * 登录模块
+ * @author flwcy
+ * @date 2019/1/3 14:04
+ */
+@Controller
+public class LoginController {
+
+    @Autowired
+    UserService userService;
+
+    @RequestMapping(value = "/index.html")
+    public String loginPage(){
+        return "login";
+    }
+
+    @RequestMapping(value = "/loginCheck.html")
+    public ModelAndView loginCheck(HttpServletRequest request, LoginVO loginVO){
+        User user = userService.selectByUserName(loginVO.getUserName());
+        if(user == null) {
+            ModelAndView mav = new ModelAndView("login");
+            mav.addObject("error","用户名错误");
+            return mav;
+        } else {
+            user.setLastIp(request.getLocalAddr());
+            user.setLastVisit(new Date());
+            userService.loginSuccess(user);
+            return new ModelAndView("main");
+        }
+    }
+}
+```
+
+##### maven配置jetty插件
+
+在`pom.xml`中配置`jetty`插件来运行项目，配置参考[文档](https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#jetty-run-goal)：
+
+```xml
+  <build>
+    <plugins>
+      <!-- jetty插件 -->
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.14.v20181114</version>
+        <configuration>
+          <httpConnector>
+            <port>8088</port>
+          </httpConnector>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <webApp>
+            <contextPath>/spring-login</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+```
+
+使用`jetty:run`就可以启动项目了。
+
+#### View
+
+后端代码基本编写完成了，我们需要集成`View`层的代码。参考[官方文档](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-view-jsp)：
+
+> 对于`JSP`页面你需要一个视图解析器来解析。最常用的`JSP`视图解析器是`InternalResourceViewResolver`和`ResourceBundleViewResolver`。`InternalResourceBundleViewResolver`可以配置成使用`JSP`页面。作为好的实现方式，强烈推荐你将`JSP`文件放在`WEB-INF`下的一个目录中，这样客户端就不会直接访问到它们。
+
+```xml
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    <property name="prefix" value="/WEB-INF/jsp/"/>
+    <property name="suffix" value=".jsp"/>
+</bean>
+```
+
+登录界面`login.jsp`代码如下：
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<html>
+	<head>
+		<title>Spring论坛登录</title>
+	</head>
+	<body>
+		<c:if test="${!empty error}">
+	        <font color="red"><c:out value="${error}" /></font>
+		</c:if>        
+		<form action="<c:url value="loginCheck.html"/>" method="post">
+			用户名：
+			<input type="text" name="userName">
+			<br>
+			密 码：
+			<input type="password" name="password">
+			<br>
+			<input type="submit" value="登录" />
+			<input type="reset" value="重置" />
+		</form>
+	</body>
+</html>
+```
+
+欢迎界面`index.jsp`代码如下：
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Spring论坛</title>
+</head>
+<body>
+${user.userName},欢迎您进入Spring论坛，您当前积分为${user.credits};
+</body>
+</html>
+```
+
+
+
+https://www.baeldung.com/spring-web-contexts
 
 https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#jetty-run-goal
 
