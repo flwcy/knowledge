@@ -650,7 +650,7 @@ public class UserServiceTest {
     <!-- 处理url -->
     <servlet-mapping>
         <servlet-name>app</servlet-name>
-        <url-pattern>.html</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 ```
 
@@ -712,10 +712,17 @@ public class LoginController {
             user.setLastIp(request.getLocalAddr());
             user.setLastVisit(new Date());
             userService.loginSuccess(user);
-            return new ModelAndView("main");
+            request.getSession().setAttribute("user",user);
+            return new ModelAndView("index");
         }
     }
 }
+```
+
+扫描`Controller`包：
+
+```xml
+ <context:component-scan base-package="com.flwcy.sl.controller"></context:component-scan>
 ```
 
 ##### maven配置jetty插件
@@ -806,9 +813,6 @@ ${user.userName},欢迎您进入Spring论坛，您当前积分为${user.credits}
 </html>
 ```
 
-
-
-https://www.baeldung.com/spring-web-contexts
-
-https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#jetty-run-goal
+#### 参考文章
+[Spring Web Contexts](https://www.baeldung.com/spring-web-contexts)
 
