@@ -13,7 +13,7 @@ com
          +- Application.java
 ```
 
-`Application.java`文件将声明`main`方法以及基本的`@SpringBootApplication`，如下所示：
+`pom.xml`配置可参考[官方文档](https://docs.spring.io/spring-boot/docs/2.2.0.BUILD-SNAPSHOT/reference/html/getting-started.html#getting-started-first-application)，`Application.java`文件将声明`main`方法以及基本的`@SpringBootApplication`，如下所示：
 
 ```java
 package com.flwcy.boot;
@@ -79,7 +79,7 @@ login:
     private String userName;
 ```
 
-假如我们要获取多个属性呢？是否需要将上述代码重复多遍呢，答案是否定的，我们通过如下方式来实现：
+假如我们要获取多个属性呢？是否需要将上述代码重复多遍呢，答案是否定的，参考[官方文档](https://docs.spring.io/spring-boot/docs/2.2.0.BUILD-SNAPSHOT/reference/html/spring-boot-features.html#boot-features-external-config-yaml)，我们通过如下方式来实现：
 
 ```java
 package com.flwcy.boot.dto;
@@ -109,3 +109,4 @@ public class User {
     private User user;
 ```
 
+这样我们就可以通过`user.getUserName()`来获取配置文件配置的用户名。
