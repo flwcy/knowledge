@@ -110,3 +110,45 @@ public class User {
 ```
 
 这样我们就可以通过`user.getUserName()`来获取配置文件配置的用户名。
+
+#### Controller的使用
+
+`@Controller`用于将类标记为`Spring Mvc Controller`对象。`@RestController`是一个组合注解，等同于`@Controller`和`@RequestBody`。因此以下两个`controller`定义应该相同：
+
+```java
+@Controller
+@ResponseBody
+public class MyController { }
+
+@RestController
+public class MyRestController { }
+```
+
+##### 获取url中的参数
+
+`@PathVariable`：获取`url`中的的数据。
+
+```java
+    @RequestMapping(value = "/getUserName/{userName}",method = RequestMethod.GET)
+    public String getUserName(@PathVariable("userName") String userName){
+        return "hi," + userName;
+    }
+```
+
+在浏览器中输入`http://localhost:8080/getUserName/flwcy`。
+
+`@RequestParam`：获取请求参数中的值。
+
+```java
+    @RequestMapping(value = "/getInfo",method = RequestMethod.GET)
+    public String getInfo(@RequestParam(value = "userName",required = true,defaultValue = "") String userName){
+        return "hi," + userName;
+    }
+```
+
+在浏览器中输入`http://localhost:8080/getInfo?userName=flwcy`。
+
+组合注解：`@GetMapping`，`@PostMapping`，`@PutMapping`等。`@GetMapping("/getInfo")`等同于`@RequestMapping(value = "/getInfo",method = RequestMethod.GET)`，减少了我们的代码量。
+
+#### 数据库操作
+
