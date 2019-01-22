@@ -152,3 +152,174 @@ public class MyRestController { }
 
 #### 数据库操作
 
+假如有这样一张数据表
+
+```sql
+DROP TABLE IF EXISTS `db_user`;
+CREATE TABLE `db_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(50) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+```
+
+`JPA`：定义了一系列对象持久化的标准。`Spring Data JPA`是`Spring`基于`Hibernate`开发的一个`JPA`框架。
+
+首先需要在`pom.xml`中添加相关依赖：
+
+```xml
+		<!-- mysql依赖 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- Spring data JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+```
+
+在配置文件中添加配置：
+
+```yaml
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_jdbc
+    data-username: root
+    data-password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+```
+
+`spring.jpa.show-sql`：显示`sql`语句
+
+`spring.jpa.hibernate.ddl-auto`：`update`更新数据库时不删除旧表，`create`每次加载`hibernate`时都会删除上一次的生成的表，然后根据你的实体类重新生成新表。
+
+参考[官方文档](https://docs.spring.io/spring-boot/docs/2.2.0.BUILD-SNAPSHOT/reference/html/spring-boot-features.html#boot-features-entity-classes)，新建`User`类
+
+```java
+package com.flwcy.boot.entity;
+
+import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
+
+@Entity(name="db_user")
+@Data
+public class User {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    private String userName;
+
+    private String password;
+    
+    private String email;
+
+    private Date birthday;
+}
+```
+
+对于数据库的增删改查操作，定义`UserRepository`接口，继承`JpaRepository`，此接口是`Spring-Data-Jpa`内部定义好的泛型接口，第一个参数实体类，第二个参数是`ID`。
+
+```java
+package com.flwcy.boot.repository;
+
+
+import com.flwcy.boot.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User,Integer> {
+}
+```
+
+#### RESTful API
+
+我们对其设计`RESTful API`，具体如下：
+
+|     请求路径     | 请求类型 |      功能描述      |
+| :--------------: | :------: | :----------------: |
+|    /listUsers    |   get    |  获取所有用户信息  |
+|  /getUser/{id}   |   get    | 通过id查询一个用户 |
+|     /addUser     |   post   |    创建一个用户    |
+| /updateUser/{id} |   put    | 通过id修改用户信息 |
+| /deleteUser/{id} |  delete  | 通过id删除一个用户 |
+
+接下来编写对应`API`接口代码：
+
+```java
+package com.flwcy.boot.controller;
+
+import com.flwcy.boot.entity.User;
+import com.flwcy.boot.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
+
+@RestController //处理http请求，返回json格式
+@RequestMapping("/user")//配置url，让该类下的所有接口url都映射在/user下
+public class UserController {
+
+    @Autowired
+    UserRepository userRepository;
+
+    @GetMapping("/selectAll")
+    public List<User> selectAll(){
+        return userRepository.findAll();
+    }
+
+    @GetMapping("/getUser/{id}")
+    public User getUser(@PathVariable("id") Integer id) {
+        return userRepository.findById(id).get();
+    }
+
+    @PostMapping("/addUser")
+    public User addUser(@RequestParam("userName") String userName,
+                          @RequestParam("password") String password, @RequestParam("email") String email) {
+        User u = new User();
+        u.setUserName(userName);
+        u.setPassword(password);
+        u.setEmail(email);
+        return userRepository.save(u);
+    }
+
+    @PutMapping("updateUser")
+    public User updateUser(@RequestParam("id") Integer id, @RequestParam("userName") String userName,
+                           @RequestParam("password") String password, @RequestParam("email") String email){
+        User u = new User();
+        u.setId(id);
+        u.setUserName(userName);
+        u.setPassword(password);
+        u.setEmail(email);
+        return userRepository.save(u);
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUser(@PathVariable("id")Integer id) {
+        userRepository.deleteById(id);
+    }
+}
+```
+
+参考[官方文档](https://docs.spring.io/spring-data/jpa/docs/2.2.0.M1/reference/html/#jpa.query-methods.query-creation)，我们也可以自定义查询方法，自定义查询就是根据方法名来自动生成`SQL`，主要的语法是`findXXBy,readAXXBy,queryXXBy,countXXBy, getXXBy`后面跟属性名称，例如：
+
+```java
+ List<User> findByUserName(String userName);
+```
+
+#### 事务管理
+
