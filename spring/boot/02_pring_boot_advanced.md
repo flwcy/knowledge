@@ -376,7 +376,7 @@ public enum ResultEnum {
 
 #### 单元测试
 
-对于我们编写的代码需进行单元测试后才进行提交，对于一般的`service`层代码：
+开发完成之后需进行单元测试后才进行提交，对于一般的`service`层代码：
 
 ```java
 package com.flwcy.boot.service;
@@ -407,7 +407,53 @@ public class UserServiceTest {
 }
 ```
 
-对于`controller`我们应该使用
+对于`controller`我们应该使用通过`MockMvc`来模拟`HTTP`请求。
+
+```java
+package com.flwcy.boot.controller;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void addUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/user/updateUser").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .param("id","13")
+                .param("userName", "qwer123").param("password", "123456")
+                .param("email", "qwer123@123.com")
+                .characterEncoding("utf-8").accept(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value("200"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void getUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/getUser/1").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("data.userName").value("qwer"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+}
+```
+
+
 
 
 
