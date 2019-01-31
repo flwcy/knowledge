@@ -2,7 +2,7 @@
 
 > [What is Java String Pool?](https://www.journaldev.com/797/what-is-java-string-pool)
 
-顾名思义，`Java字符串池`是**[Java堆内存](https://www.journaldev.com/4098/java-heap-space-vs-stack-memory)**中的存储字符串的一个池。我们知道`String`是`Java`中的特殊类，我们可以使用`new`运算符创建`String`对象，也可以用双引号提供值。
+顾名思义，`Java字符串池`是[Java堆内存](https://www.journaldev.com/4098/java-heap-space-vs-stack-memory)中的存储字符串的一个池。我们知道`String`是`Java`中的特殊类，我们可以使用`new`运算符创建`String`对象，也可以用双引号提供值。
 
 #### Java字符串池
 
