@@ -99,4 +99,13 @@ int x = 3; // 把3赋值给int类型的变量;
 
 `if`语句、`switch`语句、`for`循环语句、`while`循环语句、`do...while`循环语句
 
-> switch 语句中的变量类型可以是： byte、short、int 或者 char。从 Java SE 7 开始，switch 支持字符串 String 类型了，同时 case 标签必须为字符串常量或字面量。
+> switch 语句中的变量类型可以是： byte、short、int 或者 char。JDK5以后可以是枚举，从 Java SE 7 开始，switch 支持字符串 String 类型了，同时 case 标签必须为字符串常量或字面量。
+
+```
+练习题：在控制台输出所有水仙花数
+```
+
+
+
+
+
