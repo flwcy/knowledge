@@ -45,7 +45,25 @@
 
 ### Java
 
+#### basic
+
+[01.java语言基础](https://github.com/flwcy/knowledge/blob/master/JavaSe/basic/01_java_language_basic.md)
+
 [反射](https://github.com/flwcy/knowledge/blob/master/JavaSe/java_reflection.md)
+
+#### IO
+
+[IO流](https://github.com/flwcy/knowledge/blob/master/JavaSe/IO/IO.md)
+
+[Java IO详解之File](https://github.com/flwcy/knowledge/blob/master/JavaSe/IO/File.md)
+
+#### 异常
+
+[深入理解java异常处理机制](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Exception_handling.md)
+
+[[转摘]提倡异常封装](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Encapsulation_Exception.md)
+
+[[转摘]采用异常链传递异常](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Exception_chain.md)
 
 #### JDBC
 
@@ -70,6 +88,12 @@
 [10.DAO层代码重构](https://github.com/flwcy/knowledge/blob/master/JavaSe/JDBC/10_dao_refactor.md)
 
 [11.使用Spring中的JdbcTemple](https://github.com/flwcy/knowledge/blob/master/JavaSe/JDBC/11_spring_jdbc.md)
+
+#### 译文
+
+[Integer Cache](https://github.com/flwcy/knowledge/blob/master/JavaSe/basic/java_integer%20_cache.md)
+
+[[译]什么是Java字符串池](https://github.com/flwcy/knowledge/blob/master/JavaSe/basic/what_is_java_string_pool.md)
 
 ### 其他
 
