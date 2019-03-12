@@ -1,4 +1,4 @@
-#### Java堆空间 VS 栈 ——Java中的内存分配
+#### [译]Java堆空间 VS 栈 ——Java中的内存分配
 
 > [Java Heap Space vs Stack – Memory Allocation in Java](https://www.journaldev.com/4098/java-heap-space-vs-stack-memory)
 
@@ -75,6 +75,7 @@ public class Memory {
 参考：
 
 <https://en.wikipedia.org/wiki/Java_memory_model>
+
 <https://blogs.oracle.com/jonthecollector/presenting-the-permanent-generation>
 
 

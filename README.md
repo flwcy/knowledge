@@ -95,6 +95,8 @@
 
 [[译]什么是Java字符串池](https://github.com/flwcy/knowledge/blob/master/JavaSe/basic/what_is_java_string_pool.md)
 
+[[译]Java堆空间 VS 栈 ——Java中的内存分配](https://github.com/flwcy/knowledge/blob/master/JavaSe/basic/java_heap_space_vs_stack_memory.md)
+
 ### 其他
 
 [Git](https://github.com/flwcy/knowledge/blob/master/study/Git.md)
