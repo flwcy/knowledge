@@ -61,9 +61,9 @@
 
 [深入理解java异常处理机制](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Exception_handling.md)
 
-[[转摘]提倡异常封装](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Encapsulation_Exception.md)
+[[转载]提倡异常封装](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Encapsulation_Exception.md)
 
-[[转摘]采用异常链传递异常](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Exception_chain.md)
+[[转载]采用异常链传递异常](https://github.com/flwcy/knowledge/blob/master/JavaSe/exception/Exception_chain.md)
 
 #### JDBC
 
