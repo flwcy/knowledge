@@ -91,7 +91,7 @@ public class Driver {
 
 这个分配情况在图中说明：
 
-![Stack-Memory-vs-Heap-Space-in-Java.jpg](../../img/javaSe/basic/Stack-Memory-vs-Heap-Space-in-Java.jpg)
+![Stack-Memory-vs-Heap-Space-in-Java.jpg](../../img/JavaSe/basic/Stack-Memory-vs-Heap-Space-in-Java.jpg)
 
 #### 5. 总结
 
