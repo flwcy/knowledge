@@ -66,7 +66,7 @@ public class Memory {
 3. 存储在堆中的对象是全局可访问的，而栈内存并不能被其他线程访问。
 4. 栈中的内存管理以LIFO方式完成，而在堆内存中则更复杂，因为它是全局使用的。堆内存划分为年轻代，老年代等，更多细节请参考[Java垃圾回收](https://www.journaldev.com/2856/java-jvm-memory-model-memory-management-in-java)。
 5. 栈内存是短暂的，而堆内存则在程序执行开始到结束都存在。
-6. 我们可以使用JVM选项**-Xms**和**-Xmx**来定义堆内存的启动大小和最大大小。我们可以使用 **-Xss**来定义栈内存的大小。
+6. 我们可以使用JVM选项 **-Xms** 和 **-Xmx** 来定义堆内存的启动大小和最大大小。我们可以使用 **-Xss**来定义栈内存的大小。
 7. 当栈内存已满时，Java运行时将会抛出`java.lang.StackOverFlowError`，而如果堆内存已满，它将会抛出`java.lang.OutOfMemoryError:Java Heap Space`的错误。
 8. 与堆内存相比，栈内存的大小是非常小的。由于内存分配（LIFO）的简单性，与堆内存相比，栈内存非常快。
 
