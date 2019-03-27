@@ -35,6 +35,21 @@ public class SimpleDataSource {
     private static final String PASSWORD = "123456";
 
     private static final String URL = "jdbc:mysql://localhost:3306/db_jdbc";
+    
+    /**
+     * 初始化的连接数
+     */
+    private static int initCount = 5;
+
+    /**
+     * 最大连接数
+     */
+    private static int maxCount = 10;
+
+    /**
+     * 已创建的连接数
+     */
+    private static int currentCount = 0;
 
     static {
         pool = new LinkedList<>();
@@ -49,7 +64,8 @@ public class SimpleDataSource {
 
     public SimpleDataSource(){
         try {
-            for (int i=0;i<5;i++){
+            for (int i=0;i<initCount;i++){
+                currentCount++;
                 pool.addLast(this.createConnection());
             }
         } catch (SQLException e) {
