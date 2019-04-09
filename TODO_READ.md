@@ -2,6 +2,10 @@
 
 ### TODO_READ
 
+[Java Memory Model](http://tutorials.jenkov.com/java-concurrency/java-memory-model.html)
+
+[JVM内存结构 VS Java内存模型 VS Java对象模型](https://www.hollischuang.com/archives/2509)
+
 [Innodb中的事务隔离级别和锁的关系](https://tech.meituan.com/innodb-lock.html)
 
 [如何理解数据库事务中的一致性的概念？](https://www.zhihu.com/question/31346392)
