@@ -2,6 +2,12 @@
 
 ### TODO_READ
 
+[Killing of permgen in Java 8..!!](https://www.linkedin.com/pulse/killing-permgen-java-8-saral-saxena)
+
+[What is Run-Time Constant Pool and Method-Area in java](https://stackoverflow.com/questions/22921010/what-is-run-time-constant-pool-and-method-area-in-java)
+
+[The Architecture of the Java Virtual Machine](https://www.artima.com/insidejvm/ed2/jvm2.html)
+
 [Java Memory Model](http://tutorials.jenkov.com/java-concurrency/java-memory-model.html)
 
 [JVM内存结构 VS Java内存模型 VS Java对象模型](https://www.hollischuang.com/archives/2509)
