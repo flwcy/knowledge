@@ -21,6 +21,8 @@ Java语言是强类型语言
 
 基本数据类型：byte(1)、short(2)、int(4)、long(8)、float(4)、double(8)、char(2)、boolean(1)
 
+![](../../img/JavaSe/basic/java_data_type.png)
+
 引用数据类型：class、interface、[]
 
 整数默认是int类型
