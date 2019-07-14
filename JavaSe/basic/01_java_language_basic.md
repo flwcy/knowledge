@@ -21,7 +21,7 @@ Java语言是强类型语言
 
 基本数据类型：byte(1)、short(2)、int(4)、long(8)、float(4)、double(8)、char(2)、boolean(1)
 
-![java_data_type](../../img/JavaSe/basic/java_data_type.png)
+![数据类型转换](../../img/JavaSe/basic/java_data_type.png)
 
 引用数据类型：class、interface、[]
 
@@ -32,19 +32,33 @@ Java语言是强类型语言
 > - 十六进制数，要求 0x 或 0X 开头，如：0x15
 > - 二进制数，要求0b或0B开头，如：0b01110011
 
-浮点数默认是double类型
+**浮点数使用总结**
+
+- 默认是double类型
+- 浮点数存在舍入误差，数字不能精确表示。如果需要进行不产生舍入误差的精确数字计算，需要使用**BigDecimal类。**
+- 避免比较中使用浮点数，需要比较请使用BigDecimal类
 
 长整型用L或者l标记，建议使用L
 
 单精度浮点数用F或者f标记，建议使用F
-
-数据类型转换：byte、short、char ---- int --- long --- float --- double
 
 运算符
 
 ```java
 int x = 3; // 把3赋值给int类型的变量;
 ```
+
+**整数运算：**
+
+　　1. 如果两个操作数有一个为Long, 则结果也为long。
+
+　　2. 没有long时，结果为int。即使操作数全为short，byte，结果也是int。
+
+　　浮点运算：
+
+　　3. 如果两个操作数有一个为double，则结果为double。
+
+　　4. 只有两个操作数都是float，则结果才为float。
 
 --、++ 数字打头，先使用再计算。符号打头先计算再使用。
 
