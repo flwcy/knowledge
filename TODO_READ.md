@@ -2,6 +2,8 @@
 
 ### TODO_READ
 
+[Basics of Bit Manipulation](https://www.hackerearth.com/zh/practice/basic-programming/input-output/basics-of-input-output/tutorial/)
+
 [Killing of permgen in Java 8..!!](https://www.linkedin.com/pulse/killing-permgen-java-8-saral-saxena)
 
 [What is Run-Time Constant Pool and Method-Area in java](https://stackoverflow.com/questions/22921010/what-is-run-time-constant-pool-and-method-area-in-java)
