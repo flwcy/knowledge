@@ -61,13 +61,10 @@ System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));    //输出：
 int x = 3; // 把3赋值给int类型的变量;
 ```
 
-**整数运算：**
+**整数/浮点数运算：**
 
-　　1. 如果两个操作数有一个为Long, 则结果也为long。
-
-　　2. 没有long时，结果为int。即使操作数全为short，byte，结果也是int。
-
-　　浮点运算：
+  　　1. 如果两个操作数有一个为Long, 则结果也为long。
+  　　2. 没有long时，结果为int。即使操作数全为short，byte，结果也是int。
 
 　　3. 如果两个操作数有一个为double，则结果为double。
 
