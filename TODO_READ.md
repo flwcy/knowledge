@@ -2,7 +2,7 @@
 
 ### TODO_READ
 
-[Basics of Bit Manipulation](https://www.hackerearth.com/zh/practice/basic-programming/input-output/basics-of-input-output/tutorial/)
+[Basics of Bit Manipulation](https://www.hackerearth.com/zh/practice/basic-programming/bit-manipulation/basics-of-bit-manipulation/tutorial/)
 
 [Killing of permgen in Java 8..!!](https://www.linkedin.com/pulse/killing-permgen-java-8-saral-saxena)
 
