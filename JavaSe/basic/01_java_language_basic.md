@@ -199,6 +199,10 @@ Java语言使用new操作符来创建数组，语法如下：
 
 数组的元素是通过索引访问的。数组索引从`0`开始，所以索引值从`0`到`数组名.length-1`。
 
+多维数组：`double[] [] balances = new double[10][3]; `
+
+![二维数组](../../img/JavaSe/basic/double_dimensional_array.png)
+
 ```
 练习题：
 	打印输出杨辉三角数
