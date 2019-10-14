@@ -281,3 +281,251 @@ int n = list.get(i); // int n = list.get(i).intValue();
 失败的次数，胜率，并根据最终结果给出系统评价
 ```
 
+##### 接口
+
+接口不是类，而是对类的一组需求描述，这些类要遵从接口描述的统一格式进行定义。接口中所有方法自动地属于public。
+
+```java
+public interface Comparable {
+    int compareTo(Object other);
+}
+```
+
+为了让一个类实现一个接口，通常需要下面两个步骤：
+
+1. 使用`implements`关键字将类声明为实现给定的接口。
+2. 对接口中的所有方法进行定义。
+
+```java
+class Employee implements Comparable<Employee> {
+    public int compareTo(Employee other) {
+       return Double.compare(salary,other.getSalary());
+    }
+}
+```
+
+###### 接口的特性
+
+接口不是类，因此不能使用`new`运算符实例化一个接口：`x = new Comparable();// ERROR`。然而，可以声明接口变量：`Comparable x;// OK`。接口变量必须引用实现类接口的类对象：`x = new Employee(...);// OK provided Employee implements Comparable`。
+
+接口中不能包含实例域或静态方法，但却可以包含常量。接口中的域将自动设为`public static final`。
+
+```java
+public interface Powered extends Moveable {
+    double milesPerGallon();
+    double SPEED_LIMIT = 95; // a public static final constant
+}
+```
+尽管每个类只能够拥有一个超类，但却可以实现多个接口。
+> 接口与抽象类
+>
+> class Employee extends Person, Comparable // Error
+>
+> class Employee extends Person implements Comparable // OK
+
+在Java SE 8中，允许在接口中增加静态方法（只是这有违于将接口作为抽象规范的初衷）。
+
+###### 默认方法
+
+可以为接口方法提供一个默认实现。必须用`default`修饰符标记这样一个方法：
+
+```java
+public interface Comparable<T> {
+    default int CompareTo(T other) { return 0; } // By default,all elements are the same
+}
+```
+
+> 默认方法的一个重要用法是“接口演化（interface evolution）”
+
+如果先在一个接口中将一个方法定义为默认方法，然后又在超类或另一个接口中定义了同样的方法，Java是如何解决这种二义性：
+
+1. 超类优先。如果超类提供一个具体方法，同名而且有相同参数类型的默认方法会被忽略。
+2. 接口冲突。如果一个超接口提供类一个默认方法，另一个接口提供类一个同名而且参数类型（不论是否是默认参数）相同的方法，必须覆盖这个方法来解决冲突。
+
+下面来看第二个规则。考虑另一个包含getName方法的接口：
+
+```java
+interface Named {
+	default String getName(){ 
+		return getClass().getName() + "_" + hashCode();
+    }
+}　
+```
+
+如果有一个类同时实现了这两个接口会怎么样呢？
+
+```java
+class Student implements Person,Named {
+    ...
+}　　
+```
+
+类会继承Person和Named接口提供的两个不一致的getName方法。并不是从中选择一个，Java编译器会报告一个错误，让程序员来解决这个二义性。只需要在Student类中提供一个getName方法，在这个方法中，可以选择两个冲突方法中的一个，如下所示：
+
+```java
+class Student implements Person,Named {
+     public String getName(){ return Person.super.getName();}
+     ...
+}
+```
+
+现在假设Named接口没有为getName提供默认实现：
+
+```java
+interface Named {
+    String getName();
+}
+```
+
+Student类会从Person接口继承默认方法吗？这好像挺有道理，不过，Java设计者更强调一致性。两个接口如何冲突并不重要。如果至少有一个接口提供了一个实现，编译器就会报告错误，而程序员就必须解决这个二义性。
+
+我们只讨论了两个接口的命名冲突。现在来考虑另一种情况，一个类扩展了一个超类，同时实现了一个接口，并从超类和接口继承了相同的方法。例如，假设Person是一个类，Student定义为：
+
+```java
+class Student extends Person implements Named{...}
+```
+
+在这种情况下，只会考虑超类方法，接口的所有默认方法都会被忽略。在我们的例子中，Student从Person继承了getName方法，Named接口是否为getName提供了默认实现并不会带来什么区别。这正是“类优先”规则。
+
+##### 内部类
+
+内部类（inner class）是定义在另一个类中的类。
+
+```java
+package com.flwcy.basic.inner;
+
+/**
+ *  内部类
+ */
+public class OuterClass {
+
+    private String outerStr = "outer String";
+
+    /**
+     * 内部类即可以访问自身的数据域，也可以访问创建它的外围类对象的数据域
+     */
+    class InnerClass {
+
+        /**
+         * Inner classes cannot have static declarations
+         * 内部类中不能有static方法或者static域（内部类中所有静态域都必须是final）
+         */
+        private String innerStr = "inner class";
+
+        public void innerMethod(){
+            // 内部类的对象总有一个隐式引用，它指向了创建它的外围类对象
+            // outer.outerStr
+            System.out.println(innerStr + " " + outerStr);
+        }
+
+    }
+
+    public void outerMethod() {
+        // 在Java Se 8之前，必须把从局部类访问的局部变量声明为final
+        final String localStr = "a local variable";
+
+        /**
+         * 局部内部类不能用public或者private访问说明符进行声明，它的作用域被限定在声明这个局部类的块中
+         */
+        class LocalInnerClass {
+            public void localMethod() {
+                // 局部类可以访问外围类对象的局部变量，那些局部变量必须事实上为final
+                System.out.println(localStr);
+            }
+        }
+    }
+}
+```
+
+内部类是一种编译器现象，与虚拟机无关。
+
+**匿名内部类（anonymous inner class）**，语法格式如下：
+
+```
+new SuperType(construction paramters) {
+    inner class methods and data
+}
+```
+
+例如字符串数组按元素长度排序：
+
+```java
+        String[] arrays = new String[] {"Hello","World","Java","js","!"};
+        // 匿名内部类
+		Arrays.sort(arrays, new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                return o1.length() - o2.length();
+            }
+        });
+```
+
+> 下面的技巧称为“双括号初始化”（double brace initialization）
+>
+> invite(new ArrayList<String>(){{
+>
+> 	add("Hello");
+>
+> 	add("World");
+>
+> }});
+
+###### 静态内部类
+
+有时候，使用内部类只是为了把一个类隐藏在另一个类的内部，并不需要内部类引用外围类对象。为此，可以将内部类声明为static，以便取消产生的引用。
+
+例如计算数组中最小值和最大值的问题：
+
+```java
+package com.flwcy.basic.inner;
+
+/**
+ * 静态内部类计算数组的最大值与最小值
+ */
+public class StaticClass {
+    public static void main(String[] args) {
+        double[] array = new double[] {12.0,23.12,32.13,98.23,276.12};
+        Pair pair = Pair.maxAndMin(array);
+        System.out.println(pair.getMin());
+        System.out.println(pair.getMax());
+    }
+
+    static class Pair {
+        private double min;
+
+        private double max;
+
+        public Pair(double min,double max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public static Pair maxAndMin(double[] array) {
+            double min = Double.POSITIVE_INFINITY;
+            double max = Double.NEGATIVE_INFINITY;
+            for(double value : array) {
+                if(value > max) {
+                    max= value;
+                }
+                if(value < min) {
+                    min = value;
+                }
+            }
+
+            return new Pair(min,max);
+        }
+
+        public double getMin() {
+            return min;
+        }
+
+        public double getMax(){
+            return max;
+        }
+    }
+}
+```
+
+> 与常规内部类不同，静态内部类可以有静态域和方法。
+>
+> 声明在接口中的内部类自动成为static和public类。
+
