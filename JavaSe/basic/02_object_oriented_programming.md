@@ -308,7 +308,7 @@ class Employee implements Comparable<Employee> {
 
 接口不是类，因此不能使用`new`运算符实例化一个接口：`x = new Comparable();// ERROR`。然而，可以声明接口变量：`Comparable x;// OK`。接口变量必须引用实现类接口的类对象：`x = new Employee(...);// OK provided Employee implements Comparable`。
 
-接口中不能包含实例域或静态方法，但却可以包含常量。接口中的域将自动设为`public static final`。
+接口中不能包含实例域或静态方法，但却可以包含常量。接口中的域将自动设为`public static final`。与可以建立类的继承关系一样，接口也可以被扩展。
 
 ```java
 public interface Powered extends Moveable {
@@ -464,7 +464,7 @@ new SuperType(construction paramters) {
 > invite(new ArrayList<String>(){{
 >
 > 	add("Hello");
->
+>	
 > 	add("World");
 >
 > }});
