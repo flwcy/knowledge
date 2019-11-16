@@ -1,6 +1,6 @@
 #### 泛型程序设计
 
-通过提供实际类型参数替换形式类型参数来实例化泛型类型以形成**参数化类型**。诸如`LinkedList<E>`之类的类是泛型类型，它有一个类型参数E，实例化（例如LinkedList<Integer>或LinkedList<String>）称为参数化类型，String和Integer分别是各自的实际类型参数。
+通过提供实际类型参数替换形式类型参数来实例化泛型类型以形成**参数化类型**。诸如`LinkedList<E>`之类的类是泛型类型，它有一个类型参数`E`，实例化（例如`LinkedList<Integer>`或`LinkedList<String>`）称为参数化类型，`String`和`Integer`分别是各自的实际类型参数。
 
 泛型（generic）的本质是类型参数（type parameters），类型参数使程序更好的可读性和安全性。
 
@@ -128,7 +128,7 @@ public static <T> int countAllOccurrences(T[] list, T item) {
 }  
 ```
 
-类型变量放在修饰符（这里是public static）的后面，返回类型的前面。泛型方法可以定义在普通类中，也可以定义在泛型类中。
+类型变量放在修饰符（这里是`public static`）的后面，返回类型的前面。泛型方法可以定义在普通类中，也可以定义在泛型类中。
 
 接下来看一个泛型构造器的例子：
 
