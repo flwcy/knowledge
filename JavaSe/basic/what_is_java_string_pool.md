@@ -10,7 +10,7 @@
 
 ![String Pool](../../img/JavaSe/basic/String-Pool-Java1.png)
 
-字符串池是可能的，因为[String在Java中是不可变的](https://www.journaldev.com/802/string-immutable-final-java)，它是[字符串驻留(String interning)](https://en.wikipedia.org/wiki/String_interning)概念的实现。字符串池也是[享元设计模式](https://www.journaldev.com/1562/flyweight-design-pattern-java)的示例。
+字符串池之所以可能，是因为[String在Java中是不可变的](https://www.journaldev.com/802/string-immutable-final-java)，它是[字符串驻留(String interning)](https://en.wikipedia.org/wiki/String_interning)概念的实现。字符串池也是[享元设计模式](https://www.journaldev.com/1562/flyweight-design-pattern-java)的示例。
 
 字符串池有助于为`Java`运行时节省大量空间，尽管创建字符串需要更多时间。
 

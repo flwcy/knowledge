@@ -33,14 +33,13 @@
 > + 仅当类没有提供任何构造器的时候， 系统才会提供一个默认的无参构造器 
 
 `this`关键字：
-
-	1. 引用隐式参数
- 	2. 调用该类的其他构造器
+1. 引用隐式参数
+2. 调用该类的其他构造器
 
 `super`关键字 ：
 
-	1. 调用超类的方法
- 	2. 调用超类的构造器。
+1. 调用超类的方法
+2. 调用超类的构造器。
 
 一个对象变量并没有实际包含一个对象，而仅仅引用一个对象。Java是按值调用的：
 
@@ -91,6 +90,44 @@ swap(a,b);
 3. 不要在类中使用过多的基本类型（例如Address地址中的省市区）
 4. 将职责过多的类进行分解
 5. 类名和方法名要体现它的职责
+
+将职责过多的类进行分解，例如对于斗地主中的扑克牌，一个反面设计：
+
+```java
+// bad design
+public class CardDeck {
+    private int[] value;
+    private int[] suit;
+    
+    public CardDeck() {...}
+    public void shuffle() {...}
+    public int getTopValue() {...}
+    public void getTopSuit() {...}
+    public void draw() {...}
+}
+```
+
+实际上，这个类实现了两个独立的概念：一副牌（含有shuffle方法和draw方法）和一张牌（含有查看面值和花色的方法）。
+
+```java
+public class CardDeck {
+	private Card[] cards;
+    
+    public CardDeck() {...}
+    public void shuffle() {...}
+    public Card getTop() {...}
+    public void draw() {...}
+}
+
+public class Card {
+    private int value;
+    private int suit;
+    
+    public Card(int value,int suit) {...}
+    public int getValue() {...}
+    public int getSuit() {...}
+}
+```
 
 **访问修饰符**：
 
@@ -408,7 +445,8 @@ public class OuterClass {
 
         /**
          * Inner classes cannot have static declarations
-         * 内部类中不能有static方法或者static域（内部类中所有静态域都必须是final）
+         * 内部类中不能有static方法或者static域（内部类中所有静态域都必须是final，我们希望一个静态域只
+		 * 有一个实例， 不过对于每个外部对象， 会分别有一个单独的内部类实例）
          */
         private String innerStr = "inner class";
 
@@ -521,6 +559,21 @@ public class StaticClass {
         public double getMax(){
             return max;
         }
+    }
+}
+```
+静态内部类的另一个使用场景就是实现**单例模式**。
+
+```java
+public class Singleton {
+	private Singleton(){}
+    
+    private static class InstanceHandler {
+        private static Singleton instance = new Singleton();
+    }
+    
+    public static Singleton new Instance(){
+        return InstanceHandler.instance();
     }
 }
 ```
