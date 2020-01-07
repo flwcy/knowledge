@@ -158,7 +158,7 @@ V get(K key);
 
 ###### LinkedList
 
-`Array`和`ArrayList`都有一个重大的缺陷，这就是从数组的中间位置删除一个元素要付出很大的代价，其原因是数组中处于被删除元素之后的所有元素都要向数组的前端移动。在数组中间位置插入一个元素也是如此。s
+`Array`和`ArrayList`都有一个重大的缺陷，这就是从数组的中间位置删除一个元素要付出很大的代价，其原因是数组中处于被删除元素之后的所有元素都要向数组的前端移动。在数组中间位置插入一个元素也是如此。
 
 ![delete a element form array](../../img/JavaSe/basic/delete_a_element_from_array.png)
 
@@ -225,15 +225,143 @@ iter.set(newValue); // sets first element to newValue
 
 如果迭代器发现它的集合被另一个迭代器修改了，或是被该集合自身的方法修改了，就会抛出一个`ConcurrentModificationException`异常。  
 
+```java
+        LinkedList<String> list  = new LinkedList<>();
+        list.add("Hello");
+        list.add("1");
+        list.add("2");
+        Iterator<String> iter = list.iterator();
+        while (iter.hasNext()) {
+            String str = iter.next(); // ConcurrentModificationException
+            if("Hello".equals(str)) {
+                list.remove(str);
+            }
+        }
 ```
 
-```
+链表不支持快速地随机访问。如果要查看链表中第n个元素，就必须从头开始，越过n-1个元素。`get`方法做了微小的优化：如果索引大于`size()/2`就从链表尾端开始搜索元素。  
 
-链表不支持快速地随机访问。如果要查看链表中第n个元素，就必须从头开始，越过n-1个元素。  
+`LinkedList`与`ArrayList`的对比：
+
+1. 顺序插入速度`ArrayList`会比较快，因为`ArrayList`是基于数组实现的，数组是事先`new`好的，只要往指定位置塞一个数据就好了；`LinkedList`则不同，每次顺序插入的时候`LinkedList`将`new`一个对象出来，如果处理对象比较大。那么`new`的时间势必会长一点，再加上一些引用赋值的操作，所以顺序插入`LinkedList`必然慢于`ArrayList`
+2. 基于上一点，因为`LinkedList`里面不仅维护了待插入的元素，还维护了`Entry`的前置`Entry`和后置`Entry`，如果一个`LinkedList`中的`Entry`非常多，那么`LinkedList`将比`ArrayList`更耗费一些内存
+3. 使用各自遍历效率最高的方式，`ArrayList`的遍历效率会比`LinkedList`的遍历效率高一些
+
+- `LinkedList`做插入、删除的时候，慢在寻址，快在只需要改变前后`Entry`的引用地址
+
+- `ArrayList`做插入、删除的时候，慢在数组的批量`copy`，快在寻址
+
+  所以，如果待插入、删除的元素是在数据结构的前半段尤其是非常靠前的位置的时候，`LinkedList`的效率将大大的快过于`ArrayList`，因为`ArrayList`将批量`copy`大量的元素；越往后，对于`LinkedList`来说，因为它是双向链表，所以在第2个元素后面插入一个数据和在倒数第2个元素后面插入一个元素在效率上基本上没有差别，但是ArrayList由于要批量`copy`的元素越来越少，操作速度必然追上甚至超过`LinkedList`。
+
+  从这个分析看出，如果你十分确定你插入、删除的元素是在前半段，那么就使用`LinkedList`；如果你十分确定你插入、删除的元素在比较靠后的位置，那么可以考虑使用`ArrayList`。如果你不能确定你要做的插入、删除是在哪？那么还是建议你使用`LinkedList`吧，因为一来`LinkedList`整体插入、删除的执行效率比较稳定，没有`ArrayList`这种越往后越快的情况；二来插入元素的时候，弄的不好`ArrayList`就要进行一次扩容，记住，`ArrayList`底层数组扩容是一个既消耗时间又消耗空间的操作。
+
+  `ArrayList`使用普通的`for`循环遍历，`LinkedList`使用`foreach`循环比较快。如果使用普通`for`循环遍历`LinkedList`，在大数据量的情况下，其遍历速度将慢得令人发指。
 
 ###### ArrayList
 
-`ArrayList`底层封装了一个动态再分配的`Object`数组。通常面试会问`ArrayList`与`Vector`的区别：
+`ArrayList`的优点如下：
+
+1. `ArrayList`底层以数组实现，是一种随机访问模式，再加上它实现了`RandomAccess`接口，因此查找也就是`get`的时候非常快。
+2. `ArrayList`在顺序添加一个元素的时候非常方便，只是往数组里面添加了一个元素而已。
+
+不过`ArrayList`的缺点也十分明显：
+
+1. 删除元素的时候，涉及到一次元素复制，如果要复制的元素很多，那么就会比较耗费性能。
+2. 插入元素的时候，涉及到一次元素复制，如果要复制的元素很多，那么就会比较耗费性能。
+
+因此`ArrayList`比较适合顺序添加、随机访问的场景。`ArrayList`底层封装了一个动态再分配的`Object`数组。通常面试会问`ArrayList`与`Vector`的区别：
 
 1. `ArrayList`不是线程安全的，`Vector`是线程安全的。
 2. `ArrayList`进行扩容时增加50%，`Vector`提供了扩容时的增量设置，但通常将容量扩大1倍。
+
+###### 散列集
+
+有一种众所周知的数据结构，可以快速地查找所需要的对象，这就是散列表（hash table）。散列表为每个对象计算一个整数，称为`散列码`(hash code)。散列码是由对象的实例域产生的一个整数。更准确地说，具有不同数据域的对象将产生不同的散列码。`key1 != key2`的情况下，通过散列函数处理，`hash(key1) == hash(key2)`，这种现象被称为散列冲突（hash collision）。
+
+在Java中，散列表用链表数组实现。每个列表被称为桶（bueket）。要想查找表中对象的位置，就要先计算它的散列码，然后与桶的总数取余，所得到的结果就是保存这个元素的桶的索引。
+
+> 在Java SE 8中，桶满时会从链表变为平衡二叉树。如果选择的散列函数不当，会产生很多冲突。
+
+如果大致知道最终会有多少个元素要插入到散列表中，就可以设置桶数。通常，将桶数设置为预计元素个数的75%~150%。最好将桶数设置为一个素数，以防键的集聚。标准类库使用的桶数是2的幂，默认值为16（为表大小提供的任何值都将自动地转换为2的下一个幂）。
+
+当然，并不是总能够知道需要存储多少个元素的，也有可能最初的估计过低。如果散列表太满，就需要再散列（rehashed）。如果要对散列表再散列，就需要创建一个桶数更多的表，并将所有元素插入到这个新表中，然后丢弃原来的表。装填因子（load factor）决定何时对散列表再散列。例如，如果装填因子为0.75（默认值），而表中超过75%的位置已经填入元素，这个表就会用双倍的桶数自动地进行再散列。对于大多数应用程序来说，装填因子为0.75是比较合理的。
+
+##### HashMap
+
+`HashMap`是一种非常常见、方便和有用的集合，是一种键值对（K-V）形式的存储结构。
+
+使用一个`Map`统计一个单词在文件中出现的次数，看到一个单词时，我们将计数器加1:
+
+```java
+counts.put(word,counts.get(word) + 1);
+```
+
+第一次看到`word`时，`get`方法会返回`null`，因此抛出`NullPointerException`，我们可以使用`getOrDefault`方法来避免这个问题：
+
+```java
+counts.put(word,counts.getOrDefault(word,0) + 1);
+```
+
+另一种方法是首先调用`putIfAbsent`方法。
+
+```java
+counts.putIfAbsent(word,0);
+counts.put(word,counts.get(word) + 1); 
+```
+
+另外可以使用`merge`方法简化这个操作：
+
+```java
+counts.merge(word,1,Integer::sum);
+```
+
+`Map`有三种返回视图的方法：
+
+```java
+Set<K> keySet();
+Collection<V> values();
+Set<Map.Entry<K,V>> entrySet();
+```
+
+如果想同时获取键值对：
+
+```java
+for(Map.Entry<String,Employee> entry : staff.entrySet()) {
+    String key = entry.getKey();
+    Employee employee = entry.getValue();
+    // do something with key,value
+}
+```
+
+也可以采用`lambda`表达式：
+
+```java
+counts.forEach((k,v) -> {
+    // do something with key,value
+});
+```
+
+看一下`put`方法的源码：
+
+```java
+if ((p = tab[i = (n - 1) & hash]) == null)
+    tab[i] = newNode(hash, key, value, null);
+```
+
+`(n - 1) & hash`实际上是计算出`key`在`tab`中索引位置，这里使用了`&`，移位加快一点代码运行效率。另外这个取模操作的正确性依赖于`length`必须是2的`N`次幂，因此注意`HashMap`构造函数中，如果你指定`HashMap`初始数组的大小`initialCapacity`，如果`initialCapacity`不是2的`N`次幂，`HashMap`会算出大于`initialCapactiy`的最小2的`N`次幂的值，作为`Entry`数组的初始化大小。
+
+`HashMap`中对`Key`的`HashCode`要做一次`rehash`，防止一些糟糕的`Hash`算法生成糟糕的`HashCode`，那么为什么要防止糟糕的`HashCode`？糟糕的`HashCode`意味着的是`Hash`冲突，即多个不同的`Key`可能得到同一个`HashCode`，糟糕的`Hash`算法意味着的就是`Hash`冲突的概率增大，这意味着`HashMap`的性能将下降，表现在两个方面：
+
+1. 有10个`Key`，可能6个`Key`的`HashCode`都相同，另外四个`Key`所在的`Entry`均匀分布在`table`的位置上，而某一个位置上却连接了6个`Entry`。这就失去了`HashMap`的意义，`HashMap`这种数据结构高性能的前提是，`Entry`均匀地分布在`table`位置上，但现在却是`1 1 1 1 6`的分布。所以，我们要求`HashCode`有很强的随机性，这样就尽可能地可以保证`Entry`分布的随机性，提升了`HashMap`的效率。
+2. `HashMap`在一个某个`table`位置上遍历链表的时候的代码：`if (e.hash == hash && ((k = e.key) == key || key.equals(k)))`，由于采用了`&&`运算符，因此先比较`HashCode`，`HashCode`都不相同就直接`pass`了，不会再进行`equals`比较了。`HashCode`因为是`int`值，比较速度非常快，而`equals`方法往往会对比一系列的内容，速度会慢一些。`Hash`冲突的概率大，意味着`equals`比较的次数势必增多，必然降低了`HashMap`的效率了。
+
+> [Why do I need to override the equals and hashCode methods in Java?](https://stackoverflow.com/questions/2265503/why-do-i-need-to-override-the-equals-and-hashcode-methods-in-java)
+>
+> Joshua Bloch says on Effective Java
+>
+> ```
+> You must override hashCode() in every class that overrides equals(). Failure to do so will result in a violation of the general contract for Object.hashCode(), which will prevent your class from functioning properly in conjunction with all hash-based collections, including HashMap, HashSet, and Hashtable.
+> ```
+
+##### 参考及引用
+

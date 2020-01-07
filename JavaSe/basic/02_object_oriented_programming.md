@@ -449,7 +449,8 @@ public class OuterClass {
         /**
          * Inner classes cannot have static declarations
          * 内部类中不能有static方法或者static域（内部类中所有静态域都必须是final，我们希望一个静态域只
-		 * 有一个实例， 不过对于每个外部对象， 会分别有一个单独的内部类实例）
+		 * 有一个实例， 不过对于每个外部对象， 会分别有一个单独的内部类实例）。如果这个域不是final的，它
+		 * 就可能不是唯一的。
          */
         private String innerStr = "inner class";
 
@@ -505,10 +506,14 @@ new SuperType(construction paramters) {
 > invite(new ArrayList<String>(){{
 >
 > 	add("Hello");
->	
+> 	
 > 	add("World");
 >
 > }});
+>
+> 外层括号建立了一个ArrayList的匿名子类。内层括号则是一个对象构造块。
+>
+> 注意：存在效率和内存泄漏的问题。
 
 ###### 静态内部类
 
