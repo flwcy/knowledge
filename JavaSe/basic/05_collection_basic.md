@@ -363,5 +363,30 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 > You must override hashCode() in every class that overrides equals(). Failure to do so will result in a violation of the general contract for Object.hashCode(), which will prevent your class from functioning properly in conjunction with all hash-based collections, including HashMap, HashSet, and Hashtable.
 > ```
 
+##### todo
+
+```
+阅读ArrayList／LinkedList/HashMap的源码，写代码实现自己的ArrayList／LinkedList／HashMap
+```
+
 ##### 参考及引用
 
+[ArrayListc初始化](https://zhuanlan.zhihu.com/p/27873515)
+
+[ArrayList底层数组扩容原理](https://zhuanlan.zhihu.com/p/27878015)
+
+[三顾ArrayList](https://zhuanlan.zhihu.com/p/27938717)
+
+[LinkedList初探](https://zhuanlan.zhihu.com/p/28101975)
+
+[LinkedList元素的删除原理](https://zhuanlan.zhihu.com/p/28373321)
+
+[HashMap底层实现原理（上）](https://zhuanlan.zhihu.com/p/28501879)
+
+[HashMap底层实现原理（下）](https://zhuanlan.zhihu.com/p/28587782)
+
+[图解集合1：ArrayList](https://www.cnblogs.com/xrq730/p/4989451.html)
+
+[图解集合2：LinkedList](https://www.cnblogs.com/xrq730/p/5005347.html)
+
+[图解集合4：HashMap](https://www.cnblogs.com/xrq730/p/5030920.html)
