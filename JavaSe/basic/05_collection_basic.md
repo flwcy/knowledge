@@ -363,10 +363,10 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 > You must override hashCode() in every class that overrides equals(). Failure to do so will result in a violation of the general contract for Object.hashCode(), which will prevent your class from functioning properly in conjunction with all hash-based collections, including HashMap, HashSet, and Hashtable.
 > ```
 
-##### todo
+##### TODO
 
 ```
-阅读ArrayList／LinkedList/HashMap的源码，写代码实现自己的ArrayList／LinkedList／HashMap
+阅读ArrayList／LinkedList/HashMap的源码，写代码实现自己的ArrayList／LinkedList／HashMap，并编写测试代码
 ```
 
 ##### 参考及引用
