@@ -147,6 +147,40 @@ try {
 ```
 
 > 当finally子句包含return语句时，将会出现一种意想不到的结果，假设利用return语 句从try语句块中退出。 在方法返回前，finally子句的内容将被执行。如果finally子句中也有一个return语句，这个返回值将会覆盖原始的返回值。
+>
+> finally语句在return执行之后，return返回之前执行。
+>
+> ```
+> package com.flwxy.learning.io;
+> 
+> public class FinallyDemo {
+> 	
+> 	public static void main(String[] args) {
+> 		System.out.println(getInt());
+> 	}
+> 	public static int getInt() {
+> 		int num = 10;
+> 		try {
+> 			System.out.println(num / 0);
+> 			num = 20;
+> 		} catch(ArithmeticException e) {
+> 			num = 30;
+> 			/**
+> 			 * return num在程序执行到这一步的时候，这里不是return num，而是return 30;
+> 			 * 这个返回路径就形成了。
+> 			 * 但是呢？它发现后面还有finally，所以继续执行finally的内容，num = 40
+> 			 * 再次回到之前的返回路径，继续走return 30;
+> 			 */
+> 			return num;
+> 		} finally {
+> 			num = 40;
+> 		}
+> 		
+> 		return num;
+> 	}
+> }
+> 
+> ```
 
 有时候，在finally子句中执行资源回收的方法也有可能抛出异常，假设希望能够确保程序继续执行，代码将变得及其繁琐。
 

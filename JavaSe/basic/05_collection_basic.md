@@ -367,6 +367,8 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 
 ```
 阅读ArrayList／LinkedList/HashMap的源码，写代码实现自己的ArrayList／LinkedList／HashMap，并编写测试代码，测试通过后对比ArrayList/LinkedList/HashMap的源码实现方式与自己代码的区别
+
+练习题：实现斗地主发牌，发三个人牌，并留出三张底牌，并自动理牌。
 ```
 
 ##### 参考及引用

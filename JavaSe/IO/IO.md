@@ -297,6 +297,17 @@ public class Student implements Serializable {
     }
 ```
 
+```
+练习：
+	1. 不死神兔：有一对兔子,从出生后第三个月起每个月都生一对兔子,小兔子长到第三个月后每个月又生一对兔子,假如兔子都不死,问第二十个月的兔子对数为多少? 
+	2. 递归遍历出所有文本文件
+	3. 单级文件夹复制：将D:/java文件夹中所有.java复制至D:/jad中并保存为.jad格式
+	4. 多级文件夹复制：D:/jad复制到D:/demo
+	5. 用Reader模拟实现BufferedReader的readLine();
+	6. 自定义模拟LineNumberReader的特有功能
+	7. 登录注册io版
+```
+
 
 
 
